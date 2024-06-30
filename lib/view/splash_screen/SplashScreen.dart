@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:job_app/view/outboardingScreen/outbooardingScreen.dart';
+import 'package:job_app/view/outboarding_screen/outbooardingScreen.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
