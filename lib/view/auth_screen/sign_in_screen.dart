@@ -1,24 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:job_app/core/constansColor.dart';
+import 'package:job_app/view/auth_screen/auth_widgets/data_forms.dart';
+import 'auth_widgets/PasswordField.dart';
 
 class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: Colors.grey.shade100,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
         ),
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          padding: EdgeInsets.symmetric(horizontal: width * .05),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 20),
+              SizedBox(height: height * .04),
               Text(
                 'فرصة',
                 style: TextStyle(
@@ -37,19 +43,28 @@ class LoginScreen extends StatelessWidget {
                 ),
                 textAlign: TextAlign.right,
               ),
-              SizedBox(height: 10),
+              SizedBox(height: height * .02),
               Text(
                 'دعونا نسجل. التقدم للوظائف!',
                 style: TextStyle(color: Colors.grey.shade600),
                 textAlign: TextAlign.right,
               ),
-              SizedBox(height: 30),
-              _buildPhoneNumberField(),
-              SizedBox(height: 15),
+              SizedBox(height: height * .04),
+              DataTextField(image: 'assets/images/lock.png'),
+              // _buildPhoneNumberField(),
+              SizedBox(height: height * .03),
               PasswordField(),
-              SizedBox(height: 20),
+              SizedBox(height: height * .04),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  // await FirebaseAuth.instance.verifyPhoneNumber(
+                  //   phoneNumber: '+44 7123 123 456',
+                  //   verificationCompleted: (PhoneAuthCredential credential) {},
+                  //   verificationFailed: (FirebaseAuthException e) {},
+                  //   codeSent: (String verificationId, int? resendToken) {},
+                  //   codeAutoRetrievalTimeout: (String verificationId) {},
+                  // );
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue.shade800,
                   minimumSize: Size(double.infinity, 50),
@@ -62,51 +77,86 @@ class LoginScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 18, color: Colors.white),
                 ),
               ),
+              SizedBox(height: height * .02),
               Center(
                 child: TextButton(
                   onPressed: () {},
                   child: Text('نسيت كلمة المرور؟',
-                      style: TextStyle(color: Colors.grey.shade600)),
+                      style: TextStyle(
+                          color: primaryColor,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16)),
                 ),
               ),
-              Divider(thickness: 1, color: Colors.grey.shade300),
-              Center(
-                child: Text(
-                  'أو التسجيل عبر',
-                  style: TextStyle(color: Colors.grey.shade600),
-                ),
+              SizedBox(height: height * .03),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    child: Divider(
+                      thickness: 1.2,
+                      color: Colors.grey.shade300,
+                    ),
+                    width: width / 3.5,
+                  ),
+                  Text(
+                    '  أو التسجيل عبر  ',
+                    style: TextStyle(color: Colors.grey.shade600),
+                  ),
+                  Container(
+                    child: Divider(
+                      thickness: 1.2,
+                      color: Colors.grey.shade300,
+                    ),
+                    width: width / 3.5,
+                  )
+                ],
               ),
-              SizedBox(height: 20),
+
+              SizedBox(height: height * .04),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
+
                 children: [
                   IconButton(
                       onPressed: () {},
                       icon: Image.asset('assets/images/facebook.png')),
-                  SizedBox(width: 20),
+
                   IconButton(
                       onPressed: () {},
                       icon: Image.asset('assets/images/google.png')),
-                  SizedBox(width: 20),
+
                   IconButton(
                       onPressed: () {},
                       icon: Image.asset('assets/images/apple.png')),
                 ],
               ),
-              Spacer(),
-              Center(
-                child: TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    'تمتلك حساب؟ تسجيل جديد',
+              const Spacer(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'لا تمتلك حساب؟',
                     style: TextStyle(
-                      color: Colors.blue.shade800,
-                      decoration: TextDecoration.underline,
+                      color: Colors.grey.shade500,
+                      decoration: TextDecoration.none,
                     ),
                   ),
-                ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/sign_up');
+                    },
+                    child: Text(
+                      'تسجيل جديد',
+                      style: TextStyle(
+                        color: Colors.blue.shade800,
+                        decoration: TextDecoration.none,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              SizedBox(height: 20),
+              SizedBox(height: height * .04),
             ],
           ),
         ),
@@ -114,55 +164,22 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildPhoneNumberField() {
-    return IntlPhoneField(
-      decoration: InputDecoration(
-        labelText: '',
-        border: OutlineInputBorder(
-          borderSide: BorderSide(),
-        ),
-      ),
-      languageCode: "ar",
-      onChanged: (phone) {
-        print(phone.completeNumber);
-      },
-      onCountryChanged: (country) {
-        print('Country changed to: ' + country.name);
-      },
-    );
-  }
-
-}
-
-class PasswordField extends StatefulWidget {
-  @override
-  _PasswordFieldState createState() => _PasswordFieldState();
-}
-
-class _PasswordFieldState extends State<PasswordField> {
-  bool _obscureText = true;
-
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      decoration: InputDecoration(
-        prefixIcon: Image.asset('assets/images/lock.png'),
-        suffixIcon: IconButton(
-          icon: Icon(
-            _obscureText ? Icons.visibility_off : Icons.visibility,
-          ),
-          onPressed: () {
-            setState(() {
-              _obscureText = !_obscureText;
-            });
-          },
-        ),
-        hintText: '••••••••',
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
-      ),
-      obscureText: _obscureText,
-    );
-  }
+// Widget _buildPhoneNumberField() {
+//   return IntlPhoneField(
+//     decoration: InputDecoration(
+//       labelText: '',
+//       border: OutlineInputBorder(
+//         borderRadius: BorderRadius.circular(8),
+//         borderSide: BorderSide(),
+//       ),
+//     ),
+//     languageCode: "ar",
+//     onChanged: (phone) {
+//       print(phone.completeNumber);
+//     },
+//     onCountryChanged: (country) {
+//       print('Country changed to: ' + country.name);
+//     },
+//   );
+// }
 }

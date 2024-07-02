@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:job_app/view/auth_screen/sign_in_screen.dart';
+import 'package:job_app/view/auth_screen/sign_up_screen.dart';
 import 'package:job_app/view/splash_screen/SplashScreen.dart';
 
 void main() {
@@ -42,6 +43,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/splash_screen': (context) => SplashScreen(),
         '/log_in': (context) => LoginScreen(),
+        '/sign_up': (context) => SignUpScreen(),
       },
     );
   }
