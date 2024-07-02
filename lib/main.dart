@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:job_app/view/auth_screen/profileconfirmation.dart';
+import 'package:job_app/view/auth_screen/reset_password_confirmation.dart';
 import 'package:job_app/view/auth_screen/sign_in_screen.dart';
+import 'package:job_app/view/courses_screens/courses_datiles.dart';
+import 'package:job_app/view/home_screens/bottomBar.dart';
+import 'package:job_app/view/home_screens/home_page.dart';
 import 'package:job_app/view/splash_screen/SplashScreen.dart';
 
 void main() {
@@ -38,7 +43,6 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
 
       home: SplashScreen(),
-      initialRoute: '/splash_screen',
       routes: {
         '/splash_screen': (context) => SplashScreen(),
         '/log_in': (context) => LoginScreen(),

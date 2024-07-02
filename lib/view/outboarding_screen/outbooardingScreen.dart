@@ -11,19 +11,29 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   final List<Map<String, String>> _onboardingData = [
     {
-      'image': 'assets/images/out_1.png',
+      'image': 'assets/images/start_1.png',
       'title': 'تصفح قائمة الوظائف',
       'subtitle': 'تتضمن قائمة الوظائف لدينا العديد من الصناعات، حتى تتمكن من العثور على أفضل وظيفة لك.',
     },
     {
-      'image': 'assets/images/out_2.png',
+      'image': 'assets/images/start_2.png',
       'title': 'التقدم إلى أفضل الوظائف',
       'subtitle': 'يمكنك التقديم على الوظائف المرغوبة لديك بسرعة وسهولة وبكل سهولة.',
     },
     {
-      'image': 'assets/images/out_3.png',
-      'title': 'اجعل حياتك المهنية',
+      'image': 'assets/images/start_3.png',
+      'title': 'أدر شركتك بشكل اسهل',
       'subtitle': 'نحن نساعدك في العثور على موظفين أحلامك بناءً على متطلباتك وطلبك.',
+    },
+    {
+      'image': 'assets/images/start_4.png',
+      'title': 'طور مهراتك الوظفية ',
+      'subtitle': 'طور نفسك بشكل سريع في مهاراتك وقدراتك من خلال الكورسات والتدريبات الملحقة لدينا',
+    },
+    {
+      'image': 'assets/images/start_5.png',
+      'title': 'انشئ سيرتك الذاتية',
+      'subtitle': 'يمكنك إنشاء سيرة ذاتية لخبرات بسهولة وسرعة',
     },
   ];
 
@@ -35,16 +45,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     return Scaffold(
       body: Column(
         children: [
-          Container(
-            height: height * 0.2,
-            decoration: BoxDecoration(
-              color: Colors.grey.shade200,
-              borderRadius: BorderRadiusDirectional.only(
-                bottomEnd: Radius.circular(777),
-                bottomStart: Radius.circular(777),
-              ),
-            ),
-          ),
+
           Expanded(
             child: PageView.builder(
               controller: _controller,
@@ -74,7 +75,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         ),
                         textAlign: TextAlign.center,
                       ),
-                      SizedBox(height: height * 0.01),
+                      SizedBox(height: height * 0.05),
                       Text(
                         _onboardingData[index]['subtitle']!,
                         style: TextStyle(
@@ -83,7 +84,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         ),
                         textAlign: TextAlign.center,
                       ),
-
                     ],
                   ),
                 );
@@ -107,24 +107,28 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               ),
             ),
           ),
-          SizedBox(height: height * 0.02),
+          SizedBox(height: height * 0.05),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 if (_currentPage < _onboardingData.length - 1)
-                  TextButton(
-                    onPressed: () {
-                      _controller.jumpToPage(_onboardingData.length - 1);
-                    },
-                    child: Text(
-                      'تخطي',
-                      style: TextStyle(color: Color(0xFF95969D)),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsetsDirectional.only(end: 100),
+                      child: TextButton(
+                        onPressed: () {
+                          _controller.jumpToPage(_onboardingData.length - 1);
+                        },
+                        child: Text(
+                          'تخطي',
+                          style: TextStyle(color: Color(0xFF95969D)),
+                        ),
+                      ),
                     ),
                   ),
                 Expanded(
-
                   child: ElevatedButton(
                     onPressed: () {
                       if (_currentPage == _onboardingData.length - 1) {
@@ -143,15 +147,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color(0xFF2C557D),
-                      minimumSize: Size(_currentPage == 0 ? width * 0.1 : double.infinity, height * 0.07),
+                      minimumSize: Size(
+                        _currentPage == 0 ? width * 0.1 : double.infinity,
+                        height * 0.07,
+                      ),
                     ),
                   ),
                 ),
               ],
             ),
           ),
-
-          SizedBox(height: height * 0.03),
+          SizedBox(height: height * 0.1),
         ],
       ),
     );
