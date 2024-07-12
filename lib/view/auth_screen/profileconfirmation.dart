@@ -1,9 +1,11 @@
-
 import 'package:flutter/material.dart';
-
-
+import 'package:get/get.dart';
+import 'package:job_app/core/constansColor.dart';
+import 'package:job_app/view/home_screens/home_page.dart';
 
 class ProfileConfirmationScreen extends StatelessWidget {
+  const ProfileConfirmationScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,6 +16,7 @@ class ProfileConfirmationScreen extends StatelessWidget {
           icon: Icon(Icons.close, color: Colors.black),
           onPressed: () {
             // Close action
+
           },
         ),
       ),
@@ -24,11 +27,9 @@ class ProfileConfirmationScreen extends StatelessWidget {
             Text(
               'فرصة',
               style: TextStyle(
-                fontSize: 32,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF356899)
-              ),
-
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF356899)),
             ),
             SizedBox(height: 87),
             Image.asset(
@@ -56,9 +57,10 @@ class ProfileConfirmationScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 // Button action
+                Get.offAll(HomePage());
               },
               style: ElevatedButton.styleFrom(
-                primary: Color(0xFF356899),
+                backgroundColor: primaryColor,
                 minimumSize: Size(double.infinity, 65),
                 padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                 shape: RoundedRectangleBorder(
@@ -67,17 +69,15 @@ class ProfileConfirmationScreen extends StatelessWidget {
               ),
               child: Text(
                 'تصفح التطبيق',
-                style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold
-                ),
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
             ),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
           ],
         ),
       ),
     );
   }
 }
-

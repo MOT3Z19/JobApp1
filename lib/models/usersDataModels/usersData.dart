@@ -3,13 +3,15 @@ class UsersData {
   late String email;
   late String phoneNumber;
 
+
   UsersData(
-      {required this.userName, required this.email, required this.phoneNumber});
+      {required this.userName, required this.email, required this.phoneNumber });
 
   UsersData.fromMap(Map<String, dynamic> json) {
     userName = json['userName'];
     email = json['email'];
     phoneNumber = json['phoneNumber'];
+
   }
 
   Map<String, dynamic> toMap() {
@@ -17,6 +19,7 @@ class UsersData {
     data['userName'] = userName;
     data['email'] = email;
     data['phoneNumber'] = phoneNumber;
+
     return data;
   }
 }

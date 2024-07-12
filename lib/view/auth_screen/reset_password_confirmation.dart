@@ -1,9 +1,7 @@
-
 import 'package:flutter/material.dart';
-
-
-
 class ResetPasswordConfirmation extends StatelessWidget {
+  const ResetPasswordConfirmation({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

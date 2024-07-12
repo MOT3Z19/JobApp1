@@ -32,21 +32,21 @@ class _MyHomePageState extends State<MyHomePage> {
           },
           items:  [
             BottomNavigationBarItem(
-              icon: Image.asset('assets/images/home.png'),
+              icon: Image.asset('assets/images/home_icons/bottomBar_icon/home.svg'),
               activeIcon: Image.asset('assets/images/home_1.png'),
               label: '',
             ),
 
             BottomNavigationBarItem(
-              icon: Image.asset('assets/images/bookmark.png'),
+              icon: Image.asset('assets/images/home_icons/bottomBar_icon/saved.svg'),
               label: '',
             ),
             BottomNavigationBarItem(
-              icon: Image.asset('assets/images/message.png'),
+              icon: Image.asset('assets/images/home_icons/bottomBar_icon/requstes.svg'),
               label: '',
             ),
             BottomNavigationBarItem(
-              icon: Image.asset('assets/images/category.png'),
+              icon: Image.asset('assets/images/home_icons/bottomBar_icon/settings.svg'),
 
               label: '',
             ),
