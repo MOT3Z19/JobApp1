@@ -66,7 +66,6 @@ class SingUpController {
       }return true;
     } on SocketException catch (_) {
       print('not connected');
-      Get.snackbar('خطأ', 'يرجة التأكد من الشبكة');
     }return false;
   }
 

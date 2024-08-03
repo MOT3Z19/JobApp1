@@ -13,12 +13,11 @@ class CourseDetailsPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Banner Image
-                  Image.network(
-                    'https://images.pexels.com/photos/4491461/pexels-photo-4491461.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-                    fit: BoxFit.cover,
-                    width: double.infinity,
-                    height: 200,
-                  ),
+                  Image.asset('assets/images/conf.png', fit: BoxFit.cover,
+                width: double.infinity,
+                height: 200,),
+
+
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Column(

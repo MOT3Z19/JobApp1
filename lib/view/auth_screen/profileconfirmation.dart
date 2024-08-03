@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:job_app/core/constansColor.dart';
-import 'package:job_app/view/home_screens/home_page.dart';
+import 'package:job_app/view/home_screens/UserHome/home_page.dart';
 
 class ProfileConfirmationScreen extends StatelessWidget {
   const ProfileConfirmationScreen({super.key});

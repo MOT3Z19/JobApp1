@@ -10,7 +10,8 @@ import 'package:job_app/view/auth_screen/auth_widgets/data_forms.dart';
 import 'package:job_app/view/auth_screen/profileconfirmation.dart';
 import 'package:job_app/view/auth_screen/sign_up_screen.dart';
 import 'package:job_app/view/auth_screen/verification_screen.dart';
-import 'package:job_app/view/home_screens/home_page.dart';
+import 'package:job_app/view/home_screens/UserHome/bottomBar.dart';
+import 'package:job_app/view/home_screens/UserHome/home_page.dart';
 import '../../controller/authController/sing_up_controller.dart';
 import 'auth_widgets/PasswordField.dart';
 
@@ -82,20 +83,24 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(height: height * .04),
                   ElevatedButton(
                     onPressed: () async {
-                                  bool isSignedIn =
-                                      await _SingUpController.signIn(
-                                    _emailController.text,
-                                    _passwordController.text,
-                                  );
-                                  if (isSignedIn) {
-                                    _sharedPrefController.saveEmail(email: _emailController.text);
-                                    Get.offAll( HomePage());
-                                  } else {
-                                    Get.snackbar(
-                                        'Error', 'Please fill in all fields.');
-                                  }
-
-
+                      if (await _SingUpController.checkConnection() == true) {
+                        bool isSignedIn = await _SingUpController.signIn(
+                          _emailController.text,
+                          _passwordController.text,
+                        );
+                        if (isSignedIn) {
+                          _sharedPrefController.saveEmail(
+                              email: _emailController.text);
+                          Get.offAll(HomePage());
+                        } else {
+                          context.shwoMassege(
+                              message: 'يرجى التحقق من الإيميل أو كلمة المرور.',
+                              error: true);
+                        }
+                      } else {
+                        context.shwoMassege(
+                            message: 'يرجى التأكد من الشبكة.', error: true);
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: primaryColor,
@@ -152,16 +157,15 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       BackContainer(
                           iconButton: IconButton(
-                        onPressed: () {},
-                        icon: SvgPicture.asset(
-                            'assets/images/starts/apple.svg'),
+                        onPressed: () {
+                          Get.offAll(MyHomePage());
+                        },
+                        icon:
+                            SvgPicture.asset('assets/images/starts/apple.svg'),
                       )),
                       BackContainer(
                           iconButton: IconButton(
-                              onPressed: () {
-                                Get.to(VerificationScreen(
-                                    VerificationCode: "VerificationCode"));
-                              },
+                              onPressed: () {},
                               icon: SvgPicture.asset(
                                   'assets/images/starts/google.svg'))),
                       BackContainer(

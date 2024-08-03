@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:job_app/view/auth_screen/sign_in_screen.dart';
 import 'package:job_app/view/outboarding_screen/outbooardingScreen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/constansColor.dart';
+import '../home_screens/UserHome/bottomBar.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -19,7 +20,10 @@ class _SplashScreenState extends State<SplashScreen> {
 
   _navigateToHome() async {
     await Future.delayed(Duration(milliseconds: 3000), () {});
-    Get.offAll(OutboardingScreen());
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String email = prefs.getString('email')??'';
+    email.isEmpty?
+    Get.offAll(OutboardingScreen()):Get.offAll(MyHomePage());
   }
 
   @override

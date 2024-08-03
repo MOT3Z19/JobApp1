@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:job_app/controller/authController/authController.dart';
 import 'package:job_app/controller/authController/sing_up_controller.dart';
 import 'package:job_app/core/constansColor.dart';
 import 'package:job_app/models/usersDataModels/usersData.dart';
@@ -14,7 +15,7 @@ import 'package:job_app/utils/context-extenssion.dart';
 import 'package:job_app/view/auth_screen/profileconfirmation.dart';
 import 'package:job_app/view/auth_screen/sign_in_screen.dart';
 import 'package:job_app/view/auth_screen/verification_screen.dart';
-import 'package:job_app/view/home_screens/home_page.dart';
+import 'package:job_app/view/home_screens/UserHome/home_page.dart';
 import 'auth_widgets/PasswordField.dart';
 import 'auth_widgets/data_forms.dart';
 
@@ -22,8 +23,10 @@ class SignUpScreen extends StatefulWidget {
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
 }
-SharedPrefController _sharedPrefController =Get.put(SharedPrefController());
+
+SharedPrefController _sharedPrefController = Get.put(SharedPrefController());
 SingUpController _SingUpController = Get.put(SingUpController());
+AuthModel _auth = AuthModel();
 final TextEditingController _nameController = TextEditingController();
 final TextEditingController _passwordController = TextEditingController();
 final TextEditingController _emailController = TextEditingController();
@@ -31,7 +34,7 @@ String verificationFailMassage = '';
 String? idCode;
 bool isButtonDisabled = false;
 String? _completeNumber;
-bool connect= false;
+bool connect = false;
 
 class _SignUpScreenState extends State<SignUpScreen> {
   @override
@@ -97,21 +100,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     SizedBox(height: height * .03),
                     ElevatedButton(
-                      onPressed:() async {
-                        await FirebaseAuth.instance.verifyPhoneNumber(
-                          phoneNumber: '+972598037126',
-                          verificationCompleted: (PhoneAuthCredential credential) {},
-                          verificationFailed: (FirebaseAuthException e) {},
-                          codeSent: (String verificationId, int? resendToken) {},
-                          codeAutoRetrievalTimeout: (String verificationId) {},
-                        );
-                             _checkData();
-                              setState(() {
-                                isButtonDisabled =
-                                    true; // تعطيل الزر أثناء تنفيذ العملية
-                              });
-                             await _SingUpController.checkConnection()?
-                             await FirebaseAuth.instance.verifyPhoneNumber(
+                      onPressed: () async {
+                        _checkData();
+                        setState(() {
+                          isButtonDisabled =
+                              true; // تعطيل الزر أثناء تنفيذ العملية
+                        });
+
+                        await _SingUpController.checkConnection()
+                            ? await FirebaseAuth.instance.verifyPhoneNumber(
                                 phoneNumber: _completeNumber,
                                 verificationCompleted:
                                     (PhoneAuthCredential credential) {},
@@ -139,25 +136,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   setState(() {
                                     isButtonDisabled = false;
                                   });
-                                  _SingUpController.signUp(
-                                      UsersData(
-                                        userName: _nameController.text,
-                                        email: _emailController.text,
-                                        phoneNumber: _completeNumber ?? "erorr",
-                                      ),
-                                      _passwordController.text);
-                                  _sharedPrefController.saveEmail(email:_emailController.text);
-                                  Get.offAll(VerificationScreen(VerificationCode: verificationId));
-                                  // VerificationScreen(
-                                  //   VerificationCode: verificationId,
-                                  // )
+
+
+
+                                  Get.offAll(VerificationScreen(
+                                    VerificationCode: verificationId,
+                                    email: _emailController.text,
+                                    password: _passwordController.text,
+                                    phoneNumber: _completeNumber ?? " ",
+                                    userName: _nameController.text,
+                                  ));
                                 },
-                                timeout: const Duration(seconds: 60),
+                                timeout: const Duration(seconds: 120),
                                 codeAutoRetrievalTimeout:
                                     (String verificationId) {},
-                              ) :
-                             context.shwoMassege(message: 'يرجى التأكد من الشبكة', error: true);
-                            },
+                              )
+                            : context.shwoMassege(
+                                message: 'يرجى التأكد من الشبكة', error: true);
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: primaryColor,
                         minimumSize: const Size(double.infinity, 50),
@@ -206,12 +202,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         )),
                         BackContainer(
                             iconButton: IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  _auth.signInWithGoogle();
+                                },
                                 icon: SvgPicture.asset(
                                     'assets/images/starts/google.svg'))),
                         BackContainer(
                             iconButton: IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  _auth.signInWithFacebook();
+                                },
                                 icon: SvgPicture.asset(
                                     'assets/images/starts/facebook.svg'))),
                       ],
@@ -254,7 +254,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
       textDirection: TextDirection.ltr,
       child: IntlPhoneField(
         decoration: InputDecoration(
-          suffixIcon: SvgPicture.asset('assets/images/starts/phone.svg',fit: BoxFit.scaleDown,),
+          suffixIcon: SvgPicture.asset(
+            'assets/images/starts/phone.svg',
+            fit: BoxFit.scaleDown,
+          ),
           counterText: '',
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
@@ -262,7 +265,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ),
         ),
         languageCode: "ar",
-
         onChanged: (phone) {
           setState(() {
             _completeNumber = phone.completeNumber;
@@ -280,7 +282,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   Future<bool> _checkData() async {
-
     if (_emailController.text.isNotEmpty &&
         _nameController.text.isNotEmpty &&
         _passwordController.text.isNotEmpty) {

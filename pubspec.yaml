@@ -45,6 +45,11 @@ dependencies:
   shared_preferences: ^2.2.3
   easy_localization: ^3.0.7
   firebase_storage: ^11.2.5
+  intl: ^0.18.0
+  google_sign_in: ^6.0.0
+  flutter_facebook_auth: ^6.0.0
+
+
 
 dev_dependencies:
   flutter_test:
@@ -78,6 +83,9 @@ flutter:
     - assets/images/home_icons/page_icons/
     - assets/images/home_icons/bottomBar_icon/
     - assets/images/home_icons/drawer_icon/
+    - assets/translations/
+    - assets/images/profile_icons/jobType_icon/
+    - assets/images/profile_icons/jobTime_icon/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

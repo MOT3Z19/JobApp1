@@ -4,25 +4,42 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:job_app/controller/authController/sing_up_controller.dart';
 import 'package:job_app/core/constansColor.dart';
+import 'package:job_app/models/usersDataModels/usersData.dart';
+import 'package:job_app/prefes/sharedPrefController.dart';
 import 'package:job_app/utils/context-extenssion.dart';
 import 'package:job_app/view/auth_screen/profileconfirmation.dart';
 import 'package:job_app/view/auth_screen/sign_up_screen.dart';
-import 'package:job_app/view/home_screens/home_page.dart';
+import 'package:job_app/view/home_screens/UserHome/home_page.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 import 'auth_widgets/codeDegits.dart';
 
 class VerificationScreen extends StatefulWidget {
   final String VerificationCode;
+  final String phoneNumber;
+  final String email;
+  final String userName;
+  final String password;
 
-  VerificationScreen({super.key, required this.VerificationCode});
+  VerificationScreen(
+      {super.key,
+      required this.VerificationCode,
+      required this.phoneNumber,
+      required this.email,
+      required this.userName,
+      required this.password});
 
   @override
   State<VerificationScreen> createState() => _verificationScreenState();
 }
+
+SharedPrefController _sharedPrefController = Get.put(SharedPrefController());
+SingUpController _SingUpController = Get.put(SingUpController());
 
 class _verificationScreenState extends State<VerificationScreen> {
   var onTapRecognizer;
@@ -34,7 +51,7 @@ class _verificationScreenState extends State<VerificationScreen> {
   late StreamController<ErrorAnimationType> errorController;
 
   bool hasError = false;
-  String currentText = "";
+  String? currentText;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   final formKey = GlobalKey<FormState>();
 
@@ -60,7 +77,7 @@ class _verificationScreenState extends State<VerificationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController textEditingController = TextEditingController();
+    TextEditingController _codeEditingController = TextEditingController();
 
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
@@ -91,38 +108,41 @@ class _verificationScreenState extends State<VerificationScreen> {
               style: TextStyle(color: subsTitleColor, fontSize: 17),
             ),
             SizedBox(height: height * .20),
-            PinCodeTextField(
-              length: 6,
-              cursorColor: Colors.black,
-              keyboardType: TextInputType.number,
-              obscureText: false,
-              animationType: AnimationType.fade,
-              pinTheme: PinTheme(
-                activeBorderWidth: .5,
-                selectedColor: primaryColor,
-                inactiveColor: subsTitleColor,
-                disabledBorderWidth: .5,
-                borderWidth: .5,
-                inactiveBorderWidth: .5,
-                activeColor: Colors.black,
-                shape: PinCodeFieldShape.box,
-                borderRadius: BorderRadius.circular(10),
-                fieldHeight: height / 17,
-                fieldWidth: width / 8,
+            Directionality(
+              textDirection: TextDirection.ltr,
+              child: PinCodeTextField(
+                length: 6,
+                cursorColor: Colors.black,
+                keyboardType: TextInputType.number,
+                obscureText: false,
+                animationType: AnimationType.scale,
+                pinTheme: PinTheme(
+                  activeBorderWidth: .5,
+                  selectedColor: primaryColor,
+                  inactiveColor: subsTitleColor,
+                  disabledBorderWidth: .5,
+                  borderWidth: .5,
+                  inactiveBorderWidth: .5,
+                  activeColor: Colors.black,
+                  shape: PinCodeFieldShape.box,
+                  borderRadius: BorderRadius.circular(10),
+                  fieldHeight: height / 17,
+                  fieldWidth: width / 8,
+                ),
+                animationDuration: Duration(milliseconds: 300),
+                errorAnimationController: errorController,
+                controller: _codeEditingController,
+                onCompleted: (v) {
+                  print("Completed");
+                },
+                onChanged: (value) {
+                  print(value);
+                  setState(() {
+                    currentText = value;
+                  });
+                },
+                appContext: context,
               ),
-              animationDuration: Duration(milliseconds: 300),
-              errorAnimationController: errorController,
-              controller: textEditingController,
-              onCompleted: (v) {
-                print("Completed");
-              },
-              onChanged: (value) {
-                print(value);
-                setState(() {
-                  currentText = value;
-                });
-              },
-              appContext: context,
             ),
             Spacer(),
             ElevatedButton(
@@ -134,19 +154,28 @@ class _verificationScreenState extends State<VerificationScreen> {
                 try {
                   PhoneAuthCredential credential = PhoneAuthProvider.credential(
                       verificationId: widget.VerificationCode,
-                      smsCode: currentText);
+                      smsCode: currentText!);
                   await _auth.signInWithCredential(credential);
                   if (_auth.currentUser != null) {
-                    // ignore: use_build_context_synchronously
-                    Navigator.of(context).push(PageRouteBuilder(
-                        pageBuilder: (_, __, ___) =>
-                            const ProfileConfirmationScreen()));
+                    _SingUpController.signUp(
+                        UsersData(
+                          userName: widget.userName,
+                          email: widget.email,
+                          phoneNumber: widget.phoneNumber,
+                        ),
+                        widget.password);
+                    _sharedPrefController.saveEmail(email: widget.email);
+                    Get.offAll(ProfileConfirmationScreen());
+
+                    // Navigator.of(context).push(PageRouteBuilder(
+                    //     pageBuilder: (_, __, ___) =>
+                    //         const ProfileConfirmationScreen()));
                   }
                 } on FirebaseAuthException catch (e) {
                   setState(() {
                     verificationFailMassage = e.code;
                     context.shwoMassege(
-                        message: 'خطأ , يُرجى التحقق الرمز في الرسالة ',
+                        message: 'ً ${e.code}<خطأ , يُرجى التحقق الرمز',
                         error: true);
                   });
                 }

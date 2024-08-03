@@ -27,7 +27,7 @@ class buildJobCard extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding:  EdgeInsets.all(width*.009),
       child: Stack(
         alignment: AlignmentDirectional.center,
         children: [
@@ -86,7 +86,7 @@ class buildJobCard extends StatelessWidget {
                       ),
                       SizedBox(height: 10),
                       Wrap(
-                        spacing: width * .04,
+                        spacing: width * .01,
                         children: [
                           Chip(
                             backgroundColor: submenueColor.withOpacity(1.0),
@@ -111,7 +111,7 @@ class buildJobCard extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: width * .019),
+                      SizedBox(height: width * .03),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [

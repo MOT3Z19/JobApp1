@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:job_app/core/constansColor.dart';
-import 'package:job_app/view/profiles_screens/employeeProfile_screen.dart';
+import 'package:job_app/view/profiles_screens/userProfile_screens/storeData_screen/jobType_screen.dart';
 
 import 'employeeProfileEdit_screen.dart';
 
@@ -65,7 +65,7 @@ class MakeAccount extends StatelessWidget {
             SizedBox(height: height * .03),
             ElevatedButton(
               onPressed: () {
-                Get.to(EmployeeProfileEdit());
+                Get.to(JobTypeScreen());
                 // Button action
               },
               style: ElevatedButton.styleFrom(

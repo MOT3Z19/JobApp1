@@ -166,26 +166,11 @@ class _OnboardingScreenState extends State<OutboardingScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                if (_currentPage < _onboardingData.length - 1)
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsetsDirectional.only(end: 100),
-                      child: TextButton(
-                        onPressed: () {
-                          _controller.jumpToPage(_onboardingData.length - 1);
-                        },
-                        child: Text(
-                          'تخطي',
-                          style: TextStyle(color: Color(0xFF95969D)),
-                        ),
-                      ),
-                    ),
-                  ),
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
                       if (_currentPage == _onboardingData.length - 1) {
-                       Get.offAll(LoginScreen());
+                        Get.offAll(LoginScreen());
                       } else {
                         _controller.nextPage(
                           duration: Duration(milliseconds: 300),
@@ -207,6 +192,22 @@ class _OnboardingScreenState extends State<OutboardingScreen> {
                     ),
                   ),
                 ),
+                if (_currentPage < _onboardingData.length - 1)
+                  Expanded(
+                    child: Padding(
+                      padding:  EdgeInsetsDirectional.only(start: width * 0.2),
+                      child: TextButton(
+                        onPressed: () {
+                          _controller.jumpToPage(_onboardingData.length - 1);
+                        },
+                        child: Text(
+                          'تخطي',
+                          style: TextStyle(color: Color(0xFF95969D)),
+                        ),
+                      ),
+                    ),
+                  ),
+
               ],
             ),
           ),
