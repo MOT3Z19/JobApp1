@@ -4,6 +4,11 @@ import 'package:get/get.dart';
 import 'package:job_app/controller/authController/sing_up_controller.dart';
 import 'package:job_app/core/constansColor.dart';
 import 'package:job_app/view/auth_screen/sign_in_screen.dart';
+import 'package:job_app/view/home_screens/companyHome/compnrHome_screen.dart';
+import 'package:job_app/view/profiles_screens/companyProfile_screen/companyProfile.dart';
+import 'package:job_app/view/profiles_screens/serviceProvider_screen/serviceProviderProfile.dart';
+import 'package:job_app/view/profiles_screens/userProfile_screens/storeData_screen/jobPersonalScreen.dart';
+import 'package:job_app/view/profiles_screens/userProfile_screens/viewUserProfile_screen/employeeProfile_screen.dart';
 import 'package:job_app/view/profiles_screens/userProfile_screens/viewUserProfile_screen/makeAccount_screen.dart';
 import '../../profiles_screens/userProfile_screens/viewUserProfile_screen/jobsRequests_screen.dart';
 import '../home_widgets/CourseCard.dart';
@@ -28,165 +33,146 @@ class _HomePageState extends State<HomePage> {
     double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      // drawer: Drawer(
-      //     elevation: 3,
-      //     width: width / 1.3,
-      //     child: ListView(
-      //       padding: EdgeInsetsDirectional.symmetric(
-      //           vertical: 0.1, horizontal: 10),
-      //       children: <Widget>[
-      //         Builder(builder: (context) {
-      //           return IconButton(
-      //               padding: EdgeInsetsDirectional.only(top: 1),
-      //               onPressed: () {
-      //                 Scaffold.of(context).closeDrawer();
-      //               },
-      //               icon: Icon(Icons.close, color: subsTitleColor),
-      //               alignment: AlignmentDirectional.bottomStart);
-      //         }),
-      //         CircleAvatar(
-      //             radius: width / 9,
-      //             backgroundImage: AssetImage(
-      //                 'assets/images/outBoarding_Images/out4.jpg')),
-      //         SizedBox(height: 10),
-      //         Align(
-      //           alignment: AlignmentDirectional.center,
-      //           child: Text('ميسرة نصار',
-      //               style:
-      //                   TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-      //         ),
-      //         SizedBox(height: height * .009),
-      //         Row(
-      //           mainAxisAlignment: MainAxisAlignment.center,
-      //           children: [
-      //             SvgPicture.asset(
-      //                 'assets/images/home_icons/drawer_icon/check.svg'),
-      //             Text('مطور تطبيقات',
-      //                 style: TextStyle(
-      //                     fontWeight: FontWeight.w500,
-      //                     fontSize: 16,
-      //                     color: subsTitleColor)),
-      //           ],
-      //         ),
-      //         InkWell(
-      //           radius: 10,
-      //           onTap: () {},
-      //           child: Text(
-      //             textAlign: TextAlign.center,
-      //             'تبديل الحساب',
-      //             style: TextStyle(color: Colors.blueAccent, fontSize: 15),
-      //           ),
-      //         ),
-      //         InkWell(
-      //           onTap: () {
-      //
-      //
-      //             Get.to(MakeAccount());
-      //           },
-      //           child: ListTile(
-      //             leading: SvgPicture.asset(
-      //                 'assets/images/home_icons/drawer_icon/info.svg'),
-      //             title: Text('الملف الشخصي'),
-      //           ),
-      //         ),
-      //         InkWell(
-      //           onTap: () {},
-      //           child: ListTile(
-      //             leading: SvgPicture.asset(
-      //                 'assets/images/home_icons/drawer_icon/company.svg'),
-      //             title: Text('بروفايل شركات'),
-      //           ),
-      //         ),
-      //         InkWell(
-      //           onTap: () {
-      //             Get.to(JobRequests());
-      //           },
-      //           child: ListTile(
-      //             leading: SvgPicture.asset(
-      //                 'assets/images/home_icons/drawer_icon/requests.svg'),
-      //             title: Text('طلبات التوظيف'),
-      //           ),
-      //         ),
-      //         RadioListTile(
-      //           value: true,
-      //           groupValue: bool,
-      //           onChanged: (printError) {},
-      //           title: Text('الوضع الليلي'),
-      //         ),
-      //         InkWell(
-      //           onTap: () {},
-      //           child: ListTile(
-      //             leading: SvgPicture.asset(
-      //                 'assets/images/home_icons/drawer_icon/share.svg'),
-      //             title: Text('مشاركة االتطبيق'),
-      //           ),
-      //         ),
-      //         InkWell(
-      //           onTap: () {},
-      //           child: ListTile(
-      //             leading: SvgPicture.asset(
-      //                 'assets/images/home_icons/drawer_icon/reviw.svg'),
-      //             title: Text('تقييم التطبيق'),
-      //           ),
-      //         ),
-      //         InkWell(
-      //           onTap: () {},
-      //           child: ListTile(
-      //             leading: Image.asset(
-      //               width: 30,
-      //               height: 30,
-      //               'assets/images/home_icons/drawer_icon/volunteering.png',
-      //             ),
-      //             title: Text('الداعمون و المؤسسون'),
-      //           ),
-      //         ),
-      //         InkWell(
-      //           onTap: () {},
-      //           child: ListTile(
-      //             leading: SvgPicture.asset(
-      //                 'assets/images/home_icons/drawer_icon/polisy.svg'),
-      //             title: Text('سياسة الخصوصية'),
-      //           ),
-      //         ),
-      //         InkWell(
-      //           onTap: () {},
-      //           child: ListTile(
-      //             leading: SvgPicture.asset(
-      //                 'assets/images/home_icons/drawer_icon/concat.svg'),
-      //             title: Text('التواصل معنا'),
-      //           ),
-      //         ),
-      //         SizedBox(
-      //           height: height * .01,
-      //         ),
-      //         InkWell(
-      //           onTap: () {
-      //             _confirmLogOut();
-      //           },
-      //           child: Row(
-      //             mainAxisAlignment: MainAxisAlignment.end,
-      //             children: [
-      //               SvgPicture.asset(
-      //                   'assets/images/home_icons/drawer_icon/logout.svg'),
-      //               Text(
-      //                 '  تسجيل الخروج   ',
-      //                 style: TextStyle(
-      //                     color: Colors.red,
-      //                     fontWeight: FontWeight.bold,
-      //                     fontSize: 16),
-      //               ),
-      //             ],
-      //           ),
-      //         ),
-      //         SizedBox(
-      //           height: height * .02,
-      //         )
-      //       ],
-      //     )),
-      backgroundColor: Color(0xFFF5F5F5),
+      drawer: Drawer(
+          elevation: 3,
+          width: width / 1.3,
+          child: ListView(
+            padding: EdgeInsetsDirectional.symmetric(
+                vertical: 0.1, horizontal: 10),
+            children: <Widget>[
+              Builder(builder: (context) {
+                return IconButton(
+                    padding: EdgeInsetsDirectional.only(top: 1),
+                    onPressed: () {
+                      Scaffold.of(context).closeDrawer();
+                    },
+                    icon: Icon(Icons.close, color: subsTitleColor),
+                    alignment: AlignmentDirectional.bottomStart);
+              }),
+              CircleAvatar(
+                  radius: width / 9,
+                  backgroundImage: AssetImage(
+                      'assets/images/outBoarding_Images/out4.jpg')),
+              SizedBox(height: 10),
+              Align(
+                alignment: AlignmentDirectional.center,
+                child: Text('ميسرة نصار',
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+              ),
+              SizedBox(height: height * .009),
+
+              InkWell(
+                onTap: () {
+                  Get.to(JobPersonalScreen());
+                },
+                child: ListTile(
+                  leading: SvgPicture.asset(
+                      'assets/images/home_icons/drawer_icon/info.svg'),
+                  title: Text('الملف الشخصي'),
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  Get.to(CopmanyProfileScreen());
+                },
+                child: ListTile(
+                  leading: SvgPicture.asset(
+                      'assets/images/home_icons/drawer_icon/companyPro.svg'),
+                  title: Text('بروفايل شركات'),
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  Get.to(ServiceProviderProfile());
+                },
+                child: ListTile(
+                  leading: SvgPicture.asset(
+                      'assets/images/home_icons/drawer_icon/serviceProvider.svg'),
+                  title: Text('بروفايل مزود الخدمة'),
+                ),
+              ),
+              RadioListTile(
+                value: true,
+                groupValue: bool,
+                onChanged: (printError) {},
+                title: Text('الوضع الليلي'),
+              ),
+              InkWell(
+                onTap: () {
+                  Get.to(EmployeeProfile());
+                },
+                child: ListTile(
+                  leading: SvgPicture.asset(
+                      'assets/images/home_icons/drawer_icon/share.svg'),
+                  title: Text('مشاركة االتطبيق'),
+                ),
+              ),
+              InkWell(
+                onTap: () {},
+                child: ListTile(
+                  leading: SvgPicture.asset(
+                      'assets/images/home_icons/drawer_icon/reviw.svg'),
+                  title: Text('تقييم التطبيق'),
+                ),
+              ),
+              InkWell(
+                onTap: () {},
+                child: ListTile(
+                  leading: Image.asset(
+                    width: 30,
+                    height: 30,
+                    'assets/images/home_icons/drawer_icon/volunteering.png',
+                  ),
+                  title: Text('الداعمون و المؤسسون'),
+                ),
+              ),
+              InkWell(
+                onTap: () {},
+                child: ListTile(
+                  leading: SvgPicture.asset(
+                      'assets/images/home_icons/drawer_icon/polisy.svg'),
+                  title: Text('سياسة الخصوصية'),
+                ),
+              ),
+              InkWell(
+                onTap: () {},
+                child: ListTile(
+                  leading: SvgPicture.asset(
+                      'assets/images/home_icons/drawer_icon/concat.svg'),
+                  title: Text('التواصل معنا'),
+                ),
+              ),
+              SizedBox(
+                height: height * .01,
+              ),
+              InkWell(
+                onTap: () {
+                  _confirmLogOut();
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    SvgPicture.asset(
+                        'assets/images/home_icons/drawer_icon/logout.svg'),
+                    Text(
+                      '  تسجيل الخروج   ',
+                      style: TextStyle(
+                          color: Colors.red,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: height * .02,
+              )
+            ],
+          )),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: width*.05),
+          padding: EdgeInsets.symmetric(horizontal: width*.03),
           child: SingleChildScrollView(
             physics: ScrollPhysics(parent: BouncingScrollPhysics()),
             child: Column(
@@ -249,7 +235,9 @@ class _HomePageState extends State<HomePage> {
                               color: backSearchColor),
                         ),
                         IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Get.to(CompanyHomeScreen());
+                            },
                             icon: SvgPicture.asset(
                               'assets/images/home_icons/page_icons/filter.svg',
                               width: double.infinity,
@@ -257,6 +245,8 @@ class _HomePageState extends State<HomePage> {
                             )),
                       ],
                     ),
+                    SizedBox(width: width*.02),
+
                     Expanded(
                       child: TextField(
                         textAlign: TextAlign.start,
@@ -293,7 +283,7 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
                 Container(
-                    height: height / 4,
+                    height: height / 4.1,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(17),
                     ),

@@ -1,53 +1,99 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
-import 'package:job_app/controller/firebaseControllers/user/jobTypeController.dart';
 import 'package:job_app/core/constansColor.dart';
+import 'package:job_app/view/profiles_screens/userProfile_screens/storeData_screen/edcution_screen.dart';
 
-import 'edcution_screen.dart'; // Add this import for date formatting
-
-class ExperienceScreen extends StatelessWidget {
+import '../../../../controller/firebaseControllers/user/jobTypeController.dart';
+import '../../../../models/usersDataModels/ExperienceModel.dart';
+class ExperienceScreen extends StatefulWidget {
+  final String fullname;
+  final String bornPlace;
+  final String bornDate;
+  final String stutasMarr;
+  final String phoneNumber;
+  final String email;
+  final String money;
+  final String gender;
+  final String OpentoWork;
+  final String OntheWork;
+  final String WorkPlace;
+  final String Transfar;
+  final String Language;
+  final String Skills;
+  final String showedProfile;
   final List<JobType> selectedJobTypes;
   final List<String> selectedJobTimes;
 
-  ExperienceScreen({required this.selectedJobTypes, required this.selectedJobTimes});
+  ExperienceScreen({
+    required this.fullname,
+    required this.bornPlace,
+    required this.bornDate,
+    required this.stutasMarr,
+    required this.phoneNumber,
+    required this.email,
+    required this.money,
+    required this.gender,
+    required this.OpentoWork,
+    required this.OntheWork,
+    required this.WorkPlace,
+    required this.Transfar,
+    required this.Language,
+    required this.Skills,
+    required this.showedProfile,
+    required this.selectedJobTypes,
+    required this.selectedJobTimes,
+  });
 
+  @override
+  _ExperienceScreenState createState() => _ExperienceScreenState();
+}
+
+class _ExperienceScreenState extends State<ExperienceScreen> {
   final TextEditingController jobTitleController = TextEditingController();
   final TextEditingController companyNameController = TextEditingController();
   final TextEditingController startDateController = TextEditingController();
   final TextEditingController endDateController = TextEditingController();
-  String? selectedJobNature;
 
-  void _navigateToNextScreen() {
+  List<Experience> experiences = [];
+  final List<Map<String, dynamic>> _experienceList = [
+    {
+      'jobTitleController': TextEditingController(),
+      'companyNameController': TextEditingController(),
+      'startDateController': TextEditingController(),
+      'endDateController': TextEditingController(),
+    },
+  ];
 
-    String jobTitle = jobTitleController.text;
-    String companyName = companyNameController.text;
-    String startDate = startDateController.text;
-    String endDate = endDateController.text;
-    String jobNature = selectedJobNature ?? '';
-    if (jobTitle.isEmpty || companyName.isEmpty || startDate.isEmpty || endDate.isEmpty || jobNature.isEmpty) {
-      Get.snackbar(
-        'خطأ',
-        'الرجاء تعبئة جميع الحقول',
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
-    } else {
-      Get.to(() => EducationScreen(
-        selectedJobTypes: selectedJobTypes,
-        selectedJobTimes: selectedJobTimes,
-        jobTitle: jobTitle,
-        companyName: companyName,
-        startDate: startDate,
-        endDate: endDate,
-        jobNature: jobNature,
-      ));
-      print(selectedJobTypes[0]);
-
-    }
+  void _addNewExperience() {
+    setState(() {
+      _experienceList.add({
+        'jobTitleController': TextEditingController(),
+        'companyNameController': TextEditingController(),
+        'startDateController': TextEditingController(),
+        'endDateController': TextEditingController(),
+      });
+    });
   }
 
-  Future<void> _selectDate(BuildContext context, TextEditingController controller) async {
+  void _addExperience() {
+    setState(() {
+      experiences.add(
+        Experience(
+          jobTitle: jobTitleController.text,
+          companyName: companyNameController.text,
+          startDate: startDateController.text,
+          endDate: endDateController.text,
+        ),
+      );
+      jobTitleController.clear();
+      companyNameController.clear();
+      startDateController.clear();
+      endDateController.clear();
+    });
+  }
+  Future<void> _selectDate(
+      BuildContext context, TextEditingController controller) async {
     DateTime? pickedDate = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -59,6 +105,39 @@ class ExperienceScreen extends StatelessWidget {
     }
   }
 
+
+  void _navigateToNextScreen() {
+    if (experiences.isEmpty) {
+      Get.snackbar(
+        'خطأ',
+        'الرجاء إضافة خبرات.',
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    } else {
+      Get.to(() => EducationScreen(
+        fullname: widget.fullname,
+        bornPlace: widget.bornPlace,
+        bornDate: widget.bornDate,
+        stutasMarr: widget.stutasMarr,
+        phoneNumber: widget.phoneNumber,
+        email: widget.email,
+        money: widget.money,
+        gender: widget.gender,
+        OpentoWork: widget.OpentoWork,
+        OntheWork: widget.OntheWork,
+        WorkPlace: widget.WorkPlace,
+        Transfar: widget.Transfar,
+        Language: widget.Language,
+        Skills: widget.Skills,
+        showedProfile: widget.showedProfile,
+        selectedJobTypes: widget.selectedJobTypes,
+        selectedJobTimes: widget.selectedJobTimes,
+        experiences: experiences,
+      ));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -67,12 +146,14 @@ class ExperienceScreen extends StatelessWidget {
     final double padding = screenWidth * 0.04;
     final double fontSizeTitle = screenWidth * 0.08;
     final double fontSizeSubtitle = screenWidth * 0.05;
-    final double horizontalPadding = screenWidth * 0.04;
+    final double containerHeight = screenHeight * 0.15;
     final double buttonHeight = screenHeight * 0.07;
+    final double horizontalPadding = screenWidth * 0.04;
 
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.symmetric( horizontal: horizontalPadding, vertical: screenWidth * 0.1),
+        padding: EdgeInsets.symmetric(
+            horizontal: horizontalPadding, vertical: screenWidth * 0.1),
         child: Column(
           children: [
             Align(
@@ -84,7 +165,6 @@ class ExperienceScreen extends StatelessWidget {
                       'تخطي',
                       style: TextStyle(color: subsTitleColor),
                     ))),
-
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
@@ -116,102 +196,90 @@ class ExperienceScreen extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: padding),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Color(0xFFFFFFFF),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: TextField(
-                        style: TextStyle(fontFamily: 'Almarai'),
-
-                        controller: jobTitleController,
-                        decoration: InputDecoration(
-                          hintText: '  المسمى الوظيفي . . . ',
-                          border: InputBorder.none,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: padding),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Color(0xFFFFFFFF),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: TextField(
-                        style: TextStyle(fontFamily: 'Almarai'),
-                        controller: companyNameController,
-                        decoration: InputDecoration(
-                          hintText: '  اسم الشركة التي عملت بها . . . ',
-                          border: InputBorder.none,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: padding),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Color(0xFFFFFFFF),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: TextField(
-                        style: TextStyle(fontFamily: 'Almarai'),
-                        controller: startDateController,
-                        decoration: InputDecoration(
-                          hintText: '  تاريخ بدء العمل',
-                          border: InputBorder.none,
-                        ),
-                        readOnly: true,
-                        onTap: () => _selectDate(context, startDateController),
-                      ),
-                    ),
-                    SizedBox(height: padding),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Color(0xFFFFFFFF),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: TextField(
-                        style: TextStyle(fontFamily: 'Almarai'),
-                        controller: endDateController,
-                        decoration: InputDecoration(
-                          hintText: '  تاريخ نهاية العمل',
-                          border: InputBorder.none,
-                        ),
-                        readOnly: true,
-                        onTap: () => _selectDate(context, endDateController),
-                      ),
-                    ),
-                    SizedBox(height: padding),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Color(0xFFFFFFFF),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: DropdownButtonFormField<String>(
-                        borderRadius: BorderRadius.circular(15),
-                        decoration: InputDecoration(
-                          labelText: '  طبيعة الدوام . . . ',
-                          border: InputBorder.none,
-                        ),
-
-                        items: ['فريلانسر', 'عقد عمل', 'دوام جزئي', 'دوام كامل',].map((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value,style: TextStyle(fontSize: 17,fontFamily: 'Almarai'),),
-                          );
-                        }).toList(),
-                        onChanged: (String? newValue) {
-                          selectedJobNature = newValue;
-                        },
-                      ),
-                    ),
+                    ..._experienceList.map((experience) {
+                      return Column(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Color(0xFFFFFFFF),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: TextField(
+                              style: TextStyle(fontFamily: 'Almarai'),
+                              controller: experience['jobTitleController'],
+                              decoration: InputDecoration(
+                                hintText: '  المسمى الوظيفي . . . ',
+                                border: InputBorder.none,
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: padding),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Color(0xFFFFFFFF),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: TextField(
+                              style: TextStyle(fontFamily: 'Almarai'),
+                              controller: experience['companyNameController'],
+                              decoration: InputDecoration(
+                                hintText: '  اسم الشركة التي عملت بها . . . ',
+                                border: InputBorder.none,
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: padding),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Color(0xFFFFFFFF),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: TextField(
+                              style: TextStyle(fontFamily: 'Almarai'),
+                              controller: experience['startDateController'],
+                              decoration: InputDecoration(
+                                hintText: '  تاريخ بدء العمل',
+                                border: InputBorder.none,
+                              ),
+                              readOnly: true,
+                              onTap: () => _selectDate(
+                                  context, experience['startDateController']!),
+                            ),
+                          ),
+                          SizedBox(height: padding),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Color(0xFFFFFFFF),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: TextField(
+                              style: TextStyle(fontFamily: 'Almarai'),
+                              controller: experience['endDateController'],
+                              decoration: InputDecoration(
+                                hintText: '  تاريخ نهاية العمل',
+                                border: InputBorder.none,
+                              ),
+                              readOnly: true,
+                              onTap: () => _selectDate(
+                                  context, experience['endDateController']!),
+                            ),
+                          ),
+                          SizedBox(height: padding),
+                        ],
+                      );
+                    }).toList(),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        _addExperience();
+                        _addNewExperience();
+                      },
                       child: ListTile(
                         leading: Icon(Icons.add, color: Colors.black),
-                        title: Text('أضف خبرات اخرى ',style: TextStyle(fontFamily: 'Almarai')),
+                        title: Text('أضف خبرات اخرى ',
+                            style: TextStyle(fontFamily: 'Almarai')),
                       ),
                     ),
-                    SizedBox(height: screenHeight*.09),
+                    SizedBox(height: screenHeight * .09),
                     ElevatedButton(
                       onPressed: _navigateToNextScreen,
                       child: Text(
@@ -231,7 +299,6 @@ class ExperienceScreen extends StatelessWidget {
                 ),
               ),
             ),
-
           ],
         ),
       ),

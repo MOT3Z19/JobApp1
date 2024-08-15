@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:job_app/core/constansColor.dart';
 import 'package:job_app/view/splash_screen/splashScreen.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'firebase_options.dart';
@@ -29,12 +30,15 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       theme: ThemeData(
           appBarTheme: AppBarTheme(
+              centerTitle: true,
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              iconTheme: IconThemeData(color: Colors.black),
               titleTextStyle: TextStyle(
                   fontFamily: 'Almarai',
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
                   color: Colors.black)),
-
           inputDecorationTheme: InputDecorationTheme(
               hintStyle: TextStyle(
                 fontFamily: 'Almarai',
@@ -44,7 +48,6 @@ class MyApp extends StatelessWidget {
                 fontFamily: 'Almarai',
                 fontSize: 14,
               )),
-
           backgroundColor: Colors.red,
           textTheme: TextTheme(
             bodyText1: TextStyle(
@@ -66,7 +69,10 @@ class MyApp extends StatelessWidget {
           ),
           elevatedButtonTheme: ElevatedButtonThemeData(
               style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF2C557D)))),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  backgroundColor: primaryColor))),
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,

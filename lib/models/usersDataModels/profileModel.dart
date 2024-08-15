@@ -11,7 +11,7 @@ class Profile {
   final String college;
   final String graduationDate;
   final String briefDescription;
-  final String cvFileUrl; 
+  final String cvFileUrl;
 
   Profile({
     required this.selectedJobTypes,

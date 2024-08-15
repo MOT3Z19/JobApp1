@@ -2,11 +2,44 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:job_app/controller/firebaseControllers/user/jobTypeController.dart';
-import 'package:job_app/core/constansColor.dart';
 
+import '../../../../core/constansColor.dart';
 import 'jobTime_screen.dart';
 
 class JobTypeScreen extends StatelessWidget {
+  final String fullname;
+  final String bornPlace;
+  final String bornDate;
+  final String stutasMarr;
+  final String phoneNumber;
+  final String email;
+  final String money;
+  final String gender;
+  final String OpentoWork;
+  final String OntheWork;
+  final String WorkPlace;
+  final String Transfar;
+  final String Language;
+  final String Skills;
+  final String showedProfile;
+  JobTypeScreen({
+    required this.fullname,
+    required this.bornPlace,
+    required this.bornDate,
+    required this.stutasMarr,
+    required this.phoneNumber,
+    required this.email,
+    required this.money,
+    required this.gender,
+    required this.OpentoWork,
+    required this.OntheWork,
+    required this.WorkPlace,
+    required this.Transfar,
+    required this.Language,
+    required this.Skills,
+    required this.showedProfile,
+  });
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -38,7 +71,24 @@ class JobTypeScreen extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) =>
-                JobTimeScreen(selectedJobTypes: selectedJobTypes),
+                JobTimeScreen(
+                    fullname: fullname,
+                    bornPlace: bornPlace,
+                    bornDate: bornDate,
+                    stutasMarr: stutasMarr,
+                    phoneNumber: phoneNumber,
+                    email: email,
+                    money: money,
+                    gender: gender,
+                    OpentoWork: OpentoWork,
+                    OntheWork: OntheWork,
+                    WorkPlace: WorkPlace,
+                    Transfar: Transfar,
+                    Language: Language,
+                    Skills: Skills,
+                    showedProfile: showedProfile,
+                    selectedJobTypes: selectedJobTypes)
+            ,
           ),
         );
       }

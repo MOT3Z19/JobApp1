@@ -3,30 +3,51 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:job_app/controller/firebaseControllers/user/jobTypeController.dart';
 import 'package:job_app/controller/firebaseControllers/user/jobTimeController.dart';
 import 'package:job_app/core/constansColor.dart';
 
+import '../../../../controller/firebaseControllers/user/jobTypeController.dart';
 import 'jobExpernce_screen.dart';
 
-class JobTimeScreen extends StatefulWidget {
+class JobTimeScreen extends StatelessWidget {
+  final String fullname;
+  final String bornPlace;
+  final String bornDate;
+  final String stutasMarr;
+  final String phoneNumber;
+  final String email;
+  final String money;
+  final String gender;
+  final String OpentoWork;
+  final String OntheWork;
+  final String WorkPlace;
+  final String Transfar;
+  final String Language;
+  final String Skills;
+  final String showedProfile;
   final List<JobType> selectedJobTypes;
-  JobTimeScreen({required this.selectedJobTypes});
 
-  @override
-  State<JobTimeScreen> createState() => _JobTimeScreenState();
-}
-
-class _JobTimeScreenState extends State<JobTimeScreen> {
+  final JobTimeController jobTimeController = Get.put(JobTimeController());
+  JobTimeScreen({
+    required this.fullname,
+    required this.bornPlace,
+    required this.bornDate,
+    required this.stutasMarr,
+    required this.phoneNumber,
+    required this.email,
+    required this.money,
+    required this.gender,
+    required this.OpentoWork,
+    required this.OntheWork,
+    required this.WorkPlace,
+    required this.Transfar,
+    required this.Language,
+    required this.Skills,
+    required this.showedProfile,
+    required this.selectedJobTypes
+  });
 
   // Map<String, String> jobTimeImages = {
-  //   'دوام كامل': 'assets/images/profile_icons/jobTime_icon/full.jpg',
-  //   'دوام جزئي': 'assets/images/profile_icons/jobTime_icon/half.jpg',
-  //   'عقد عمل': 'assets/images/profile_icons/jobTime_icon/face.jpg',
-  //   'تدريب عملي': 'assets/images/profile_icons/jobTime_icon/work.jpg',
-  //   'فريلانسر': 'assets/images/profile_icons/jobTime_icon/freelancer.jpg',
-  //   'أعمال حرة': 'assets/images/profile_icons/jobTime_icon/others.jpg',
-  // };
   final JobTimeController controller = Get.put(JobTimeController());
 
   @override
@@ -113,8 +134,7 @@ class _JobTimeScreenState extends State<JobTimeScreen> {
                                   value: jobTime.isSelected,
                                   activeColor: Color(0xFF5386E4),
                                   onChanged: (bool? value) {
-                                    controller.toggleJobTimeSelection(
-                                        index, value!);
+                                    controller.toggleJobTimeSelection(jobTime);
                                   },
                                 ),
                               ],
@@ -139,10 +159,25 @@ class _JobTimeScreenState extends State<JobTimeScreen> {
                     );
                   } else {
                     Get.to(() => ExperienceScreen(
-                      selectedJobTypes: widget.selectedJobTypes,
+                      fullname: fullname,
+                      bornPlace: bornPlace,
+                      bornDate: bornDate,
+                      stutasMarr: stutasMarr,
+                      phoneNumber: phoneNumber,
+                      email: email,
+                      money: money,
+                      gender: gender,
+                      OpentoWork: OpentoWork,
+                      OntheWork: OntheWork,
+                      WorkPlace: WorkPlace,
+                      Transfar: Transfar,
+                      Language: Language,
+                      Skills: Skills,
+                      showedProfile: showedProfile,
+                      selectedJobTypes: selectedJobTypes,
                       selectedJobTimes: selectedJobTimes,
                     ));
-                  }
+                   }
                 },
                 child: Text(
                   'التالي',

@@ -3,42 +3,68 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:job_app/controller/firebaseControllers/user/firestoreProfilesController.dart';
-import 'package:job_app/controller/firebaseControllers/user/jobTypeController.dart';
-import 'package:job_app/core/constansColor.dart';
-import 'package:job_app/models/usersDataModels/profileModel.dart';
-
-import 'moreType_screen.dart';
+import 'package:job_app/controller/firebaseControllers/user/user_profile_controller.dart';
+import '../../../../controller/firebaseControllers/user/jobTypeController.dart';
+import '../../../../core/constansColor.dart';
+import '../../../../models/usersDataModels/ExperienceModel.dart';
+import '../../../../models/usersDataModels/UserProfileModel.dart';
+import 'portofileScreen.dart';
 
 class ProfileDataScreen extends StatelessWidget {
+  final String fullname;
+  final String bornPlace;
+  final String bornDate;
+  final String stutasMarr;
+  final String phoneNumber;
+  final String email;
+  final String money;
+  final String gender;
+  final String OpentoWork;
+  final String OntheWork;
+  final String WorkPlace;
+  final String Transfar;
+  final String Language;
+  final String Skills;
+  final String showedProfile;
   final List<JobType> selectedJobTypes;
   final List<String> selectedJobTimes;
-  final String jobTitle;
-  final String companyName;
-  final String startDate;
-  final String endDate;
-  final String jobNature;
+  final List<Experience> experiences;
   final String educationLevel;
   final String university;
   final String college;
   final String graduationDate;
 
   ProfileDataScreen({
+    required this.fullname,
+    required this.bornPlace,
+    required this.bornDate,
+    required this.stutasMarr,
+    required this.phoneNumber,
+    required this.email,
+    required this.money,
+    required this.gender,
+    required this.OpentoWork,
+    required this.OntheWork,
+    required this.WorkPlace,
+    required this.Transfar,
+    required this.Language,
+    required this.Skills,
+    required this.showedProfile,
     required this.selectedJobTypes,
     required this.selectedJobTimes,
-    required this.jobTitle,
-    required this.companyName,
-    required this.startDate,
-    required this.endDate,
-    required this.jobNature,
+    required this.experiences,
     required this.educationLevel,
     required this.university,
     required this.college,
     required this.graduationDate,
   });
 
-  final TextEditingController briefDescriptionController =
-      TextEditingController();
+  final TextEditingController coursesNameController = TextEditingController();
+  final TextEditingController coursesTypeController = TextEditingController();
+  final TextEditingController coursesAgncyController = TextEditingController();
+  final TextEditingController coursesTimeController = TextEditingController();
+
+  final ProfileDataController controller = Get.put(ProfileDataController());
 
   @override
   Widget build(BuildContext context) {
@@ -89,36 +115,10 @@ class ProfileDataScreen extends StatelessWidget {
                           fontSize: fontSizeSubtitle,
                           fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(height: padding),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Color(0xFFFFFFFF),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: padding),
-                        child: DropdownButtonFormField<String>(
-                          decoration: InputDecoration(
-                            labelText: 'التحصيل الدراسي',
-                            border: InputBorder.none,
-                          ),
-                          items: ['الثانوية', 'بكالوريس', 'ماجستير', 'دكتوراه']
-                              .map((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(
-                                value,
-                                style: TextStyle(fontFamily: 'Almarai'),
-                              ),
-                            );
-                          }).toList(),
-                          onChanged: (String? newValue) {},
-                        ),
-                      ),
-                    ),
+
                     SizedBox(height: padding),
                     Text(
-                      'النبذة المختصرة',
+                      'الشهادات والدورات',
                       style: TextStyle(
                           fontSize: fontSizeSubtitle * 0.8,
                           fontWeight: FontWeight.bold),
@@ -133,9 +133,9 @@ class ProfileDataScreen extends StatelessWidget {
                         padding: EdgeInsets.symmetric(horizontal: padding),
                         child: TextField(
                           style: TextStyle(fontFamily: 'Almarai'),
-                          maxLines: 3,
+                          controller: coursesNameController,
                           decoration: InputDecoration(
-                            hintText: 'النبذة المختصرة',
+                            hintText: 'اسم الدورة / الشهادة',
                             border: InputBorder.none,
                           ),
                         ),
@@ -143,94 +143,129 @@ class ProfileDataScreen extends StatelessWidget {
                     ),
                     SizedBox(height: padding),
                     Container(
-                      padding: EdgeInsets.all(padding),
                       decoration: BoxDecoration(
-                        border: Border.all(color: Colors.blue),
-                        borderRadius: BorderRadius.circular(8),
+                        color: Color(0xFFFFFFFF),
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            'قم برفع ملف السيرة الذاتية الخاص بك لتحصل على وظيفة مطابقة لعملك...',
-                            style: TextStyle(fontSize: fontSizeSubtitle * 0.8),
-                            textAlign: TextAlign.center,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: padding),
+                        child: TextField(
+                          style: TextStyle(fontFamily: 'Almarai'),
+                          controller: coursesTypeController,
+                          decoration: InputDecoration(
+                            hintText: 'الاختصاص',
+                            border: InputBorder.none,
                           ),
-                          SizedBox(height: padding),
-                          Text(
-                            'صيغ الملفات DOC, pdf, word',
-                            style: TextStyle(
-                                fontSize: fontSizeSubtitle * 0.7,
-                                color: Colors.grey),
-                          ),
-                          SizedBox(height: padding),
-                          ElevatedButton(
-
-                            onPressed: () async {},
-                            child: Text(
-                              'اختر من الملفات',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: primaryColor,
-                              minimumSize: Size(double.infinity, buttonHeight),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                            ),
-                          ),
-
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: screenHeight*.15),
-                    ElevatedButton(
-                      child: Text(
-                        'التالي',
-                        style: TextStyle(
-                            color: Color(0xFFFFFFFF), fontSize: fontSizeSubtitle),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: primaryColor,
-                        minimumSize: Size(double.infinity, buttonHeight),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                      onPressed: () async {
-                        Get.to(MoretypeScreen());
-                        if (cvFile != null) {
-                          String cvFileUrl = await cvFile.path;
-                          Profile profile = Profile(
-                            selectedJobTypes:
-                            selectedJobTypes.map((type) => type.name).toList(),
-                            selectedJobTimes: selectedJobTimes,
-                            jobTitle: jobTitle,
-                            companyName: companyName,
-                            startDate: startDate,
-                            endDate: endDate,
-                            jobNature: jobNature,
-                            educationLevel: educationLevel,
-                            university: university,
-                            college: college,
-                            graduationDate: graduationDate,
-                            briefDescription: briefDescriptionController.text,
-                            cvFileUrl: cvFileUrl,
-                          );
-
-                          Get.find<FirestoreController>().saveProfile(profile);
-
-
-                        }
-                      },
-
-
                     ),
+                    SizedBox(height: padding),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Color(0xFFFFFFFF),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: padding),
+                        child: TextField(
+                          style: TextStyle(fontFamily: 'Almarai'),
+                          controller: coursesAgncyController,
+                          decoration: InputDecoration(
+                            hintText: 'الجهة المنفذة',
+                            border: InputBorder.none,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: padding),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Color(0xFFFFFFFF),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: padding),
+                        child: TextField(
+                          style: TextStyle(fontFamily: 'Almarai'),
+                          controller: coursesTimeController,
+                          decoration: InputDecoration(
+                            hintText: 'مدة الدورة',
+                            border: InputBorder.none,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: padding),
+
+                    InkWell(
+                      onTap: () {
+                      },
+                      child: ListTile(
+                        leading: Icon(Icons.add, color: Colors.black),
+                        title: Text('أضف شهادات ودورات اخرى ',
+                            style: TextStyle(fontFamily: 'Almarai')),
+                      ),
+                    ),
+
+
+                    SizedBox(height: screenHeight * .15),
+                    ElevatedButton(
+                        child: Text(
+                          'التالي',
+                          style: TextStyle(
+                              color: Color(0xFFFFFFFF),
+                              fontSize: fontSizeSubtitle),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: primaryColor,
+                          minimumSize: Size(double.infinity, buttonHeight),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        onPressed: () async {
+                          Profile profile = Profile(
+                              fullname: fullname,
+                              bornPlace: bornPlace,
+                              bornDate: bornDate,
+                              stutasMarr: stutasMarr,
+                              phoneNumber: phoneNumber,
+                              email: email,
+                              money: money,
+                              gender: gender,
+                              OpentoWork: OpentoWork,
+                              OntheWork: OntheWork,
+                              WorkPlace: WorkPlace,
+                              Transfar: Transfar,
+                              Language: Language,
+                              Skills: Skills,
+                              showedProfile: showedProfile,
+                              selectedJobTypes: selectedJobTypes
+                                  .map((type) => type.name)
+                                  .toList(),
+                              selectedJobTimes: selectedJobTimes,
+                              experiences: experiences,
+                              educationLevel: educationLevel,
+                              university: university,
+                              college: college,
+                              graduationDate: graduationDate,
+                              nameCourse: coursesNameController.text,
+                              timeCourse: coursesTimeController.text,
+                              typeCourse: coursesTypeController.text,
+                              AgnecyCoutse: coursesAgncyController.text,
+                              evaluation: educationLevel,
+                              portfolioImages: [],
+                              profileImage: '',
+                              cvText: '',
+                              videoUrl: '');
+
+                         await Get.find<ProfileDataController>().saveProfile(profile);
+                           Get.to(ProtofileScreen());
+                        }),
                   ],
                 ),
               ),
             ),
-
           ],
         ),
       ),

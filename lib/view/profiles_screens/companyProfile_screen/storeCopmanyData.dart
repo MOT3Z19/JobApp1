@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -46,36 +48,36 @@ class _CompanyProfileFormState extends State<CompanyProfileForm> {
     }
   }
 
-  // Future<void> selectAndUploadFile() async {
-  //   FilePickerResult? result = await FilePicker.platform.pickFiles(
-  //     type: FileType.custom,
-  //     allowedExtensions: ['svg', 'png', 'jpeg', 'jpg'],
-  //   );
-  //
-  //   if (result != null) {
-  //     File file = File(result.files.single.path!);
-  //
-  //     setState(() {
-  //       imageFile = file;
-  //       selectedImage = Image.file(file);
-  //     });
-  //     if (result != null) {
-  //       imageFile = File(result.files.single.path!);
-  //
-  //       try {
-  //         String fileName = imageFile!.path.split('/').last;
-  //         Reference storageRef =
-  //         FirebaseStorage.instance.ref().child('cv_files/$fileName');
-  //         UploadTask uploadTask = storageRef.putFile(imageFile!);
-  //
-  //         TaskSnapshot taskSnapshot = await uploadTask;
-  //         downloadUrl = await taskSnapshot.ref.getDownloadURL();
-  //       } catch (e) {
-  //         print('File upload error: $e');
-  //       }
-  //     }
-  //   }
-  // }
+  Future<void> selectAndUploadFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['svg', 'png', 'jpeg', 'jpg'],
+    );
+
+    if (result != null) {
+      File file = File(result.files.single.path!);
+
+      setState(() {
+        imageFile = file;
+        selectedImage = Image.file(file);
+      });
+      if (result != null) {
+        imageFile = File(result.files.single.path!);
+
+        try {
+          String fileName = imageFile!.path.split('/').last;
+          Reference storageRef =
+          FirebaseStorage.instance.ref().child('cv_files/$fileName');
+          UploadTask uploadTask = storageRef.putFile(imageFile!);
+
+          TaskSnapshot taskSnapshot = await uploadTask;
+          downloadUrl = await taskSnapshot.ref.getDownloadURL();
+        } catch (e) {
+          print('File upload error: $e');
+        }
+      }
+    }
+  }
 
   Future<void> saveCompanyProfile(String imageUrl) async {
     ProfileCompany profileCompany = ProfileCompany(
@@ -302,7 +304,9 @@ class _CompanyProfileFormState extends State<CompanyProfileForm> {
                               height: 20,
                             ),
                             ElevatedButton(
-                              onPressed: (){},// => selectAndUploadFile(),
+                              onPressed: (){
+                                selectAndUploadFile();
+                              },// => selectAndUploadFile(),
                               child: Text(
                                 'اختر من صورة',
                                 style: TextStyle(color: Colors.white),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:job_app/core/constansColor.dart';
+import 'package:job_app/view/profiles_screens/userProfile_screens/storeData_screen/jobPersonalScreen.dart';
 import 'package:job_app/view/profiles_screens/userProfile_screens/storeData_screen/jobType_screen.dart';
 
 import 'employeeProfileEdit_screen.dart';
@@ -65,16 +66,13 @@ class MakeAccount extends StatelessWidget {
             SizedBox(height: height * .03),
             ElevatedButton(
               onPressed: () {
-                Get.to(JobTypeScreen());
+                Get.to(JobPersonalScreen());
                 // Button action
               },
               style: ElevatedButton.styleFrom(
                 primary: Color(0xFF356899),
                 minimumSize: Size(double.infinity, 60),
-                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
+
               ),
               child: Text(
                 'إنشاء سيرة ذاتية',

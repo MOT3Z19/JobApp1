@@ -26,18 +26,17 @@ class buildJobCard extends StatelessWidget {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    return Padding(
-      padding:  EdgeInsets.all(width*.009),
-      child: Stack(
-        alignment: AlignmentDirectional.center,
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              color: primaryColor,
-              // boxShadow:Box,
-              borderRadius: BorderRadius.circular(17),
-            ),
-            child: Padding(
+    return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      color: primaryColor,
+      elevation: 3,
+      shadowColor: Colors.blue,
+      child: Padding(
+        padding:  EdgeInsets.all(width*.009),
+        child: Stack(
+          alignment: AlignmentDirectional.center,
+          children: [
+            Padding(
               padding: EdgeInsets.symmetric(
                   horizontal: width * .02, vertical: width * .05),
               child: Column(
@@ -111,7 +110,6 @@ class buildJobCard extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: width * .03),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -130,13 +128,13 @@ class buildJobCard extends StatelessWidget {
                 ],
               ),
             ),
-          ),
-          SvgPicture.asset(
-            'assets/images/home_icons/page_icons/mask_icons.svg',
-            fit: BoxFit.fill,
-            width: double.infinity,
-          ),
-        ],
+            SvgPicture.asset(
+              'assets/images/home_icons/page_icons/mask_icons.svg',
+              fit: BoxFit.fill,
+              width: double.infinity,
+            ),
+          ],
+        ),
       ),
     );
   }

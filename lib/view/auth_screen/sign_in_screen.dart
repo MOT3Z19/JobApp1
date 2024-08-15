@@ -10,9 +10,12 @@ import 'package:job_app/view/auth_screen/auth_widgets/data_forms.dart';
 import 'package:job_app/view/auth_screen/profileconfirmation.dart';
 import 'package:job_app/view/auth_screen/sign_up_screen.dart';
 import 'package:job_app/view/auth_screen/verification_screen.dart';
+import 'package:job_app/view/courses_screens/courses_datiles.dart';
 import 'package:job_app/view/home_screens/UserHome/bottomBar.dart';
 import 'package:job_app/view/home_screens/UserHome/home_page.dart';
 import '../../controller/authController/sing_up_controller.dart';
+import '../job_screens/job_screen.dart';
+import '../profiles_screens/companyProfile_screen/storeCopmanyData.dart';
 import 'auth_widgets/PasswordField.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -118,7 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Center(
                     child: TextButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, '/ResetPassword');
+                        Get.to(CompanyProfileForm());
                       },
                       child: Text('نسيت كلمة المرور؟',
                           style: TextStyle(
@@ -165,12 +168,16 @@ class _LoginScreenState extends State<LoginScreen> {
                       )),
                       BackContainer(
                           iconButton: IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Get.to(JobScreen());
+                              },
                               icon: SvgPicture.asset(
                                   'assets/images/starts/google.svg'))),
                       BackContainer(
                           iconButton: IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Get.to(CourseDetailsPage());
+                              },
                               icon: SvgPicture.asset(
                                   'assets/images/starts/facebook.svg'))),
                     ],

@@ -48,8 +48,8 @@ dependencies:
   intl: ^0.18.0
   google_sign_in: ^6.0.0
   flutter_facebook_auth: ^6.0.0
-
-
+  image_picker: ^1.0.7
+  file_picker: 8.0.0+1
 
 dev_dependencies:
   flutter_test:
@@ -80,6 +80,7 @@ flutter:
     - assets/images/starts/
     - assets/images/outBoarding_Images/
     - assets/images/home_icons/
+    - assets/images/courses_icons/
     - assets/images/home_icons/page_icons/
     - assets/images/home_icons/bottomBar_icon/
     - assets/images/home_icons/drawer_icon/

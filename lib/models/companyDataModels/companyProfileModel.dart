@@ -16,4 +16,16 @@ class ProfileCompany {
     required this.companyDescription,
     required this.cvFileUrl,
   });
+
+  factory ProfileCompany.fromMap(Map<String, dynamic> map) {
+    return ProfileCompany(
+      companyName: map['companyName'],
+      companyAddress: map['companyAddress'],
+      businessType: map['businessType'],
+      employeeCount: map['employeeCount'],
+      companyDescription: map['companyDescription'],
+      cvFileUrl: map['cvFileUrl'],
+      establishmentDate: map['establishmentDate'],
+    );
+  }
 }
