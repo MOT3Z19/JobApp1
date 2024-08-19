@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -26,7 +28,13 @@ class _HomePageState extends State<HomePage> {
   SingUpController _singUpController = Get.put(SingUpController());
   final PageController _controller = PageController();
   int _currentPage = 0;
+  bool? isConnection;
 
+  @override
+  void initState() {
+    checkConnection();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -37,8 +45,8 @@ class _HomePageState extends State<HomePage> {
           elevation: 3,
           width: width / 1.3,
           child: ListView(
-            padding: EdgeInsetsDirectional.symmetric(
-                vertical: 0.1, horizontal: 10),
+            padding:
+                EdgeInsetsDirectional.symmetric(vertical: 0.1, horizontal: 10),
             children: <Widget>[
               Builder(builder: (context) {
                 return IconButton(
@@ -51,17 +59,15 @@ class _HomePageState extends State<HomePage> {
               }),
               CircleAvatar(
                   radius: width / 9,
-                  backgroundImage: AssetImage(
-                      'assets/images/outBoarding_Images/out4.jpg')),
-              SizedBox(height: 10),
+                  backgroundImage:
+                      AssetImage('assets/images/outBoarding_Images/out4.jpg')),
+              SizedBox(height: height * .01),
               Align(
                 alignment: AlignmentDirectional.center,
                 child: Text('ميسرة نصار',
                     style:
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
               ),
-              SizedBox(height: height * .009),
-
               InkWell(
                 onTap: () {
                   Get.to(JobPersonalScreen());
@@ -140,12 +146,10 @@ class _HomePageState extends State<HomePage> {
                 child: ListTile(
                   leading: SvgPicture.asset(
                       'assets/images/home_icons/drawer_icon/concat.svg'),
-                  title: Text('التواصل معنا'),
+                  title: Text('تواصل معنا'),
                 ),
               ),
-              SizedBox(
-                height: height * .01,
-              ),
+              SizedBox(height: height * .009),
               InkWell(
                 onTap: () {
                   _confirmLogOut();
@@ -172,12 +176,13 @@ class _HomePageState extends State<HomePage> {
           )),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: width*.03),
+          padding: EdgeInsets.symmetric(horizontal: width * .03),
           child: SingleChildScrollView(
             physics: ScrollPhysics(parent: BouncingScrollPhysics()),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(height: height * .009),
                 Row(
                   children: [
                     Builder(builder: (context) {
@@ -185,18 +190,43 @@ class _HomePageState extends State<HomePage> {
                         onTap: () {
                           Scaffold.of(context).openDrawer();
                         },
-                        child: CircleAvatar(
-                            child: Container(
-                              alignment: AlignmentDirectional.bottomEnd,
-                              width: 10,
-                              height: 10,
-                              decoration: BoxDecoration(
-                                  color: Colors.red,
-                                  borderRadius: BorderRadius.circular(20)),
-                            ),
-                            radius: width / 13,
-                            backgroundImage: AssetImage(
-                                'assets/images/outBoarding_Images/out4.jpg')),
+                        child: Stack(
+                          alignment: AlignmentDirectional.topStart,
+                          children: [
+                            CircleAvatar(
+                                radius: width / 13,
+                                backgroundImage: AssetImage(
+                                    'assets/images/outBoarding_Images/out4.jpg')),
+                            Visibility (
+                              visible: isConnection??true,
+                              child: Stack(
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.only(top: width*.02,right: width*.01),
+                                    child: Container(
+                                      width: 14,
+                                      height: 14,
+                                      decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.circular(20)),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(top: width*.025,right: width*.015),
+                                    child: Container(
+                                      width: 10,
+                                      height: 10,
+                                      decoration: BoxDecoration(
+                                          color: Colors.green,
+                                          borderRadius: BorderRadius.circular(20)),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+
+                          ],
+                        ),
                       );
                     }),
                     SizedBox(
@@ -207,9 +237,8 @@ class _HomePageState extends State<HomePage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text('مرحبا بك',
-                            style:
-                                TextStyle(color: Colors.grey, fontSize: 16)),
-                        Text('محمود شاهين 👋',
+                            style: TextStyle(color: Colors.grey, fontSize: 16)),
+                        Text('ميسرة نصار 👋',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 20)),
                       ],
@@ -245,8 +274,7 @@ class _HomePageState extends State<HomePage> {
                             )),
                       ],
                     ),
-                    SizedBox(width: width*.02),
-
+                    SizedBox(width: width * .02),
                     Expanded(
                       child: TextField(
                         textAlign: TextAlign.start,
@@ -260,6 +288,7 @@ class _HomePageState extends State<HomePage> {
                             fit: BoxFit.scaleDown,
                           ),
                           border: OutlineInputBorder(
+                            borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
@@ -386,20 +415,18 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-  void open(){
+
+  void open() {
     Scaffold.of(context).openDrawer();
   }
 
   Future<void> _confirmLogOut() async {
-
     showDialog(
-
         context: context,
         builder: (context) {
           double height = MediaQuery.of(context).size.height;
           double width = MediaQuery.of(context).size.width;
           return AlertDialog(
-
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
@@ -421,23 +448,24 @@ class _HomePageState extends State<HomePage> {
             ),
             actions: [
               Container(
-                width: width/2.9,
+                width: width / 2.9,
                 child: TextButton(
-
                     style: TextButton.styleFrom(backgroundColor: Colors.red),
                     onPressed: () {
                       _singUpController.logout();
                       Get.offAll(LoginScreen());
-
                     },
                     child: Text(
-                      style:
-                      TextStyle(color: Colors.white, fontFamily: 'Almarai',fontSize: 16,fontWeight: FontWeight.w300),
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Almarai',
+                          fontSize: 16,
+                          fontWeight: FontWeight.w300),
                       'تسجيل الخروج',
                     )),
               ),
               Container(
-                width: width/2.9,
+                width: width / 2.9,
                 child: TextButton(
                     style: TextButton.styleFrom(
                         backgroundColor: Colors.grey.shade300),
@@ -446,12 +474,33 @@ class _HomePageState extends State<HomePage> {
                     },
                     child: Text(
                       'الغاء',
-                      style: TextStyle(color: Colors.black, fontSize: 16,),
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                      ),
                     )),
               ),
-
             ],
           );
         });
   }
+  Future<bool>checkConnection() async {
+    try {
+      final result = await InternetAddress.lookup('example.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        setState(() {
+          isConnection=true;
+        });
+        print('connected');
+        print( "$isConnection ccccccccccccccccccccccccccccccc");
+      }return true;
+    } on SocketException catch (_) {
+      setState(() {
+        isConnection=false;
+      });
+      print('not connected');
+      print( "$isConnection ccccccccccccccccccccccccccccccc");
+    }return false;
+  }
+
 }

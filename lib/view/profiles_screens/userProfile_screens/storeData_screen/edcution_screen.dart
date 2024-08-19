@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:job_app/widgets/drop_TextFiledmenu_Widget.dart';
 
 import '../../../../controller/firebaseControllers/user/jobTypeController.dart';
 import '../../../../core/constansColor.dart';
@@ -51,7 +52,7 @@ class EducationScreen extends StatelessWidget {
   final TextEditingController universityController = TextEditingController();
   final TextEditingController collegeController = TextEditingController();
   final TextEditingController graduationDateController =
-      TextEditingController();
+  TextEditingController();
   String? selectedDegree;
 
   void _navigateToNextScreen() {
@@ -59,47 +60,35 @@ class EducationScreen extends StatelessWidget {
     String college = collegeController.text;
     String graduationDate = graduationDateController.text;
     String educationLevel = selectedDegree ?? '';
-
-    if (university.isNotEmpty &&
-        college.isNotEmpty &&
-        graduationDate.isNotEmpty &&
-        educationLevel.isNotEmpty) {
-      Get.to(() => ProfileDataScreen(
-            fullname: fullname,
-            bornPlace: bornPlace,
-            bornDate: bornDate,
-            stutasMarr: stutasMarr,
-            phoneNumber: phoneNumber,
-            email: email,
-            money: money,
-            gender: gender,
-            OpentoWork: OpentoWork,
-            OntheWork: OntheWork,
-            WorkPlace: WorkPlace,
-            Transfar: Transfar,
-            Language: Language,
-            Skills: Skills,
-            showedProfile: showedProfile,
-            selectedJobTypes: selectedJobTypes,
-            selectedJobTimes: selectedJobTimes,
-            experiences: experiences,
-            university: university,
-            college: college,
-            graduationDate: graduationDate,
-            educationLevel: educationLevel,
-          ));
-    } else {
-      Get.snackbar(
-        'خطأ',
-        'الرجاء تعبئة جميع الحقول',
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
-    }
+    Get.to(() =>
+        ProfileDataScreen(
+          fullname: fullname,
+          bornPlace: bornPlace,
+          bornDate: bornDate,
+          stutasMarr: stutasMarr,
+          phoneNumber: phoneNumber,
+          email: email,
+          money: money,
+          gender: gender,
+          OpentoWork: OpentoWork,
+          OntheWork: OntheWork,
+          WorkPlace: WorkPlace,
+          Transfar: Transfar,
+          Language: Language,
+          Skills: Skills,
+          showedProfile: showedProfile,
+          selectedJobTypes: selectedJobTypes,
+          selectedJobTimes: selectedJobTimes,
+          experiences: experiences,
+          university: university,
+          college: college,
+          graduationDate: graduationDate,
+          educationLevel: educationLevel,
+        ));
   }
 
-  Future<void> _selectDate(
-      BuildContext context, TextEditingController controller) async {
+  Future<void> _selectDate(BuildContext context,
+      TextEditingController controller) async {
     DateTime? pickedDate = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -113,8 +102,14 @@ class EducationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery
+        .of(context)
+        .size
+        .width;
+    final screenHeight = MediaQuery
+        .of(context)
+        .size
+        .height;
 
     final double padding = screenWidth * 0.04;
     final double fontSizeTitle = screenWidth * 0.08;
@@ -132,7 +127,9 @@ class EducationScreen extends StatelessWidget {
             Align(
                 alignment: AlignmentDirectional.centerEnd,
                 child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      _navigateToNextScreen();
+                    },
                     child: Text(
                       textAlign: TextAlign.left,
                       'تخطي',
@@ -156,7 +153,7 @@ class EducationScreen extends StatelessWidget {
                     Text(
                       'قم ببناء الملف الشخصي لك لتحصل على فرصة أكبر :)',
                       style:
-                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                      TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: padding * 2),
                     Text(
@@ -173,30 +170,47 @@ class EducationScreen extends StatelessWidget {
                       ),
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: padding),
-                        child: DropdownButtonFormField<String>(
-                          decoration: InputDecoration(
-                            labelText: 'آخر مؤهل علمي ',
-                            border: InputBorder.none,
-                          ),
-                          items: [
-                            'متوسط اعدادية',
-                            'دبلوم',
-                            'بكالوريوس',
-                            'ماجستير',
-                            'دكتوراة'
-                          ].map((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(
-                                value,
-                                style: TextStyle(fontFamily: 'Almarai'),
-                              ),
-                            );
-                          }).toList(),
-                          onChanged: (String? newValue) {
-                            selectedDegree = newValue;
-                          },
+                        child: SizedBox(
+                          height: screenHeight/16,
+                          child: CustomDropdown(
+                              label: 'آخر مؤهل علمي ',
+                              onChanged: (String? newValue) {
+                                selectedDegree = newValue;
+                              },
+                              options: [
+                                    'متوسط اعدادية',
+                                    'دبلوم',
+                                    'بكالوريوس',
+                                    'ماجستير',
+                                    'دكتوراة'
+                              ],
+                              selectedValue
+                              :selectedDegree),
                         ),
+                        // child: DropdownButtonFormField<String>(
+                        //   decoration: InputDecoration(
+                        //     labelText: 'آخر مؤهل علمي ',
+                        //     border: InputBorder.none,
+                        //   ),
+                        //   items: [
+                        //     'متوسط اعدادية',
+                        //     'دبلوم',
+                        //     'بكالوريوس',
+                        //     'ماجستير',
+                        //     'دكتوراة'
+                        //   ].map((String value) {
+                        //     return DropdownMenuItem<String>(
+                        //       value: value,
+                        //       child: Text(
+                        //         value,
+                        //         style: TextStyle(fontFamily: 'Almarai'),
+                        //       ),
+                        //     );
+                        //   }).toList(),
+                        //   onChanged: (String? newValue) {
+                        //     selectedDegree = newValue;
+                        //   },
+                        // ),
                       ),
                     ),
                     SizedBox(height: padding),
@@ -262,7 +276,7 @@ class EducationScreen extends StatelessWidget {
                       child: ListTile(
                         leading: Icon(Icons.add, color: Colors.black),
                         title: Text(
-                          'أضف شهادات اخرى ',
+                          'أضف شهادات ودورات ',
                           style: TextStyle(fontFamily: 'Almarai'),
                         ),
                       ),

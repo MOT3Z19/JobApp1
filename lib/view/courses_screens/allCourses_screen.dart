@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:job_app/view/home_screens/home_widgets/buildPopularJobs.dart';
 import 'package:job_app/view/requests_screen/request_widgets/requestCard.dart';
@@ -18,6 +19,11 @@ class _AllCoursesScreenState extends State<AllCoursesScreen> {
   Widget build(BuildContext context) {
     return  Scaffold(
       appBar: AppBar(
+        leading:
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SvgPicture.asset('assets/images/profile_icons/jobType_icon/add.svg'),
+        ),
         centerTitle: true,
         title:  Text('الدورات'),
         backgroundColor: Colors.transparent,

@@ -88,7 +88,9 @@ class ProfileDataScreen extends StatelessWidget {
             Align(
                 alignment: AlignmentDirectional.centerEnd,
                 child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.to(ProtofileScreen());
+                    },
                     child: Text(
                       textAlign: TextAlign.left,
                       'تخطي',
@@ -112,7 +114,7 @@ class ProfileDataScreen extends StatelessWidget {
                     Text(
                       'قم ببناء الملف الشخصي لك لتحصل على فرصة أكبر :)',
                       style: TextStyle(
-                          fontSize: fontSizeSubtitle,
+                          fontSize: 22,
                           fontWeight: FontWeight.bold),
                     ),
 
@@ -224,6 +226,7 @@ class ProfileDataScreen extends StatelessWidget {
                           ),
                         ),
                         onPressed: () async {
+                          Get.to(ProtofileScreen());
                           Profile profile = Profile(
                               fullname: fullname,
                               bornPlace: bornPlace,
@@ -260,7 +263,7 @@ class ProfileDataScreen extends StatelessWidget {
                               videoUrl: '');
 
                          await Get.find<ProfileDataController>().saveProfile(profile);
-                           Get.to(ProtofileScreen());
+
                         }),
                   ],
                 ),

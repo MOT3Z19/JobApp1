@@ -32,6 +32,7 @@ class _MyHomePageState extends State<MyHomePage> {
     HomePage(),
     AllCoursesScreen(),
     JobRequests(),
+    JobRequests(),
   ];
 
   @override
@@ -40,7 +41,6 @@ class _MyHomePageState extends State<MyHomePage> {
     double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-
       body: _tabs[_currentIndex], // Display the current tab's content
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
@@ -68,41 +68,32 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           BottomNavigationBarItem(
             icon: SvgPicture.asset(
-                'assets/images/home_icons/bottomBar_icon/request.svg'),
+                'assets/images/home_icons/bottomBar_icon/employee.svg'),
             activeIcon: SvgPicture.asset(
-                'assets/images/home_icons/bottomBar_icon/requestS.svg'),
+                'assets/images/home_icons/bottomBar_icon/employeeS.svg'),
             label: '',
           ),
           BottomNavigationBarItem(
             icon: Builder(builder: (context) {
-              return InkWell(
-                  onTap: () {
-
-                    print('yes');
-                    print('yes');
-                    Scaffold.of(context).openDrawer();
-                  },
-                  child: SvgPicture.asset(
-                      'assets/images/home_icons/bottomBar_icon/category.svg'));
+              return SvgPicture.asset(
+                  'assets/images/home_icons/drawer_icon/serviceProvider.svg');
             }),
             activeIcon: SvgPicture.asset(
-                'assets/images/home_icons/bottomBar_icon/categoryS.svg'),
+                'assets/images/home_icons/bottomBar_icon/providerS.svg'),
             label: '',
           ),
         ],
       ),
     );
   }
+
   Future<void> _confirmLogOut() async {
-
     showDialog(
-
         context: context,
         builder: (context) {
           double height = MediaQuery.of(context).size.height;
           double width = MediaQuery.of(context).size.width;
           return AlertDialog(
-
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
@@ -124,23 +115,24 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             actions: [
               Container(
-                width: width/2.9,
+                width: width / 2.9,
                 child: TextButton(
-
                     style: TextButton.styleFrom(backgroundColor: Colors.red),
                     onPressed: () {
                       _singUpController.logout();
                       Get.offAll(LoginScreen());
-
                     },
                     child: Text(
-                      style:
-                      TextStyle(color: Colors.white, fontFamily: 'Almarai',fontSize: 16,fontWeight: FontWeight.w300),
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Almarai',
+                          fontSize: 16,
+                          fontWeight: FontWeight.w300),
                       'تسجيل الخروج',
                     )),
               ),
               Container(
-                width: width/2.9,
+                width: width / 2.9,
                 child: TextButton(
                     style: TextButton.styleFrom(
                         backgroundColor: Colors.grey.shade300),
@@ -149,13 +141,14 @@ class _MyHomePageState extends State<MyHomePage> {
                     },
                     child: Text(
                       'الغاء',
-                      style: TextStyle(color: Colors.black, fontSize: 16,),
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                      ),
                     )),
               ),
-
             ],
           );
         });
   }
-
 }

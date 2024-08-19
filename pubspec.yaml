@@ -50,6 +50,8 @@ dependencies:
   flutter_facebook_auth: ^6.0.0
   image_picker: ^1.0.7
   file_picker: 8.0.0+1
+  dotted_border: ^2.1.0
+  video_player: ^2.8.1
 
 dev_dependencies:
   flutter_test:
@@ -86,6 +88,7 @@ flutter:
     - assets/images/home_icons/drawer_icon/
     - assets/translations/
     - assets/images/profile_icons/jobType_icon/
+    - assets/images/profile_icons/
     - assets/images/profile_icons/jobTime_icon/
   #   - images/a_dot_ham.jpeg
 

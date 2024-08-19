@@ -16,12 +16,13 @@ class _JobPersonalScreenState extends State<JobPersonalScreen> {
   final TextEditingController fullnameController = TextEditingController();
   final TextEditingController bornPlaceController = TextEditingController();
   final TextEditingController bornDateController = TextEditingController();
-  final TextEditingController maritalStatusController = TextEditingController();
+ // final TextEditingController maritalStatusController = TextEditingController();
   final TextEditingController phoneNumberController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController salaryExpectationController = TextEditingController();
 
   String? selectedGender;
+  String? maritalStatus;
   String? selectedOpenToWork;
   String? selectedOtherCommitments;
   String? selectedWorkPlace;
@@ -31,12 +32,11 @@ class _JobPersonalScreenState extends State<JobPersonalScreen> {
   String? selectedProfileVisibility;
 
   void _navigateToNextScreen() {
-    if (fullnameController.text.isNotEmpty) {
       Get.to(() => JobTypeScreen(
         fullname: fullnameController.text,
         bornPlace: bornPlaceController.text,
         bornDate: bornDateController.text,
-        stutasMarr: maritalStatusController.text,
+        stutasMarr: maritalStatus??'',
         phoneNumber: phoneNumberController.text,
         email: emailController.text,
         money: salaryExpectationController.text,
@@ -49,14 +49,7 @@ class _JobPersonalScreenState extends State<JobPersonalScreen> {
         Skills: selectedSkills ?? '',
         showedProfile: selectedProfileVisibility ?? '',
       ));
-    } else {
-      Get.snackbar(
-        'Error',
-        'Please fill in all required fields.',
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
-    }
+
   }
 
   @override
@@ -73,7 +66,9 @@ class _JobPersonalScreenState extends State<JobPersonalScreen> {
             Align(
               alignment: AlignmentDirectional.centerEnd,
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  _navigateToNextScreen();
+                },
                 child: Text(
                   'تخطي',
                   style: TextStyle(color: subsTitleColor),
@@ -104,21 +99,31 @@ class _JobPersonalScreenState extends State<JobPersonalScreen> {
                 physics: BouncingScrollPhysics(parent: BouncingScrollPhysics()),
                 child: Column(
                   children: [
-                    CustomTextField(label: 'الاسم ثلاثي', controller: fullnameController),
-                    CustomTextField(label: 'محل الولادة', controller: bornPlaceController),
+                    CustomTextField(label: 'الاسم ثلاثي', controller: fullnameController,keybordType: TextInputType.name),
+                    CustomTextField(label: 'محل الولادة', controller: bornPlaceController,keybordType: TextInputType.streetAddress),
                     CustomDatePicker(label: 'تاريخ الميلاد', controller: bornDateController),
-                    CustomTextField(label: 'الحالة الزوجية', controller: maritalStatusController),
-                    CustomTextField(label: 'رقم الهاتف', controller: phoneNumberController),
-                    CustomTextField(label: 'البريد الالكتروني', controller: emailController),
+                    SizedBox(height: screenHeight*.01),
                     CustomDropdown(
-                      label: 'الجنس',
-                      options: ['ذكر', 'انثى'],
+                      label: 'الحالة الزوجية',
+                      options: ['أعزب', 'متزوج','منفصل'],
                       selectedValue: selectedGender,
                       onChanged: (value) => setState(() => selectedGender = value),
                     ),
+                   // CustomTextField(label: 'الحالة الزوجية', controller: maritalStatusController),
+                    CustomTextField(label: 'رقم الهاتف', controller: phoneNumberController,keybordType: TextInputType.phone),
+                    CustomTextField(label: 'البريد الالكتروني', controller: emailController,keybordType: TextInputType.emailAddress),
+                    SizedBox(height: screenHeight*.01),
                     CustomDropdown(
+                      label: 'الجنس',
+                      options: ['ذكر', 'انثى'],
+                      selectedValue: maritalStatus,
+                      onChanged: (value) => setState(() => maritalStatus = value),
+                    ),
+                    CustomDropdown(
+
                       label: 'هل انت متاح للعمل',
                       options: ['نعم', 'لا'],
+
                       selectedValue: selectedOpenToWork,
                       onChanged: (value) => setState(() => selectedOpenToWork = value),
                     ),
@@ -134,38 +139,43 @@ class _JobPersonalScreenState extends State<JobPersonalScreen> {
                       selectedValue: selectedWorkPlace,
                       onChanged: (value) => setState(() => selectedWorkPlace = value),
                     ),
-                    CustomTextField(label: 'اقل راتب تقبل به', controller: salaryExpectationController),
+                    CustomTextField(label: 'اقل راتب تقبل به - >     مثال : 400\$ فصاعدا', controller: salaryExpectationController,keybordType: TextInputType.text),
+                    SizedBox(height: screenHeight*.02),
+
                     CustomDropdown(
                       label: 'هل تمتلك وسيلة نقل',
-                      options: ['Yes', 'No'],
+                      options: ['نعم', 'لا'],
                       selectedValue: selectedTransport,
                       onChanged: (value) => setState(() => selectedTransport = value),
                     ),
                     CustomDropdown(
                       label: 'اللغات',
-                      options: ['English', 'French', 'Arabic'],
+                      options: ['English', 'French', 'Arabic','chines'],
                       selectedValue: selectedLanguage,
                       onChanged: (value) => setState(() => selectedLanguage = value),
                     ),
                     CustomDropdown(
                       label: 'المهارات',
-                      options: ['English', 'French', 'Arabic'],
+                      options: ['العمل الجماعي', 'التعامل مع الزبائن', 'التسويق','الحسابات'],
                       selectedValue: selectedSkills,
                       onChanged: (value) => setState(() => selectedSkills = value),
                     ),
                     CustomDropdown(
+
                       label: 'من يمكن رؤية ملفك الشخصي',
-                      options: ['جميع رواد الاعمال واصحاب المشاريع', 'لا احد سوى الوضائف التي اتقدم عليها'],
+                      options: ['جميع رواد الاعمال واصحاب المشاريع', 'لا احد سوى الوظائف التي اتقدم عليها'],
                       selectedValue: selectedProfileVisibility,
                       onChanged: (value) => setState(() => selectedProfileVisibility = value),
                     ),
+                    SizedBox(height: screenHeight*.02),
+
                     ElevatedButton(
                       onPressed: _navigateToNextScreen,
                       child: Text(
-                        'Next',
+                        'التالي',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: screenWidth * 0.05,
+
                         ),
                       ),
                       style: ElevatedButton.styleFrom(

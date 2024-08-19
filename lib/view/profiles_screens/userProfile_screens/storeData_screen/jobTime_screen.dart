@@ -46,6 +46,28 @@ class JobTimeScreen extends StatelessWidget {
     required this.showedProfile,
     required this.selectedJobTypes
   });
+  void _goToNextPage(){
+    final selectedJobTimes = controller.getSelectedJobTimes();
+    Get.to(() => ExperienceScreen(
+      fullname: fullname,
+      bornPlace: bornPlace,
+      bornDate: bornDate,
+      stutasMarr: stutasMarr,
+      phoneNumber: phoneNumber,
+      email: email,
+      money: money,
+      gender: gender,
+      OpentoWork: OpentoWork,
+      OntheWork: OntheWork,
+      WorkPlace: WorkPlace,
+      Transfar: Transfar,
+      Language: Language,
+      Skills: Skills,
+      showedProfile: showedProfile,
+      selectedJobTypes: selectedJobTypes,
+      selectedJobTimes: selectedJobTimes,
+    ));
+  }
 
   // Map<String, String> jobTimeImages = {
   final JobTimeController controller = Get.put(JobTimeController());
@@ -56,10 +78,8 @@ class JobTimeScreen extends StatelessWidget {
     final screenHeight = MediaQuery.of(context).size.height;
 
     final double horizontalPadding = screenWidth * 0.04;
-    final double fontSizeTitle = screenWidth * 0.06;
     final double verticalPadding = screenWidth * 0.05;
     final double fontSizeSubtitle = screenWidth * 0.045;
-    final double containerHeight = screenHeight * 0.08;
     final double buttonHeight = screenHeight * 0.07;
 
     return Scaffold(
@@ -73,7 +93,9 @@ class JobTimeScreen extends StatelessWidget {
               Align(
                   alignment: AlignmentDirectional.centerEnd,
                   child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        _goToNextPage();
+                      },
                       child: Text(
                         textAlign: TextAlign.left,
                         'تخطي',
@@ -90,10 +112,10 @@ class JobTimeScreen extends StatelessWidget {
                 ),
               ),
               Text(
-                'ما طبيعة الدوام الوظيفي التي تبحث عنه؟',
+                'ما هو مدى تفرغك للعمل ؟',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: fontSizeTitle,
+                  fontSize: 22,
                 ),
               ),
 
@@ -149,35 +171,7 @@ class JobTimeScreen extends StatelessWidget {
               SizedBox(height: 30),
               ElevatedButton(
                 onPressed: () {
-                  final selectedJobTimes = controller.getSelectedJobTimes();
-
-                  if (selectedJobTimes.isEmpty) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('يرجى اختيار وقت وظيفي واحد على الأقل!'),
-                      ),
-                    );
-                  } else {
-                    Get.to(() => ExperienceScreen(
-                      fullname: fullname,
-                      bornPlace: bornPlace,
-                      bornDate: bornDate,
-                      stutasMarr: stutasMarr,
-                      phoneNumber: phoneNumber,
-                      email: email,
-                      money: money,
-                      gender: gender,
-                      OpentoWork: OpentoWork,
-                      OntheWork: OntheWork,
-                      WorkPlace: WorkPlace,
-                      Transfar: Transfar,
-                      Language: Language,
-                      Skills: Skills,
-                      showedProfile: showedProfile,
-                      selectedJobTypes: selectedJobTypes,
-                      selectedJobTimes: selectedJobTimes,
-                    ));
-                   }
+                  _goToNextPage();
                 },
                 child: Text(
                   'التالي',

@@ -47,9 +47,7 @@ class JobTypeScreen extends StatelessWidget {
 
     final double horizontalPadding = screenWidth * 0.04;
     final double verticalPadding = screenWidth * 0.05;
-    final double fontSizeTitle = screenWidth * 0.06;
     final double fontSizeSubtitle = screenWidth * 0.045;
-    final double containerHeight = screenHeight * 0.08;
     final double buttonHeight = screenHeight * 0.07;
 
     final JobTypeController controller = Get.put(JobTypeController());
@@ -57,17 +55,7 @@ class JobTypeScreen extends StatelessWidget {
     void _navigateToNextScreen() {
       List<JobType> selectedJobTypes =
           controller.jobTypes.where((jobType) => jobType.isSelected).toList();
-
-      if (selectedJobTypes.isEmpty) {
-        Get.snackbar(
-          'خطأ',
-          'الرجاء تعبئة جميع الحقول',
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
-      } else {
-        // Navigate to the next screen and pass selected job types
-        Navigator.push(
+      Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) =>
@@ -91,7 +79,7 @@ class JobTypeScreen extends StatelessWidget {
             ,
           ),
         );
-      }
+
     }
 
     return Scaffold(
@@ -105,7 +93,9 @@ class JobTypeScreen extends StatelessWidget {
               Align(
                   alignment: AlignmentDirectional.centerEnd,
                   child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        _navigateToNextScreen();
+                      },
                       child: Text(
                         textAlign: TextAlign.left,
                         'تخطي',
@@ -125,7 +115,8 @@ class JobTypeScreen extends StatelessWidget {
                 'ما القسم العام للوظيفة التي تريد البحث عنها؟',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: fontSizeTitle,
+                  fontSize: 22,
+
                 ),
               ),
               SizedBox(

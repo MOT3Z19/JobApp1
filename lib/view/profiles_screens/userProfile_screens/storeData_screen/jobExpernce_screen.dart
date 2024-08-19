@@ -107,14 +107,7 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
 
 
   void _navigateToNextScreen() {
-    if (experiences.isEmpty) {
-      Get.snackbar(
-        'خطأ',
-        'الرجاء إضافة خبرات.',
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
-    } else {
+
       Get.to(() => EducationScreen(
         fullname: widget.fullname,
         bornPlace: widget.bornPlace,
@@ -135,7 +128,7 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
         selectedJobTimes: widget.selectedJobTimes,
         experiences: experiences,
       ));
-    }
+
   }
 
   @override
@@ -159,7 +152,9 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
             Align(
                 alignment: AlignmentDirectional.centerEnd,
                 child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      _navigateToNextScreen();
+                    },
                     child: Text(
                       textAlign: TextAlign.left,
                       'تخطي',

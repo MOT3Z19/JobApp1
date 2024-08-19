@@ -34,6 +34,7 @@ class CustomDatePicker extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: screenWidth * 0.02),
       padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
       child: TextField(
+        style: TextStyle(fontFamily: 'Almarai'),
         controller: controller,
         decoration: InputDecoration(
           hintText: label,
