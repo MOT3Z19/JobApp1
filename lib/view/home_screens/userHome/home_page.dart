@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:job_app/controller/authController/sing_up_controller.dart';
 import 'package:job_app/core/constansColor.dart';
 import 'package:job_app/view/auth_screen/sign_in_screen.dart';
+import 'package:job_app/view/drawerOthersTabs_screen/policyTab.dart';
 import 'package:job_app/view/home_screens/companyHome/compnrHome_screen.dart';
 import 'package:job_app/view/profiles_screens/companyProfile_screen/companyProfile.dart';
 import 'package:job_app/view/profiles_screens/serviceProvider_screen/serviceProviderProfile.dart';
@@ -134,7 +135,9 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  Get.to(PolicyTabScreen());
+                },
                 child: ListTile(
                   leading: SvgPicture.asset(
                       'assets/images/home_icons/drawer_icon/polisy.svg'),

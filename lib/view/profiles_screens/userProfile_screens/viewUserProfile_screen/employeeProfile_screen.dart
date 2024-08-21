@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -6,6 +7,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:job_app/controller/firebaseControllers/user/user_profile_controller.dart';
 import 'package:job_app/core/constansColor.dart';
 import 'package:job_app/models/usersDataModels/UserProfileModel.dart';
+import 'package:video_player/video_player.dart';
 
 class EmployeeProfile extends StatefulWidget {
   const EmployeeProfile({super.key});
@@ -13,6 +15,8 @@ class EmployeeProfile extends StatefulWidget {
   @override
   State<EmployeeProfile> createState() => _EmployeeProfileState();
 }
+late VideoPlayerController _controller;
+
 
 class _EmployeeProfileState extends State<EmployeeProfile> {
   final ProfileDataController _userProfileController = Get.put(
@@ -49,12 +53,12 @@ class _EmployeeProfileState extends State<EmployeeProfile> {
                       alignment: AlignmentDirectional.center,
                       child: CircleAvatar(
                           radius: width / 7,
-                          backgroundImage:NetworkImage(user.profileImage??'')),
+                          backgroundImage:NetworkImage("user.profileImage??''")),
                     ),
                     SizedBox(height: height * .009),
                     Align(
                       alignment: AlignmentDirectional.center,
-                      child: Text(user.fullname??'',
+                      child: Text("user.fullname??''",
                           style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
                     ),
@@ -65,7 +69,7 @@ class _EmployeeProfileState extends State<EmployeeProfile> {
                         SvgPicture.asset(
                             'assets/images/home_icons/drawer_icon/check.svg'),
                         SizedBox(height: height * .009),
-                        Text(user.selectedJobTypes.single[0],
+                        Text("user.selectedJobTypes.sing le[0]",
                             style: TextStyle(
                                 fontWeight: FontWeight.w500,
                                 fontSize: 16,
@@ -92,7 +96,7 @@ class _EmployeeProfileState extends State<EmployeeProfile> {
                               children: [
                                 Text('الاسم :  '),
                                 Text(
-                                  user.fullname??'',
+                                 " user.fullname??''",
                                 ),
                               ],
                             ),
@@ -100,7 +104,7 @@ class _EmployeeProfileState extends State<EmployeeProfile> {
                               children: [
                                 Text('تاريخ الميلاد :  '),
                                 Text(
-                                  user.bornDate??'',
+                                  "user.bornDate??''",
                                 ),
                               ],
                             ),
@@ -108,7 +112,7 @@ class _EmployeeProfileState extends State<EmployeeProfile> {
                               children: [
                                 Text('الإيميل :  '),
                                 Text(
-                                  user.email??'',
+                                 " user.email??''",
                                 ),
                               ],
                             ),
@@ -116,7 +120,7 @@ class _EmployeeProfileState extends State<EmployeeProfile> {
                               children: [
                                 Text('الحالة الإجتماعية :  '),
                                 Text(
-                                  user.stutasMarr??'',
+                                 " user.stutasMarr??''",
                                 ),
                               ],
                             ),
@@ -124,7 +128,7 @@ class _EmployeeProfileState extends State<EmployeeProfile> {
                               children: [
                                 Text('العنوان :  '),
                                 Text(
-                                  user.bornPlace??'',
+                                 " user.bornPlace??''",
                                 ),
                               ],
                             ),
@@ -176,11 +180,11 @@ class _EmployeeProfileState extends State<EmployeeProfile> {
                           children: [
                             Row(
                               children: [
-                                Text(user.educationLevel??'',
+                                Text("user.educationLevel??''",
                                     style: TextStyle(fontWeight: FontWeight.bold)),
                                 Spacer(),
                                 Text(
-                                  user.university??'',
+                                 " user.university??''",
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                               ],
@@ -188,11 +192,11 @@ class _EmployeeProfileState extends State<EmployeeProfile> {
                             SizedBox(height: height * .01),
                             Row(
                               children: [
-                                Text(user.university??'',
+                                Text("user.university??''",
                                     style: TextStyle(color: subsTitleColor)),
                                 Spacer(),
                                 Text(
-                                  user.graduationDate??'',
+                                 " user.graduationDate??''",
                                   style: TextStyle(color: subsTitleColor),
                                 ),
                               ],
@@ -254,7 +258,7 @@ class _EmployeeProfileState extends State<EmployeeProfile> {
                             borderRadius: BorderRadius.circular(15)),
                         child: Text(
                             style: TextStyle(color: subsTitleColor),
-                            user.cvText??'')),
+                         "   user.cvText??''")),
                     SizedBox(height: height * .01),
                     Text(
                       'معرض الاعمال',
@@ -281,7 +285,10 @@ class _EmployeeProfileState extends State<EmployeeProfile> {
                               width: width / 2.8,
                             );
                           }),
-                    )
+                    ),
+                    // VideoPlayer(
+                    //   VideoPlayerController.networkUrl(user.videoUrl as Uri)
+                    // )
                   ],
                 ),
               );
