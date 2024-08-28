@@ -28,4 +28,16 @@ class ServiceProfile {
       'imageUrl': imageUrl,
     };
   }
+
+  factory ServiceProfile.fromMap(Map<String, dynamic> map) {
+    return ServiceProfile(
+      name:  map['name']??'',
+      serviceType: map['serviceType']??'',
+      serviceDescription:  map['serviceDescription']??'',
+      serviceFee:  map['serviceFee']??'',
+      workLocation:  map['workLocation']??'',
+      phoneNumber:  map['phoneNumber']??'',
+      imageUrl:  map['imageUrl']??'',
+    );
+  }
 }

@@ -25,20 +25,26 @@ class CustomDatePicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-
+    final screenHeight = MediaQuery.of(context).size.height;
     return Container(
+      height: screenHeight/14,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).primaryColor,
         borderRadius: BorderRadius.circular(10),
       ),
       margin: EdgeInsets.symmetric(vertical: screenWidth * 0.02),
-      padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
       child: TextField(
         style: TextStyle(fontFamily: 'Almarai'),
         controller: controller,
         decoration: InputDecoration(
+          filled: true,
+          fillColor: Theme.of(context).primaryColor,
           hintText: label,
-          border: InputBorder.none,
+          border: OutlineInputBorder( // استخدام OutlineInputBorder للحواف الدائري// ة
+              borderRadius: BorderRadius.circular(10), // إضافة الحواف الدائرية
+              borderSide: BorderSide.none,
+              gapPadding: 12// إزالة الحد الخارجي
+          ),
         ),
         readOnly: true,
         onTap: () => _selectDate(context),

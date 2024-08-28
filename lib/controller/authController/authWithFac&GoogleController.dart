@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:job_app/view/home_screens/UserHome/home_page.dart';
 
-class AuthModel {
+class AuthWithFacebookAndGoogleController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 

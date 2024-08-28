@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class StutasController extends GetxController{
+class StatusController extends GetxController{
   var isDarkMode = false.obs;
   var currentT = false.obs;
 
-  void toggleTheme(){
-    isDarkMode.value = !isDarkMode.value;
-    Get.changeTheme(isDarkMode.value ? ThemeData.dark() : ThemeData.light());
-  }
+
   void changeLanguage(){
     Locale currentLang = Get.locale ?? Locale('ar');
     if(currentLang == Locale('ar')){
@@ -19,5 +16,12 @@ class StutasController extends GetxController{
       currentT.value = !currentT.value;
 
     }
+  }
+
+  ThemeMode get theme => isDarkMode.value ? ThemeMode.dark : ThemeMode.light;
+
+  void toggleTheme(){
+    isDarkMode.value = !isDarkMode.value;
+    Get.changeThemeMode(isDarkMode.value ? ThemeMode.dark : ThemeMode.light);
   }
 }

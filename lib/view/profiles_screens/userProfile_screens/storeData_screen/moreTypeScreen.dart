@@ -4,8 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:job_app/controller/firebaseControllers/user/moreProfileController.dart';
+import 'package:job_app/controller/firestoreController/user/moreProfileController.dart';
 import 'package:job_app/core/constansColor.dart';
+import 'package:job_app/view/home_screens/UserHome/home_page.dart';
 
 class MoreTypeScreen extends StatefulWidget {
   @override
@@ -34,7 +35,6 @@ class _ProtofileScreenState extends State<MoreTypeScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             Center(
               child: Text(
                 'فرصة',
@@ -85,20 +85,20 @@ class _ProtofileScreenState extends State<MoreTypeScreen> {
                                           textAlign: TextAlign.center,
                                         )
                                       : Container(
-                                          height: screenHeight * 0.29,
-                                          width: screenWidth * 0.29,
+                                          height: screenHeight * 0.17,
+                                          width: screenWidth * 0.35,
                                           decoration: BoxDecoration(
-                                            color: Color(0xFFF5F5F5),
-                                            border: Border.all(),
-                                            shape: BoxShape.circle,
-                                          ),
+                                              color: Color(0xFFF5F5F5),
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      screenWidth * 0.60)),
                                           child: Image.network(
                                             controller.profilePhotoUrl.value,
                                             fit: BoxFit.cover,
                                           ),
                                         )),
                             ),
-                          )),
+                          ))
                     ),
                     SizedBox(height: fontSizeSubtitle),
                     DottedBorder(
@@ -158,9 +158,12 @@ class _ProtofileScreenState extends State<MoreTypeScreen> {
                       controller: cvTextController,
                       maxLines: 5,
                       decoration: InputDecoration(
-                        suffixIcon: Padding(
-                            padding: EdgeInsetsDirectional.only(top: screenHeight*.13,start: screenWidth*.05),
-                            child: SvgPicture.asset('assets/images/profile_icons/about.svg')),
+                          suffixIcon: Padding(
+                              padding: EdgeInsetsDirectional.only(
+                                  top: screenHeight * .13,
+                                  start: screenWidth * .05),
+                              child: SvgPicture.asset(
+                                  'assets/images/profile_icons/about.svg')),
                           fillColor: Colors.white,
                           filled: true,
                           border:
@@ -173,15 +176,11 @@ class _ProtofileScreenState extends State<MoreTypeScreen> {
                     ElevatedButton(
                       onPressed: () async {
                         String uid = FirebaseAuth.instance.currentUser!.uid;
-
                         await FirebaseFirestore.instance
                             .collection('profiles_User')
                             .doc(uid)
-                            .update(
-                          {
-                            'cvText': cvTextController.text,
-                          },
-                        );
+                            .update({'cvText': cvTextController.text});
+                        Get.to(HomePage());
                       },
                       child: Center(
                           child: Text('حفظ السيرة الذاتية',

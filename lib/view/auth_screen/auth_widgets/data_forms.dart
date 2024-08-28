@@ -44,18 +44,15 @@ class BackContainer extends StatelessWidget{
 
       decoration: BoxDecoration(
 
-        color: Colors.white,
+        color: Theme.of(context).primaryColor,
         borderRadius: BorderRadius.circular(40),
       ),
     ),
           IconButton(
-
             onPressed: () {},
             icon:iconButton,
             alignment: AlignmentDirectional.center,
             iconSize: 45,
-
-
 
           ),
         ]);

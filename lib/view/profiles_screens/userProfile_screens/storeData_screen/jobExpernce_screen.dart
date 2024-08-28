@@ -1,11 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:job_app/controller/firestoreController/user/jobTypeController.dart';
 import 'package:job_app/core/constansColor.dart';
+import 'package:job_app/models/usersDataModels/ExperienceModel.dart';
 import 'package:job_app/view/profiles_screens/userProfile_screens/storeData_screen/edcution_screen.dart';
 
-import '../../../../controller/firebaseControllers/user/jobTypeController.dart';
-import '../../../../models/usersDataModels/ExperienceModel.dart';
 class ExperienceScreen extends StatefulWidget {
   final String fullname;
   final String bornPlace;
@@ -50,48 +50,44 @@ class ExperienceScreen extends StatefulWidget {
 }
 
 class _ExperienceScreenState extends State<ExperienceScreen> {
+  List<Experience> experiences = [];
+
   final TextEditingController jobTitleController = TextEditingController();
   final TextEditingController companyNameController = TextEditingController();
   final TextEditingController startDateController = TextEditingController();
   final TextEditingController endDateController = TextEditingController();
 
-  List<Experience> experiences = [];
-  final List<Map<String, dynamic>> _experienceList = [
-    {
-      'jobTitleController': TextEditingController(),
-      'companyNameController': TextEditingController(),
-      'startDateController': TextEditingController(),
-      'endDateController': TextEditingController(),
-    },
-  ];
-
-  void _addNewExperience() {
-    setState(() {
-      _experienceList.add({
-        'jobTitleController': TextEditingController(),
-        'companyNameController': TextEditingController(),
-        'startDateController': TextEditingController(),
-        'endDateController': TextEditingController(),
-      });
-    });
-  }
-
   void _addExperience() {
-    setState(() {
-      experiences.add(
-        Experience(
-          jobTitle: jobTitleController.text,
-          companyName: companyNameController.text,
-          startDate: startDateController.text,
-          endDate: endDateController.text,
-        ),
-      );
+    if (jobTitleController.text.isNotEmpty &&
+        companyNameController.text.isNotEmpty &&
+        startDateController.text.isNotEmpty &&
+        endDateController.text.isNotEmpty) {
+      setState(() {
+        experiences.add(
+          Experience(
+            jobTitle: jobTitleController.text,
+            companyName: companyNameController.text,
+            startDate: startDateController.text,
+            endDate: endDateController.text,
+          ),
+        );
+      });
+
+      // Clear the controllers after adding the experience
       jobTitleController.clear();
       companyNameController.clear();
       startDateController.clear();
       endDateController.clear();
-    });
+    } else {
+      Get.snackbar(
+        'خطأ',
+        'الرجاء ملء جميع الحقول.',
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
   }
+
   Future<void> _selectDate(
       BuildContext context, TextEditingController controller) async {
     DateTime? pickedDate = await showDatePicker(
@@ -105,9 +101,15 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
     }
   }
 
-
   void _navigateToNextScreen() {
-
+    if (experiences.isEmpty) {
+      Get.snackbar(
+        'خطأ',
+        'الرجاء إضافة خبرات.',
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    } else {
       Get.to(() => EducationScreen(
         fullname: widget.fullname,
         bornPlace: widget.bornPlace,
@@ -128,7 +130,7 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
         selectedJobTimes: widget.selectedJobTimes,
         experiences: experiences,
       ));
-
+    }
   }
 
   @override
@@ -152,9 +154,7 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
             Align(
                 alignment: AlignmentDirectional.centerEnd,
                 child: TextButton(
-                    onPressed: () {
-                      _navigateToNextScreen();
-                    },
+                    onPressed: () {},
                     child: Text(
                       textAlign: TextAlign.left,
                       'تخطي',
@@ -191,83 +191,72 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
                       ),
                     ),
                     SizedBox(height: padding),
-                    ..._experienceList.map((experience) {
-                      return Column(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Color(0xFFFFFFFF),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: TextField(
-                              style: TextStyle(fontFamily: 'Almarai'),
-                              controller: experience['jobTitleController'],
-                              decoration: InputDecoration(
-                                hintText: '  المسمى الوظيفي . . . ',
-                                border: InputBorder.none,
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: padding),
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Color(0xFFFFFFFF),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: TextField(
-                              style: TextStyle(fontFamily: 'Almarai'),
-                              controller: experience['companyNameController'],
-                              decoration: InputDecoration(
-                                hintText: '  اسم الشركة التي عملت بها . . . ',
-                                border: InputBorder.none,
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: padding),
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Color(0xFFFFFFFF),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: TextField(
-                              style: TextStyle(fontFamily: 'Almarai'),
-                              controller: experience['startDateController'],
-                              decoration: InputDecoration(
-                                hintText: '  تاريخ بدء العمل',
-                                border: InputBorder.none,
-                              ),
-                              readOnly: true,
-                              onTap: () => _selectDate(
-                                  context, experience['startDateController']!),
-                            ),
-                          ),
-                          SizedBox(height: padding),
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Color(0xFFFFFFFF),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: TextField(
-                              style: TextStyle(fontFamily: 'Almarai'),
-                              controller: experience['endDateController'],
-                              decoration: InputDecoration(
-                                hintText: '  تاريخ نهاية العمل',
-                                border: InputBorder.none,
-                              ),
-                              readOnly: true,
-                              onTap: () => _selectDate(
-                                  context, experience['endDateController']!),
-                            ),
-                          ),
-                          SizedBox(height: padding),
-                        ],
-                      );
-                    }).toList(),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Color(0xFFFFFFFF),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: TextField(
+                        style: TextStyle(fontFamily: 'Almarai'),
+                        controller: jobTitleController,
+                        decoration: InputDecoration(
+                          hintText: '  المسمى الوظيفي . . . ',
+                          border: InputBorder.none,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: padding),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Color(0xFFFFFFFF),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: TextField(
+                        style: TextStyle(fontFamily: 'Almarai'),
+                        controller: companyNameController,
+                        decoration: InputDecoration(
+                          hintText: '  اسم الشركة التي عملت بها . . . ',
+                          border: InputBorder.none,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: padding),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Color(0xFFFFFFFF),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: TextField(
+                        style: TextStyle(fontFamily: 'Almarai'),
+                        controller: startDateController,
+                        decoration: InputDecoration(
+                          hintText: '  تاريخ بدء العمل',
+                          border: InputBorder.none,
+                        ),
+                        readOnly: true,
+                        onTap: () => _selectDate(context, startDateController),
+                      ),
+                    ),
+                    SizedBox(height: padding),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Color(0xFFFFFFFF),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: TextField(
+                        style: TextStyle(fontFamily: 'Almarai'),
+                        controller: endDateController,
+                        decoration: InputDecoration(
+                          hintText: '  تاريخ نهاية العمل',
+                          border: InputBorder.none,
+                        ),
+                        readOnly: true,
+                        onTap: () => _selectDate(context, endDateController),
+                      ),
+                    ),
+                    SizedBox(height: padding),
                     InkWell(
-                      onTap: () {
-                        _addExperience();
-                        _addNewExperience();
-                      },
+                      onTap: _addExperience,
                       child: ListTile(
                         leading: Icon(Icons.add, color: Colors.black),
                         title: Text('أضف خبرات اخرى ',
@@ -280,7 +269,8 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
                       child: Text(
                         'التالي',
                         style: TextStyle(
-                            color: Color(0xFFFFFFFF), fontSize: fontSizeSubtitle),
+                            color: Color(0xFFFFFFFF),
+                            fontSize: fontSizeSubtitle),
                       ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: primaryColor,

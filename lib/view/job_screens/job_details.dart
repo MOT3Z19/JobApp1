@@ -19,9 +19,6 @@ class _JobScreenState extends State<JobScreen>with SingleTickerProviderStateMixi
       _tabController = TabController(length: 2, vsync: this);
   }
 
-
-
-
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;

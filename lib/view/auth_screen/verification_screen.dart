@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
@@ -7,17 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
-import 'package:job_app/controller/authController/sing_up_controller.dart';
+import 'package:job_app/controller/authController/authWithEmail&PassController.dart';
 import 'package:job_app/core/constansColor.dart';
 import 'package:job_app/models/usersDataModels/usersData.dart';
 import 'package:job_app/prefes/sharedPrefController.dart';
 import 'package:job_app/utils/context-extenssion.dart';
 import 'package:job_app/view/auth_screen/profileconfirmation.dart';
 import 'package:job_app/view/auth_screen/sign_up_screen.dart';
-import 'package:job_app/view/home_screens/UserHome/home_page.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-
-import 'auth_widgets/codeDegits.dart';
 
 class VerificationScreen extends StatefulWidget {
   final String VerificationCode;
@@ -39,7 +35,8 @@ class VerificationScreen extends StatefulWidget {
 }
 
 SharedPrefController _sharedPrefController = Get.put(SharedPrefController());
-SingUpController _SingUpController = Get.put(SingUpController());
+AuthWithEmailAndPassController _SingUpController =
+    Get.put(AuthWithEmailAndPassController());
 
 class _verificationScreenState extends State<VerificationScreen> {
   var onTapRecognizer;

@@ -6,7 +6,7 @@ import 'package:job_app/models/usersDataModels/usersData.dart';
 import 'package:job_app/prefes/sharedPrefController.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SingUpController {
+class AuthWithEmailAndPassController {
   final SharedPrefController _sharedPrefController = Get.put(SharedPrefController());
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final CollectionReference _usersCollection = FirebaseFirestore.instance.collection('users');
@@ -68,8 +68,7 @@ class SingUpController {
 
   Future<void>logout()async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String email = prefs.getString('email')??" ";
-    _sharedPrefController.removeUser(email: email??"");
+    _sharedPrefController.removeUser();
     print('removed');
     _auth.signOut();
   }

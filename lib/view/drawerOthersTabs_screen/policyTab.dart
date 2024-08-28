@@ -23,8 +23,8 @@ class PolicyTabScreen extends StatelessWidget {
             Container(
               padding: EdgeInsetsDirectional.symmetric(vertical: height*.02,horizontal: width*.03),
               decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(15),
+                  color:Theme.of(context).primaryColor,
+                  borderRadius: BorderRadius.circular(15),
               ),
               width:width ,
               child: Column(

@@ -7,15 +7,13 @@ import 'package:job_app/core/constansColor.dart';
 import 'package:job_app/prefes/sharedPrefController.dart';
 import 'package:job_app/utils/context-extenssion.dart';
 import 'package:job_app/view/auth_screen/auth_widgets/data_forms.dart';
-import 'package:job_app/view/auth_screen/profileconfirmation.dart';
 import 'package:job_app/view/auth_screen/sign_up_screen.dart';
-import 'package:job_app/view/auth_screen/verification_screen.dart';
 import 'package:job_app/view/courses_screens/courses_datiles.dart';
 import 'package:job_app/view/home_screens/UserHome/bottomBar.dart';
 import 'package:job_app/view/home_screens/UserHome/home_page.dart';
-import '../../controller/authController/sing_up_controller.dart';
-import '../job_screens/job_screen.dart';
-import '../profiles_screens/companyProfile_screen/storeCopmanyData.dart';
+import 'package:job_app/view/profiles_screens/companyProfile_screens/storeCopmanyProfile.dart';
+import '../../controller/authController/authWithEmail&PassController.dart';
+import '../job_screens/job_details.dart';
 import 'auth_widgets/PasswordField.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -24,7 +22,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  SingUpController _SingUpController = Get.put(SingUpController());
+  AuthWithEmailAndPassController _SingUpController = Get.put(AuthWithEmailAndPassController());
   SharedPrefController _sharedPrefController = Get.put(SharedPrefController());
   TextEditingController _passwordController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
@@ -94,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         if (isSignedIn) {
                           _sharedPrefController.saveEmail(
                               email: _emailController.text);
-                          Get.offAll(HomePage());
+                          Get.offAll(MyHomePage());
                         } else {
                           context.shwoMassege(
                               message: 'يرجى التحقق من الإيميل أو كلمة المرور.',

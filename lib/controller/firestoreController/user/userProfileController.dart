@@ -17,14 +17,18 @@ class ProfileDataController extends GetxController {
   var imageFile = Rxn<File>();
   var downloadUrlImage = RxnString();
   Profile? _userProfile;
-
+  String uid = FirebaseAuth.instance.currentUser!.uid;
   String? evaluation;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<void> saveProfile(Profile profile) async {
-    String uid = FirebaseAuth.instance.currentUser!.uid;
+    List<Map<String, dynamic>> experienceMaps = profile.experiences!.map((experience) => experience.toMap()).toList();
+    List<Map<String, dynamic>> edactionMaps = profile.edaction!.map((edaction) => edaction.toMap()).toList();
+    List<Map<String, dynamic>> certificatesMaps = profile.certificates!.map((certificates) => certificates.toMap()).toList();
+
     try {
       await _firestore.collection('profiles_User').doc(uid).set({
+
         'fullname': profile.fullname,
         'bornPlace': profile.bornPlace,
         'bornDate': profile.bornDate,
@@ -42,16 +46,9 @@ class ProfileDataController extends GetxController {
         'showedProfile': profile.showedProfile,
         'selectedJobTypes': profile.selectedJobTypes,
         'selectedJobTimes': profile.selectedJobTimes,
-        'experiences': profile.experiences,
-        'educationLevel': profile.educationLevel,
-        'university': profile.university,
-        'college': profile.college,
-        'graduationDate': profile.graduationDate,
-        'nameCourse': profile.nameCourse,
-        'typeCourse': profile.typeCourse,
-        'timeCourse': profile.timeCourse,
-        'AgnecyCoutse': profile.AgnecyCoutse,
-        'evaluation': profile.evaluation,
+        'experiences': experienceMaps,
+        'education': edactionMaps,
+        'certificates':certificatesMaps,
         'portfolioImages': profile.portfolioImages,
         'profilePhotoUrl': profile.profileImage,
         'videoUrl': profile.videoUrl,
@@ -90,10 +87,10 @@ class ProfileDataController extends GetxController {
 
   Future<Profile?> fetchProfile() async {
     String uid = FirebaseAuth.instance.currentUser!.uid;
-
-    if (_userProfile != null) {
-      return _userProfile;
-    }
+    //
+    // if (uid != null) {
+    //   return _userProfile;
+    // }
     //
     // SharedPreferences prefs = await SharedPreferences.getInstance();
     // String companyId = prefs.getString('id') ?? ""; // الحصول على companyId
@@ -110,6 +107,18 @@ class ProfileDataController extends GetxController {
       return _userProfile;
     } else {
       return null; // التعامل مع حالة عدم وجود المستند
+    }
+  }
+  Future<bool> checkEmployeeExists() async {
+    try {
+      DocumentSnapshot doc = await FirebaseFirestore.instance
+          .collection('profiles_User')
+          .doc(uid)
+          .get();
+      return doc.exists;
+    } catch (e) {
+      print('Error checking document existence: $e');
+      return false;
     }
   }
 }

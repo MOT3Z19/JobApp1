@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:job_app/core/constansColor.dart';
 class ResetPasswordConfirmation extends StatelessWidget {
   const ResetPasswordConfirmation({super.key});
 
@@ -24,7 +25,7 @@ class ResetPasswordConfirmation extends StatelessWidget {
               style: TextStyle(
                   fontSize: 32,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF356899)
+                  color: primaryColor
               ),
 
             ),
@@ -56,7 +57,7 @@ class ResetPasswordConfirmation extends StatelessWidget {
                 // Button action
               },
               style: ElevatedButton.styleFrom(
-                primary: Color(0xFF356899),
+                primary: primaryColor,
                 minimumSize: Size(double.infinity, 65),
                 padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                 shape: RoundedRectangleBorder(

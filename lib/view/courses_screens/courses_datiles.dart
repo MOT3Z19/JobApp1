@@ -3,7 +3,27 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:job_app/core/constansColor.dart';
 
 class CourseDetailsPage extends StatefulWidget {
-  const CourseDetailsPage({super.key});
+  final String? courseName;
+  final String? courseHours;
+  final String? isCertified;
+  final String? courseLevel;
+  final String? courseType;
+  final String? coursePrice;
+  final String? courseLocation;
+  final String? courseDescription;
+  final String? videoLink;
+
+  const CourseDetailsPage(
+      {super.key,
+       this.courseName,
+       this.courseHours,
+       this.isCertified,
+       this.courseLevel,
+       this.courseType,
+       this.coursePrice,
+       this.courseLocation,
+       this.courseDescription,
+       this.videoLink});
 
   @override
   State<CourseDetailsPage> createState() => _CourseDetailsPageState();
@@ -44,33 +64,35 @@ class _CourseDetailsPageState extends State<CourseDetailsPage>
                 Row(
                   children: [
                     Text(
-                      'دورة تدريب برمجة موبايل',
-                      style: TextStyle(
-                        fontSize: 15,
-                      ),
+                      widget.courseName??'',
                     ),
                     Spacer(),
                     Text(
-                      'أونلاين',
+                      widget.courseType??'',
                       style: TextStyle(color: primaryColor),
                     ),
                     SizedBox(width: width * .02),
                     Text(
-                      '20 ألف دينار',
+                      ' ${widget.coursePrice}  دينار ',
                       style: TextStyle(color: primaryColor),
                     ),
                   ],
                 ),
                 SizedBox(height: height * .02),
-                Text(
-                  'بتاريخ 22/05/2024',
-                  style: TextStyle(fontSize: 13),
+                Row(
+                  children: [
+                    Icon(Icons.location_on_outlined,color: Color(0xff515163),),
+                    Text(
+                      ' ${widget.courseLocation?? ' - '}',
+                      style: TextStyle(fontSize: 13),
+                    ),
+                  ],
                 ),
                 SizedBox(height: height * .01),
-                Text(
-                  '152 متعلم',
-                  style: TextStyle(fontSize: 13),
-                ),
+                // Text(
+                //   '152 متعلم',
+                //   style: TextStyle(fontSize: 13),
+                // ),
                 SizedBox(
                     height: height / 2.4,
                     width: width,
@@ -78,7 +100,6 @@ class _CourseDetailsPageState extends State<CourseDetailsPage>
                       children: [
                         TabBar(
                           unselectedLabelColor: subsTitleColor,
-                          labelColor: Colors.black,
                           controller: _tabController,
                           tabs: [
                             Tab(
@@ -126,7 +147,7 @@ class _CourseDetailsPageState extends State<CourseDetailsPage>
                                       SvgPicture.asset(
                                           'assets/images/courses_icons/time.svg'),
                                       SizedBox(width: width * .02),
-                                      Text('اجمالي عدد ساعات الدورة 12 ساعة'),
+                                      Text('اجمالي عدد ساعات الدورة ${widget.courseHours} ساعة '),
                                     ],
                                   ),
                                   Row(
@@ -134,7 +155,7 @@ class _CourseDetailsPageState extends State<CourseDetailsPage>
                                       SvgPicture.asset(
                                           'assets/images/courses_icons/star.svg'),
                                       SizedBox(width: width * .02),
-                                      Text('شهادة معتمدة'),
+                                      Text('${widget.isCertified} شهادة معتمدة '),
                                     ],
                                   ),
                                   Row(
@@ -142,67 +163,67 @@ class _CourseDetailsPageState extends State<CourseDetailsPage>
                                       SvgPicture.asset(
                                           'assets/images/courses_icons/level.svg'),
                                       SizedBox(width: width * .02),
-                                      Text('للمبتدئين'),
+                                      Text(widget.courseLevel??''),
                                     ],
                                   ),
                                   Text('ماذا ستتعلم؟',
                                       style: TextStyle(fontSize: 15)),
                                   Text(
-                                      'تم تصميم برنامج أساسيات تعلم Macine لتوفير أساس متين ومهارات جاهزة للعمل لمهندسي تعلم الآلة. تم تصميم برنامج أساسيات تعلم Macine لتوفيرج أساسيات تعلم Macine لتوفير أساس متين ومهارات جاهزة للعمل لمهندسي تعلم الآلة. اقرأ أكثر  أساس متين ومهارات جاهزة للعمل لمهندسي تعلم الآلة. اقرأ أكثر...',
+                                    widget.courseDescription??'',
                                       style: TextStyle(fontSize: 14)),
                                 ],
                               ),
                               Column(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                    MainAxisAlignment.start,
                                 children: [
                                   Row(
                                     children: [
                                       SvgPicture.asset(
                                           'assets/images/courses_icons/time.svg'),
                                       SizedBox(width: width * .02),
-                                      Text('اجمالي عدد ساعات الدورة 12 ساعة'),
+                                      Text('اجمالي عدد ساعات الدورة ${widget.courseHours} ساعة '),
                                     ],
                                   ),
-                                  Row(
-                                    children: [
-                                      SvgPicture.asset(
-                                          'assets/images/courses_icons/time.svg'),
-                                      SizedBox(width: width * .02),
-                                      Text('عدد الايام 3 أيام'),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      SvgPicture.asset(
-                                          'assets/images/courses_icons/time.svg'),
-                                      SizedBox(width: width * .02),
-                                      Text('4 ساعات يومياً'),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      SvgPicture.asset(
-                                          'assets/images/courses_icons/time.svg'),
-                                      SizedBox(width: width * .02),
-                                      Text('تاريخ البداية 22/05/2024'),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      SvgPicture.asset(
-                                          'assets/images/courses_icons/time.svg'),
-                                      SizedBox(width: width * .02),
-                                      Text('تاريخ النهاية 25/05/2024'),
-                                    ],
-                                  ),
+                                  // Row(
+                                  //   children: [
+                                  //     SvgPicture.asset(
+                                  //         'assets/images/courses_icons/time.svg'),
+                                  //     SizedBox(width: width * .02),
+                                  //     Text('عدد الايام 3 أيام'),
+                                  //   ],
+                                  // ),
+                                  // Row(
+                                  //   children: [
+                                  //     SvgPicture.asset(
+                                  //         'assets/images/courses_icons/time.svg'),
+                                  //     SizedBox(width: width * .02),
+                                  //     Text('4 ساعات يومياً'),
+                                  //   ],
+                                  // ),
+                                  // Row(
+                                  //   children: [
+                                  //     SvgPicture.asset(
+                                  //         'assets/images/courses_icons/time.svg'),
+                                  //     SizedBox(width: width * .02),
+                                  //     Text('تاريخ البداية 22/05/2024'),
+                                  //   ],
+                                  // ),
+                                  // Row(
+                                  //   children: [
+                                  //     SvgPicture.asset(
+                                  //         'assets/images/courses_icons/time.svg'),
+                                  //     SizedBox(width: width * .02),
+                                  //     Text('تاريخ النهاية 25/05/2024'),
+                                  //   ],
+                                  // ),
                                 ],
                               ),
                               Container(
                                 padding: EdgeInsetsDirectional.symmetric(
                                     horizontal: width * .02),
                                 decoration: BoxDecoration(
-                                  color: Colors.white,
+                                  color: Theme.of(context).primaryColor,
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 child: Column(
@@ -211,10 +232,7 @@ class _CourseDetailsPageState extends State<CourseDetailsPage>
                                     Row(
                                       children: [
                                         Text(
-                                          'القسم الأول',
-                                          style: TextStyle(
-                                              color: subsTitleColor,
-                                              fontSize: 13),
+                                          'رابط فيديو قائمة محاضرات الدورة . . . ',
                                         ),
                                         Spacer(),
                                         IconButton(
@@ -223,10 +241,7 @@ class _CourseDetailsPageState extends State<CourseDetailsPage>
                                                 Icon(Icons.keyboard_arrow_down))
                                       ],
                                     ),
-                                    Text(
-                                      'قائمة تشغيل الدورة',
-                                      style: TextStyle(fontSize: 18),
-                                    ),
+
                                     SizedBox(
                                       height: height * .02,
                                     ),
@@ -236,44 +251,44 @@ class _CourseDetailsPageState extends State<CourseDetailsPage>
                                             'assets/images/courses_icons/play.svg'),
                                         SizedBox(width: width * .02),
                                         Text(
-                                          'المحاضرة الاولى',
+                                          widget.videoLink??'',
                                           style: TextStyle(fontSize: 13),
                                         ),
                                       ],
                                     ),
-                                    Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                            'assets/images/courses_icons/play.svg'),
-                                        SizedBox(width: width * .02),
-                                        Text(
-                                          'المحاضرة الاولى',
-                                          style: TextStyle(fontSize: 13),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                            'assets/images/courses_icons/play.svg'),
-                                        SizedBox(width: width * .02),
-                                        Text(
-                                          'المحاضرة الاولى',
-                                          style: TextStyle(fontSize: 13),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                            'assets/images/courses_icons/play.svg'),
-                                        SizedBox(width: width * .02),
-                                        Text(
-                                          'المحاضرة الاولى',
-                                          style: TextStyle(fontSize: 13),
-                                        ),
-                                      ],
-                                    ),
+                                    // Row(
+                                    //   children: [
+                                    //     SvgPicture.asset(
+                                    //         'assets/images/courses_icons/play.svg'),
+                                    //     SizedBox(width: width * .02),
+                                    //     Text(
+                                    //       'المحاضرة الاولى',
+                                    //       style: TextStyle(fontSize: 13),
+                                    //     ),
+                                    //   ],
+                                    // ),
+                                    // Row(
+                                    //   children: [
+                                    //     SvgPicture.asset(
+                                    //         'assets/images/courses_icons/play.svg'),
+                                    //     SizedBox(width: width * .02),
+                                    //     Text(
+                                    //       'المحاضرة الاولى',
+                                    //       style: TextStyle(fontSize: 13),
+                                    //     ),
+                                    //   ],
+                                    // ),
+                                    // Row(
+                                    //   children: [
+                                    //     SvgPicture.asset(
+                                    //         'assets/images/courses_icons/play.svg'),
+                                    //     SizedBox(width: width * .02),
+                                    //     Text(
+                                    //       'المحاضرة الاولى',
+                                    //       style: TextStyle(fontSize: 13),
+                                    //     ),
+                                    //   ],
+                                    // ),
                                   ],
                                 ),
                               )

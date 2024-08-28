@@ -1,10 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:job_app/controller/firebaseControllers/company/companyProfileController.dart';
+import 'package:job_app/controller/firestoreController/company/companyProfileController.dart';
 import 'package:job_app/core/constansColor.dart';
-import 'package:job_app/models/companyDataModels/companyProfileModel.dart';
+import 'package:job_app/models/companyDataModels/companyProfile.dart';
 import 'package:job_app/view/home_screens/home_widgets/buildPopularJobs.dart';
 
 class CopmanyProfileScreen extends StatefulWidget {
@@ -56,12 +57,12 @@ class _CopmanyProfileScreenState extends State<CopmanyProfileScreen> {
                     child: CircleAvatar(
                         radius: width / 7,
                         backgroundImage:
-                        NetworkImage(profileCompany.cvFileUrl)),
+                        NetworkImage(profileCompany.cvFileUrl??'')),
                   ),
                   SizedBox(height: height * .009),
                   Align(
                     alignment: AlignmentDirectional.center,
-                    child: Text(profileCompany.companyName,
+                    child: Text(profileCompany.companyName??'',
                         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
                   ),
                   SizedBox(height: 2),
@@ -70,7 +71,7 @@ class _CopmanyProfileScreenState extends State<CopmanyProfileScreen> {
                     children: [
                       SvgPicture.asset(
                           'assets/images/home_icons/drawer_icon/check.svg'),
-                      Text(profileCompany.businessType,
+                      Text(profileCompany.businessType??'',
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 16,
@@ -86,7 +87,7 @@ class _CopmanyProfileScreenState extends State<CopmanyProfileScreen> {
                     padding: EdgeInsets.all(width * .05),
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Theme.of(context).primaryColor,
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Column(
@@ -95,19 +96,19 @@ class _CopmanyProfileScreenState extends State<CopmanyProfileScreen> {
                         Row(
                           children: [
                             Text(
-                              profileCompany.establishmentDate,
+                              profileCompany.establishmentDate??'',
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                             Spacer(),
                             Text(
-                              '${profileCompany.employeeCount} موظف ',
+                              '${profileCompany.employeeCount??''} موظف ',
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),
                         SizedBox(height: height * .01),
                         Text(
-                          '${profileCompany.establishmentDate} عاماً من التميز والعطاء',
+                          '${calculateYearsOfExcellence(profileCompany.establishmentDate??'' )}',
                           style: TextStyle(color: subsTitleColor),
                         ),
                       ],
@@ -121,7 +122,7 @@ class _CopmanyProfileScreenState extends State<CopmanyProfileScreen> {
                     padding: EdgeInsets.all(width * .05),
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Theme.of(context).primaryColor,
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Column(
@@ -131,7 +132,7 @@ class _CopmanyProfileScreenState extends State<CopmanyProfileScreen> {
                             style:
                             TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
                         Text(
-                          profileCompany.companyAddress,
+                          profileCompany.companyAddress??'',
                           style: TextStyle(color: subsTitleColor),
                         ),
                       ],
@@ -145,10 +146,10 @@ class _CopmanyProfileScreenState extends State<CopmanyProfileScreen> {
                     width: double.infinity,
                     padding: EdgeInsets.all(width * .05),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Theme.of(context).primaryColor,
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    child: Text( profileCompany.companyDescription),),
+                    child: Text( profileCompany.companyDescription??''),),
                   SizedBox(height: height * .01),
                   Row(
                     children: [
@@ -166,16 +167,16 @@ class _CopmanyProfileScreenState extends State<CopmanyProfileScreen> {
                                   fontSize: 15, color: Color(0xFF95969D)))),
                     ],
                   ),
-                  SizedBox(
-                    height: height / 3,
-
-                    child: ListView.builder(
-                        physics: BouncingScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          return buildPopularJobs();
-                        },
-                        itemCount: 9),
-                  ),
+                  // SizedBox(
+                  //   height: height / 3,
+                  //
+                  //   child: ListView.builder(
+                  //       physics: BouncingScrollPhysics(),
+                  //       itemBuilder: (context, index) {
+                  //         return buildPopularJobs();
+                  //       },
+                  //       itemCount: 9),
+                  // ),
                 ]));
             })
 
@@ -183,5 +184,14 @@ class _CopmanyProfileScreenState extends State<CopmanyProfileScreen> {
     ,
     );
 
+  }
+  String calculateYearsOfExcellence(String establishmentDate) {
+    DateTime establishedDate = DateFormat('yyyy-MM-dd').parse(establishmentDate);
+    int yearsOfExcellence = DateTime.now().year - establishedDate.year;
+    if (DateTime.now().month < establishedDate.month ||
+        (DateTime.now().month == establishedDate.month && DateTime.now().day < establishedDate.day)) {
+      yearsOfExcellence--;
+    }
+    return '$yearsOfExcellence عاماً من التميز والعطاء';
   }
 }

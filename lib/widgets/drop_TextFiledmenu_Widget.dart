@@ -18,40 +18,37 @@ class CustomDropdown extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHight = MediaQuery.of(context).size.height;
-    return SizedBox(
-      height: screenHight/12,
-      child: DropdownButtonFormField<String>(
-        borderRadius: BorderRadius.circular(15),
-        value: selectedValue,
-        dropdownColor: Colors.white,
-        isExpanded: true,
-
-        alignment: AlignmentDirectional.bottomStart,
-        decoration: InputDecoration(
-          fillColor: Colors.white,
-          filled: true,
-          contentPadding: EdgeInsetsDirectional.symmetric(horizontal:screenWidth*.03,vertical: screenHight*.01),
-          labelText: label,
-          border: OutlineInputBorder( // استخدام OutlineInputBorder للحواف الدائرية
-            borderRadius: BorderRadius.circular(10), // إضافة الحواف الدائرية
-            borderSide: BorderSide.none,
-            gapPadding: 12// إزالة الحد الخارجي
-          ),
-
+    return DropdownButtonFormField<String>(
+      padding: EdgeInsetsDirectional.symmetric(vertical: screenHight*.01,),
+      menuMaxHeight: screenHight/5,
+      borderRadius: BorderRadius.circular(15),
+      value: selectedValue,
+      isExpanded: true,
+      alignment: AlignmentDirectional.bottomStart,
+      decoration: InputDecoration(
+        filled: true,
+        fillColor: Theme.of(context).primaryColor,
+        contentPadding: EdgeInsetsDirectional.symmetric(horizontal:screenWidth*.03,vertical: screenHight*.01),
+        labelText: label,
+        border: OutlineInputBorder( // استخدام OutlineInputBorder للحواف الدائري// ة
+          borderRadius: BorderRadius.circular(10), // إضافة الحواف الدائرية
+          borderSide: BorderSide.none,
+          gapPadding: 12// إزالة الحد الخارجي
         ),
-        items: options.map((String value) {
-          return DropdownMenuItem<String>(
-            value: value,
-            child: SizedBox(
-                width: screenWidth/2,
-                child: Text(value,style: TextStyle(fontFamily: 'Almarai',fontSize: 13),)),
-          );
-        }).toList(),
-
-        onChanged: onChanged,
-
 
       ),
+      items: options.map((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: SizedBox(
+              width: screenWidth/2,
+              child: Text(value,style: TextStyle(fontFamily: 'Almarai',fontSize: 13),)),
+        );
+      }).toList(),
+
+      onChanged: onChanged,
+
+
     );
   }
 }

@@ -1,12 +1,8 @@
-
 import 'package:flutter/material.dart';
-
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:job_app/controller/firebaseControllers/user/jobTimeController.dart';
+import 'package:job_app/controller/firestoreController/user/jobTimeController.dart';
+import 'package:job_app/controller/firestoreController/user/jobTypeController.dart';
 import 'package:job_app/core/constansColor.dart';
-
-import '../../../../controller/firebaseControllers/user/jobTypeController.dart';
 import 'jobExpernce_screen.dart';
 
 class JobTimeScreen extends StatelessWidget {
@@ -175,11 +171,10 @@ class JobTimeScreen extends StatelessWidget {
                 },
                 child: Text(
                   'التالي',
-                  style: TextStyle(
-                      color: Color(0xFFFFFFFF), fontSize: fontSizeSubtitle),
+                  style: TextStyle(fontSize: fontSizeSubtitle),
                 ),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF356899),
+                  backgroundColor: primaryColor,
                   minimumSize: Size(double.infinity, buttonHeight),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),

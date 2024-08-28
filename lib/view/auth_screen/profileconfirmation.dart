@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:job_app/core/constansColor.dart';
+import 'package:job_app/view/home_screens/UserHome/bottomBar.dart';
 import 'package:job_app/view/home_screens/UserHome/home_page.dart';
 
 class ProfileConfirmationScreen extends StatelessWidget {
@@ -29,7 +30,7 @@ class ProfileConfirmationScreen extends StatelessWidget {
               style: TextStyle(
                   fontSize: 32,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF356899)),
+                  color: primaryColor),
             ),
             SizedBox(height: 87),
             Image.asset(
@@ -57,7 +58,7 @@ class ProfileConfirmationScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 // Button action
-                Get.offAll(HomePage());
+                Get.offAll(MyHomePage());
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: primaryColor,

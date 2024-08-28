@@ -16,11 +16,9 @@ class _JobPersonalScreenState extends State<JobPersonalScreen> {
   final TextEditingController fullnameController = TextEditingController();
   final TextEditingController bornPlaceController = TextEditingController();
   final TextEditingController bornDateController = TextEditingController();
- // final TextEditingController maritalStatusController = TextEditingController();
   final TextEditingController phoneNumberController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController salaryExpectationController = TextEditingController();
-
   String? selectedGender;
   String? maritalStatus;
   String? selectedOpenToWork;
@@ -58,140 +56,142 @@ class _JobPersonalScreenState extends State<JobPersonalScreen> {
     final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04, vertical: screenWidth * 0.07),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Align(
-              alignment: AlignmentDirectional.centerEnd,
-              child: TextButton(
-                onPressed: () {
-                  _navigateToNextScreen();
-                },
-                child: Text(
-                  'تخطي',
-                  style: TextStyle(color: subsTitleColor),
-                ),
-              ),
-            ),
-            Center(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        actions: [
+          Align(
+            alignment: AlignmentDirectional.centerEnd,
+            child: TextButton(
+              onPressed: () {
+                _navigateToNextScreen();
+              },
               child: Text(
-                'فرصة',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 32,
-                  color: primaryColor,
+                'تخطي',
+                style: TextStyle(color: subsTitleColor),
+              ),
+            ),
+          ),
+        ],
+      ),
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.03, vertical: screenWidth * 0.07),
+        child: Expanded(
+          child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(parent: BouncingScrollPhysics()),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: screenHeight*.07),
+                Center(
+                  child: Text(
+                    'فرصة',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 32,
+                      color: primaryColor,
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            Text(
-              'قم ببناء الملف الشخصي لك لتحصل على فرصة أكبر :)',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 22
-              ),
-            ),
-            SizedBox(height: screenHeight*.02),
-            Text('المعلومات الشخصية',style: TextStyle(fontWeight: FontWeight.bold),),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: BouncingScrollPhysics(parent: BouncingScrollPhysics()),
-                child: Column(
-                  children: [
-                    CustomTextField(label: 'الاسم ثلاثي', controller: fullnameController,keybordType: TextInputType.name),
-                    CustomTextField(label: 'محل الولادة', controller: bornPlaceController,keybordType: TextInputType.streetAddress),
-                    CustomDatePicker(label: 'تاريخ الميلاد', controller: bornDateController),
-                    SizedBox(height: screenHeight*.01),
-                    CustomDropdown(
-                      label: 'الحالة الزوجية',
-                      options: ['أعزب', 'متزوج','منفصل'],
-                      selectedValue: selectedGender,
-                      onChanged: (value) => setState(() => selectedGender = value),
-                    ),
-                   // CustomTextField(label: 'الحالة الزوجية', controller: maritalStatusController),
-                    CustomTextField(label: 'رقم الهاتف', controller: phoneNumberController,keybordType: TextInputType.phone),
-                    CustomTextField(label: 'البريد الالكتروني', controller: emailController,keybordType: TextInputType.emailAddress),
-                    SizedBox(height: screenHeight*.01),
-                    CustomDropdown(
-                      label: 'الجنس',
-                      options: ['ذكر', 'انثى'],
-                      selectedValue: maritalStatus,
-                      onChanged: (value) => setState(() => maritalStatus = value),
-                    ),
-                    CustomDropdown(
-
-                      label: 'هل انت متاح للعمل',
-                      options: ['نعم', 'لا'],
-
-                      selectedValue: selectedOpenToWork,
-                      onChanged: (value) => setState(() => selectedOpenToWork = value),
-                    ),
-                    CustomDropdown(
-                      label: 'هل لديك التزامات اخرى',
-                      options: ['نعم', 'لا'],
-                      selectedValue: selectedOtherCommitments,
-                      onChanged: (value) => setState(() => selectedOtherCommitments = value),
-                    ),
-                    CustomDropdown(
-                      label: 'متاح للعمل حضوريا او اونلاين',
-                      options: ['حضوريا', 'اونلاين'],
-                      selectedValue: selectedWorkPlace,
-                      onChanged: (value) => setState(() => selectedWorkPlace = value),
-                    ),
-                    CustomTextField(label: 'اقل راتب تقبل به - >     مثال : 400\$ فصاعدا', controller: salaryExpectationController,keybordType: TextInputType.text),
-                    SizedBox(height: screenHeight*.02),
-
-                    CustomDropdown(
-                      label: 'هل تمتلك وسيلة نقل',
-                      options: ['نعم', 'لا'],
-                      selectedValue: selectedTransport,
-                      onChanged: (value) => setState(() => selectedTransport = value),
-                    ),
-                    CustomDropdown(
-                      label: 'اللغات',
-                      options: ['English', 'French', 'Arabic','chines'],
-                      selectedValue: selectedLanguage,
-                      onChanged: (value) => setState(() => selectedLanguage = value),
-                    ),
-                    CustomDropdown(
-                      label: 'المهارات',
-                      options: ['العمل الجماعي', 'التعامل مع الزبائن', 'التسويق','الحسابات'],
-                      selectedValue: selectedSkills,
-                      onChanged: (value) => setState(() => selectedSkills = value),
-                    ),
-                    CustomDropdown(
-
-                      label: 'من يمكن رؤية ملفك الشخصي',
-                      options: ['جميع رواد الاعمال واصحاب المشاريع', 'لا احد سوى الوظائف التي اتقدم عليها'],
-                      selectedValue: selectedProfileVisibility,
-                      onChanged: (value) => setState(() => selectedProfileVisibility = value),
-                    ),
-                    SizedBox(height: screenHeight*.02),
-
-                    ElevatedButton(
-                      onPressed: _navigateToNextScreen,
-                      child: Text(
-                        'التالي',
-                        style: TextStyle(
-                          color: Colors.white,
-
-                        ),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: primaryColor,
-                        minimumSize: Size(double.infinity, screenHeight * 0.07),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                    ),
-                  ],
+                Text(
+                  'قم ببناء الملف الشخصي لك لتحصل على فرصة أكبر :)',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 22
+                  ),
                 ),
-              ),
-            ),
+                SizedBox(height: screenHeight*.02),
+                Text('المعلومات الشخصية',style: TextStyle(fontWeight: FontWeight.bold),),
+                SizedBox(height: screenHeight*.01),
+                CustomTextField(label: 'الاسم ثلاثي', controller: fullnameController,keybordType: TextInputType.name),
+                CustomTextField(label: 'محل الولادة', controller: bornPlaceController,keybordType: TextInputType.streetAddress),
+                CustomDatePicker(label: 'تاريخ الميلاد', controller: bornDateController),
+                SizedBox(height: screenHeight*.01),
+                CustomDropdown(
+                  label: 'الحالة الزوجية',
+                  options: ['أعزب', 'متزوج','منفصل'],
+                  selectedValue: maritalStatus,
+                  onChanged: (value) => setState(() => maritalStatus = value),
+                ),
+               // CustomTextField(label: 'الحالة الزوجية', controller: maritalStatusController),
+                CustomTextField(label: 'رقم الهاتف', controller: phoneNumberController,keybordType: TextInputType.phone),
+                CustomTextField(label: 'البريد الالكتروني', controller: emailController,keybordType: TextInputType.emailAddress),
+                SizedBox(height: screenHeight*.01),
+                CustomDropdown(
+                  label: 'الجنس',
+                  options: ['ذكر', 'انثى'],
+                  selectedValue: selectedGender,
+                  onChanged: (value) => setState(() => selectedGender = value),
+                ),
+                CustomDropdown(
 
-          ],
+                  label: ' هل انت متاح للعمل الان',
+                  options: ['نعم يمكنني البدء فوراً', 'لا سوف اتفرغ خلال فترة قصيرة'],
+
+                  selectedValue: selectedOpenToWork,
+                  onChanged: (value) => setState(() => selectedOpenToWork = value),
+                ),
+                CustomDropdown(
+                  label: 'هل لديك التزامات اخرى ؟',
+                  options: ['متفرغ كلياً', 'متفرغ جزئياً'],
+                  selectedValue: selectedOtherCommitments,
+                  onChanged: (value) => setState(() => selectedOtherCommitments = value),
+                ),
+                CustomDropdown(
+                  label: 'متاح للعمل حضوريا او اونلاين',
+                  options: ['كلاهما','حضورياً', 'اونلاين'],
+                  selectedValue: selectedWorkPlace,
+                  onChanged: (value) => setState(() => selectedWorkPlace = value),
+                ),
+                CustomTextField(label: 'اقل راتب تقبل به - >     مثال : 400\$ فصاعدا', controller: salaryExpectationController,keybordType: TextInputType.text),
+                SizedBox(height: screenHeight*.01),
+
+                CustomDropdown(
+                  label: 'هل تمتلك وسيلة نقل',
+                  options: ['نعم', 'لا'],
+                  selectedValue: selectedTransport,
+                  onChanged: (value) => setState(() => selectedTransport = value),
+                ),
+                CustomDropdown(
+                  label: 'اللغات',
+                  options: ['English', 'French', 'Arabic','chines'],
+                  selectedValue: selectedLanguage,
+                  onChanged: (value) => setState(() => selectedLanguage = value),
+                ),
+                CustomDropdown(
+                  label: 'المهارات',
+                  options: ['العمل الجماعي', 'التعامل مع الزبائن', 'التسويق','الحسابات'],
+                  selectedValue: selectedSkills,
+                  onChanged: (value) => setState(() => selectedSkills = value),
+                ),
+                CustomDropdown(
+
+                  label: 'من يمكن رؤية ملفك الشخصي',
+                  options: ['جميع رواد الاعمال واصحاب المشاريع', 'لا احد سوى الوظائف التي اتقدم عليها'],
+                  selectedValue: selectedProfileVisibility,
+                  onChanged: (value) => setState(() => selectedProfileVisibility = value),
+                ),
+                SizedBox(height: screenHeight*.02),
+
+                ElevatedButton(
+                  onPressed: _navigateToNextScreen,
+                  child: Text(
+                    'التالي',
+                    style: TextStyle(
+                      color: Colors.white,
+
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: primaryColor,
+                    minimumSize: Size(double.infinity, screenHeight * 0.07),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

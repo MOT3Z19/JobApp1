@@ -10,4 +10,13 @@ class Experience {
     required this.startDate,
     required this.endDate,
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'jobTitle': jobTitle,
+      'companyName': companyName,
+      'startDate': startDate,
+      'endDate': endDate,
+    };
+  }
 }

@@ -11,8 +11,18 @@ class SharedPrefController {
     await prefs.setString('id', userId);
   }
 
-  Future<void> removeUser({required String email}) async {
+  // Future<void> removeUser({required String email}) async {
+  //   final SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   await prefs.remove(email);
+  //
+  // }
+  Future<void> removeUser() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.remove(email);
+    await prefs.remove('email');
+
   }
+  // Future<void> removeUser({required String email}) async {
+  //   final SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   await prefs.remove(email);
+  // }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:job_app/core/constansColor.dart';
 
 class MoretypeScreen extends StatefulWidget {
   @override
@@ -6,10 +7,8 @@ class MoretypeScreen extends StatefulWidget {
 }
 
 class _ProtofileScreenState extends State<MoretypeScreen> {
-
   @override
   Widget build(BuildContext context) {
-
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
@@ -22,9 +21,9 @@ class _ProtofileScreenState extends State<MoretypeScreen> {
 
     return Scaffold(
       body: Padding(
-        padding:EdgeInsets.symmetric( horizontal: horizontalPadding, vertical: screenWidth * 0.1),
-
-      child: Column(
+        padding: EdgeInsets.symmetric(
+            horizontal: horizontalPadding, vertical: screenWidth * 0.1),
+        child: Column(
           children: [
             Expanded(
               child: SingleChildScrollView(
@@ -38,19 +37,21 @@ class _ProtofileScreenState extends State<MoretypeScreen> {
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: fontSizeTitle,
-                            color: Color(0xFF356899)),
+                            color: primaryColor),
                       ),
                     ),
                     Text(
                       'قم ببناء الملف الشخصي لك لتحصل على فرصة أكبر :)',
-                      style:
-                      TextStyle(fontSize: fontSizeSubtitle, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontSize: fontSizeSubtitle,
+                          fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: padding),
                     Text(
                       'معرض الاعمال ',
-                      style:
-                      TextStyle(fontSize: fontSizeSubtitle, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontSize: fontSizeSubtitle,
+                          fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: padding),
                     Center(
@@ -71,8 +72,9 @@ class _ProtofileScreenState extends State<MoretypeScreen> {
                             SizedBox(height: fontSizeSubtitle),
                             Text(
                               'صيغ الملفات DOC, pdf, word',
-                              style:
-                              TextStyle(fontSize: fontSizeSubtitle, color: Colors.grey),
+                              style: TextStyle(
+                                  fontSize: fontSizeSubtitle,
+                                  color: Colors.grey),
                             ),
                             SizedBox(height: padding),
                             ElevatedButton(

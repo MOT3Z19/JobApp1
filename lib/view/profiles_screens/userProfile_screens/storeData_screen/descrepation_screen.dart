@@ -1,16 +1,16 @@
 import 'dart:io';
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:job_app/controller/firebaseControllers/user/user_profile_controller.dart';
-import '../../../../controller/firebaseControllers/user/jobTypeController.dart';
+import 'package:job_app/controller/firestoreController/user/jobTypeController.dart';
+import 'package:job_app/controller/firestoreController/user/userProfileController.dart';
+import 'package:job_app/models/usersDataModels/Certificates.dart';
+import 'package:job_app/models/usersDataModels/Edaction.dart';
 import '../../../../core/constansColor.dart';
 import '../../../../models/usersDataModels/ExperienceModel.dart';
 import '../../../../models/usersDataModels/UserProfileModel.dart';
 import 'portofileScreen.dart';
 
-class ProfileDataScreen extends StatelessWidget {
+class ProfileDataScreen extends StatefulWidget {
   final String fullname;
   final String bornPlace;
   final String bornDate;
@@ -29,10 +29,8 @@ class ProfileDataScreen extends StatelessWidget {
   final List<JobType> selectedJobTypes;
   final List<String> selectedJobTimes;
   final List<Experience> experiences;
-  final String educationLevel;
-  final String university;
-  final String college;
-  final String graduationDate;
+  final List<Edaction> edaction;
+
 
   ProfileDataScreen({
     required this.fullname,
@@ -53,18 +51,54 @@ class ProfileDataScreen extends StatelessWidget {
     required this.selectedJobTypes,
     required this.selectedJobTimes,
     required this.experiences,
-    required this.educationLevel,
-    required this.university,
-    required this.college,
-    required this.graduationDate,
+    required this.edaction,
+
   });
 
+  @override
+  State<ProfileDataScreen> createState() => _ProfileDataScreenState();
+}
+
+class _ProfileDataScreenState extends State<ProfileDataScreen> {
   final TextEditingController coursesNameController = TextEditingController();
   final TextEditingController coursesTypeController = TextEditingController();
   final TextEditingController coursesAgncyController = TextEditingController();
   final TextEditingController coursesTimeController = TextEditingController();
-
   final ProfileDataController controller = Get.put(ProfileDataController());
+
+  List<Certificates> certificates = [];
+
+  void _addCertificates() {
+    if (coursesNameController.text.isNotEmpty &&
+        coursesTypeController.text.isNotEmpty &&
+        coursesAgncyController.text.isNotEmpty &&
+        coursesTimeController.text.isNotEmpty) {
+      setState(() {
+        certificates.add(
+          Certificates(
+            coursesName: coursesNameController.text,
+            coursesType: coursesTypeController.text,
+            coursesAgncy: coursesAgncyController.text,
+            coursesTime: coursesTimeController.text,
+          ),
+        );
+      });
+
+      // Clear the controllers after adding the experience
+      coursesNameController.clear();
+      coursesTypeController.clear();
+      coursesAgncyController.clear();
+      coursesTimeController.clear();
+    } else {
+      Get.snackbar(
+        'خطأ',
+        'الرجاء ملء جميع الحقول.',
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +141,7 @@ class ProfileDataScreen extends StatelessWidget {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: fontSizeTitle,
-                          color: Color(0xFF356899),
+                          color: primaryColor,
                         ),
                       ),
                     ),
@@ -200,8 +234,7 @@ class ProfileDataScreen extends StatelessWidget {
                     SizedBox(height: padding),
 
                     InkWell(
-                      onTap: () {
-                      },
+                      onTap: () => _addCertificates(),
                       child: ListTile(
                         leading: Icon(Icons.add, color: Colors.black),
                         title: Text('أضف شهادات ودورات اخرى ',
@@ -215,7 +248,7 @@ class ProfileDataScreen extends StatelessWidget {
                         child: Text(
                           'التالي',
                           style: TextStyle(
-                              color: Color(0xFFFFFFFF),
+
                               fontSize: fontSizeSubtitle),
                         ),
                         style: ElevatedButton.styleFrom(
@@ -226,44 +259,37 @@ class ProfileDataScreen extends StatelessWidget {
                           ),
                         ),
                         onPressed: () async {
-                          Get.to(ProtofileScreen());
                           Profile profile = Profile(
-                              fullname: fullname,
-                              bornPlace: bornPlace,
-                              bornDate: bornDate,
-                              stutasMarr: stutasMarr,
-                              phoneNumber: phoneNumber,
-                              email: email,
-                              money: money,
-                              gender: gender,
-                              OpentoWork: OpentoWork,
-                              OntheWork: OntheWork,
-                              WorkPlace: WorkPlace,
-                              Transfar: Transfar,
-                              Language: Language,
-                              Skills: Skills,
-                              showedProfile: showedProfile,
-                              selectedJobTypes: selectedJobTypes
+                              fullname: widget.fullname,
+                              bornPlace: widget.bornPlace,
+                              bornDate: widget.bornDate,
+                              stutasMarr: widget.stutasMarr,
+                              phoneNumber: widget.phoneNumber,
+                              email: widget.email,
+                              money: widget.money,
+                              gender: widget.gender,
+                              OpentoWork: widget.OpentoWork,
+                              OntheWork: widget.OntheWork,
+                              WorkPlace: widget.WorkPlace,
+                              Transfar: widget.Transfar,
+                              Language: widget.Language,
+                              Skills: widget.Skills,
+                              showedProfile: widget.showedProfile,
+                              selectedJobTypes: widget.selectedJobTypes
                                   .map((type) => type.name)
                                   .toList(),
-                              selectedJobTimes: selectedJobTimes,
-                              experiences: experiences,
-                              educationLevel: educationLevel,
-                              university: university,
-                              college: college,
-                              graduationDate: graduationDate,
-                              nameCourse: coursesNameController.text,
-                              timeCourse: coursesTimeController.text,
-                              typeCourse: coursesTypeController.text,
-                              AgnecyCoutse: coursesAgncyController.text,
-                              evaluation: educationLevel,
+                              selectedJobTimes: widget.selectedJobTimes,
+                              experiences: widget.experiences,
+                            edaction: widget.edaction,
+                            certificates: certificates,
                               portfolioImages: [],
                               profileImage: '',
                               cvText: '',
-                              videoUrl: '');
+                              videoUrl: '',
+                             );
 
                          await Get.find<ProfileDataController>().saveProfile(profile);
-
+                          Get.to(ProtofileScreen());
                         }),
                   ],
                 ),

@@ -1,11 +1,12 @@
 class ProfileCompany {
-  final String companyName;
-  final String companyAddress;
-  final String establishmentDate;
-  final String businessType;
-  final String employeeCount;
-  final String companyDescription;
-  final String cvFileUrl;
+  String companyName;
+  String companyAddress;
+  String establishmentDate;
+  String businessType;
+  String employeeCount;
+  String companyDescription;
+  String cvFileUrl;
+  bool visible;
 
   ProfileCompany({
     required this.companyName,
@@ -15,7 +16,21 @@ class ProfileCompany {
     required this.employeeCount,
     required this.companyDescription,
     required this.cvFileUrl,
+    required this.visible,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'companyName': companyName,
+      'companyAddress': companyAddress,
+      'establishmentDate': establishmentDate,
+      'businessType': businessType,
+      'employeeCount': employeeCount,
+      'companyDescription': companyDescription,
+      'cvFileUrl': cvFileUrl,
+      'visible': visible,
+    };
+  }
 
   factory ProfileCompany.fromMap(Map<String, dynamic> map) {
     return ProfileCompany(
@@ -24,8 +39,9 @@ class ProfileCompany {
       businessType: map['businessType'],
       employeeCount: map['employeeCount'],
       companyDescription: map['companyDescription'],
-      cvFileUrl: map['cvFileUrl'],
+      cvFileUrl: map['cvFileUrl']??'',
       establishmentDate: map['establishmentDate'],
+      visible: map['visible'],
     );
   }
 }

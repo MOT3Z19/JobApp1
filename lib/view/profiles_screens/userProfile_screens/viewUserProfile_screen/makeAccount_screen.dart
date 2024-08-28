@@ -15,36 +15,28 @@ class MakeAccount extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
+      appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            SizedBox(height: height * .1),
             CircleAvatar(
                 radius: width / 7,
                 backgroundImage:
                     AssetImage('assets/images/outBoarding_Images/out4.jpg')),
             SizedBox(height: height * .009),
-            Align(
-              alignment: AlignmentDirectional.center,
-              child: Text('ميسرة نصار',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-            ),
-            SizedBox(height: 2),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('مطور تطبيقات',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16,
-                        color: subsTitleColor)),
-                SizedBox(height: height * .009),
-                SvgPicture.asset(
-                    'assets/images/home_icons/drawer_icon/check.svg'),
+                SvgPicture.asset('assets/images/home_icons/drawer_icon/check.svg'),
+                Align(
+                  alignment: AlignmentDirectional.center,
+                  child: Text('  ميسرة نصار',
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                ),
               ],
             ),
-            SizedBox(height: height * .05),
+            SizedBox(height: height*.07),
             Image(
               image: AssetImage(
                 'assets/images/resume.png',
@@ -52,31 +44,25 @@ class MakeAccount extends StatelessWidget {
               width: width / 2.5,
               height: height / 4,
             ),
-            SizedBox(height: height * .05),
+            SizedBox(height: height * .03),
             Text(
               'لا يوجد بيانات لمفلك الشخصي',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
             ),
-            SizedBox(height: height * .01),
+            SizedBox(height: height * .03),
             Text(
-              textAlign:TextAlign.center,
-              'للأسف لا يوجد بيانات لعرضها, قم بانشاء سيرة ذاتية عنك لتتمكن من التقديم على الوظائف المتاحة في التطبيق وتزيد فرصتك في الحصول على وظائف ملائمة لك وسنقدم لك نماذج تساعدك في  بناء سيرتك الذاتية ',
+              textAlign: TextAlign.center,
+              'للأسف لا يوجد بيانات لعرضها, قم بانشاء سيرة ذاتية عنك لتتمكن من التقديم على الوظائف المتاحة في التطبيق وتزيد فرصتك في الحصول على وظائف ملائمة لك وسنقدم لك نماذج تساعدك في  بناء سيرتك الذاتية...',
               style: TextStyle(fontSize: 15, color: subsTitleColor),
             ),
-            SizedBox(height: height * .03),
+            SizedBox(height: height * .05),
             ElevatedButton(
               onPressed: () {
                 Get.to(JobPersonalScreen());
                 // Button action
               },
-              style: ElevatedButton.styleFrom(
-                primary: Color(0xFF356899),
-                minimumSize: Size(double.infinity, 60),
-
-              ),
               child: Text(
                 'إنشاء سيرة ذاتية',
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
             ),
           ],

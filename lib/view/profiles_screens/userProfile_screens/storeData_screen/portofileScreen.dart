@@ -1,7 +1,7 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:job_app/controller/firebaseControllers/user/protofile_controller.dart';
+import 'package:job_app/controller/firestoreController/user/protofile_controller.dart';
 import 'package:job_app/core/constansColor.dart';
 import 'package:job_app/view/profiles_screens/userProfile_screens/storeData_screen/moreTypeScreen.dart';
 
@@ -18,10 +18,7 @@ class _ProtofileScreenState extends State<ProtofileScreen> {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
-    final double padding = screenWidth * 0.04;
-    final double fontSizeTitle = screenWidth * 0.08;
     final double fontSizeSubtitle = screenWidth * 0.04;
-    final double containerHeight = screenHeight * 0.08;
     final double horizontalPadding = screenWidth * 0.04;
     final double buttonHeight = screenHeight * 0.07;
 
@@ -154,8 +151,8 @@ class _ProtofileScreenState extends State<ProtofileScreen> {
                     SizedBox(height: screenHeight / 10),
                     ElevatedButton(
                       onPressed: () async {
-                        Get.to(MoreTypeScreen());
                         await controller.uploadImages();
+                        Get.to(MoreTypeScreen());
                       },
                       child: Center(
                         child: Text('التالي',

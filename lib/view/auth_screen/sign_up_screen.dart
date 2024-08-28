@@ -6,16 +6,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:job_app/controller/authController/authController.dart';
-import 'package:job_app/controller/authController/sing_up_controller.dart';
+import 'package:job_app/controller/authController/authWithFac&GoogleController.dart';
+import 'package:job_app/controller/authController/authWithEmail&PassController.dart';
 import 'package:job_app/core/constansColor.dart';
-import 'package:job_app/models/usersDataModels/usersData.dart';
 import 'package:job_app/prefes/sharedPrefController.dart';
 import 'package:job_app/utils/context-extenssion.dart';
-import 'package:job_app/view/auth_screen/profileconfirmation.dart';
 import 'package:job_app/view/auth_screen/sign_in_screen.dart';
 import 'package:job_app/view/auth_screen/verification_screen.dart';
-import 'package:job_app/view/home_screens/UserHome/home_page.dart';
 import 'auth_widgets/PasswordField.dart';
 import 'auth_widgets/data_forms.dart';
 
@@ -25,8 +22,8 @@ class SignUpScreen extends StatefulWidget {
 }
 
 SharedPrefController _sharedPrefController = Get.put(SharedPrefController());
-SingUpController _SingUpController = Get.put(SingUpController());
-AuthModel _auth = AuthModel();
+AuthWithEmailAndPassController _SingUpController = Get.put(AuthWithEmailAndPassController());
+AuthWithFacebookAndGoogleController _auth = AuthWithFacebookAndGoogleController();
 final TextEditingController _nameController = TextEditingController();
 final TextEditingController _passwordController = TextEditingController();
 final TextEditingController _emailController = TextEditingController();

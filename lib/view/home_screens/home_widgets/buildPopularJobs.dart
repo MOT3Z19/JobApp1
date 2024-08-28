@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:job_app/core/constansColor.dart';
 
 class buildPopularJobs extends StatelessWidget {
-  const buildPopularJobs({super.key});
+  final String jobName;
+  final String salary;
+  final String address;
+  final String caption;
+  const buildPopularJobs({super.key, required this.jobName, required this.salary, required this.address, required this.caption});
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +39,7 @@ class buildPopularJobs extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'شيف طبخ',
+                    jobName??'',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 14,
@@ -46,7 +50,7 @@ class buildPopularJobs extends StatelessWidget {
                     height: height * .01,
                   ),
                   Text(
-                    'مطعم المدينة',
+                    caption??'',
                     style: TextStyle(
                         fontSize: 14,
                         color: subsTitleColor,
@@ -82,11 +86,11 @@ class buildPopularJobs extends StatelessWidget {
                         )),
                   ),
                   Text(
-                    'الراتب:500\$',
+                    'الراتب:$salary\$',
                     style: TextStyle(fontSize: 14, color: primaryColor),
                   ),
                   Text(
-                    'العراق.بغداد',
+                    address??'',
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 14,

@@ -1,9 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:job_app/controller/firebaseControllers/user/jobTypeController.dart';
-
-import '../../../../core/constansColor.dart';
+import 'package:job_app/controller/firestoreController/user/jobTypeController.dart';
+import 'package:job_app/core/constansColor.dart';
 import 'jobTime_screen.dart';
 
 class JobTypeScreen extends StatelessWidget {
@@ -177,8 +175,7 @@ class JobTypeScreen extends StatelessWidget {
                 onPressed: _navigateToNextScreen,
                 child: Text(
                   'التالي',
-                  style: TextStyle(
-                      color: Color(0xFFFFFFFF), fontSize: fontSizeSubtitle),
+                  style: TextStyle(fontSize: fontSizeSubtitle),
                 ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: primaryColor,

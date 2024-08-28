@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:job_app/controller/firestoreController/user/jobTypeController.dart';
+import 'package:job_app/core/constansColor.dart';
+import 'package:job_app/models/usersDataModels/Edaction.dart';
+import 'package:job_app/models/usersDataModels/ExperienceModel.dart';
 import 'package:job_app/widgets/drop_TextFiledmenu_Widget.dart';
-
-import '../../../../controller/firebaseControllers/user/jobTypeController.dart';
-import '../../../../core/constansColor.dart';
-import '../../../../models/usersDataModels/ExperienceModel.dart';
 import 'descrepation_screen.dart'; // Add this import for date formatting
 
-class EducationScreen extends StatelessWidget {
+class EducationScreen extends StatefulWidget {
   final String fullname;
   final String bornPlace;
   final String bornDate;
@@ -49,42 +49,83 @@ class EducationScreen extends StatelessWidget {
     required this.experiences,
   });
 
+  @override
+  State<EducationScreen> createState() => _EducationScreenState();
+}
+
+class _EducationScreenState extends State<EducationScreen> {
   final TextEditingController universityController = TextEditingController();
+
   final TextEditingController collegeController = TextEditingController();
+
   final TextEditingController graduationDateController =
   TextEditingController();
+
   String? selectedDegree;
 
+  List<Edaction> eduction = [];
+
+  void _addEdaction() {
+    if (universityController.text.isNotEmpty &&
+        collegeController.text.isNotEmpty &&
+        graduationDateController.text.isNotEmpty &&
+        selectedDegree.toString().isNotEmpty) {
+      setState(() {
+        eduction.add(
+          Edaction(
+            university: universityController.text,
+            college: collegeController.text,
+            graduationDate: graduationDateController.text,
+            selectedDegree: selectedDegree.toString(),
+          ),
+        );
+      });
+
+      universityController.clear();
+      collegeController.clear();
+      graduationDateController.clear();
+    } else {
+      Get.snackbar(
+        'خطأ',
+        'الرجاء ملء جميع الحقول.',
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
+  }
+
   void _navigateToNextScreen() {
-    String university = universityController.text;
-    String college = collegeController.text;
-    String graduationDate = graduationDateController.text;
-    String educationLevel = selectedDegree ?? '';
-    Get.to(() =>
-        ProfileDataScreen(
-          fullname: fullname,
-          bornPlace: bornPlace,
-          bornDate: bornDate,
-          stutasMarr: stutasMarr,
-          phoneNumber: phoneNumber,
-          email: email,
-          money: money,
-          gender: gender,
-          OpentoWork: OpentoWork,
-          OntheWork: OntheWork,
-          WorkPlace: WorkPlace,
-          Transfar: Transfar,
-          Language: Language,
-          Skills: Skills,
-          showedProfile: showedProfile,
-          selectedJobTypes: selectedJobTypes,
-          selectedJobTimes: selectedJobTimes,
-          experiences: experiences,
-          university: university,
-          college: college,
-          graduationDate: graduationDate,
-          educationLevel: educationLevel,
-        ));
+    if (eduction.isEmpty) {
+      Get.snackbar(
+        'خطأ',
+        'الرجاء إضافة خبرات.',
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }else{
+      Get.to(() =>
+          ProfileDataScreen(
+            fullname: widget.fullname,
+            bornPlace: widget.bornPlace,
+            bornDate: widget.bornDate,
+            stutasMarr: widget.stutasMarr,
+            phoneNumber: widget.phoneNumber,
+            email: widget.email,
+            money: widget.money,
+            gender: widget.gender,
+            OpentoWork: widget.OpentoWork,
+            OntheWork: widget.OntheWork,
+            WorkPlace: widget.WorkPlace,
+            Transfar: widget.Transfar,
+            Language: widget.Language,
+            Skills: widget.Skills,
+            showedProfile: widget.showedProfile,
+            selectedJobTypes: widget.selectedJobTypes,
+            selectedJobTimes: widget.selectedJobTimes,
+            experiences: widget.experiences,
+            edaction: eduction,
+          ));
+    }
   }
 
   Future<void> _selectDate(BuildContext context,
@@ -146,7 +187,7 @@ class EducationScreen extends StatelessWidget {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: fontSizeTitle,
-                          color: Color(0xFF356899),
+                          color: primaryColor,
                         ),
                       ),
                     ),
@@ -272,7 +313,7 @@ class EducationScreen extends StatelessWidget {
                     ),
                     SizedBox(height: padding),
                     InkWell(
-                      onTap: () {},
+                      onTap: () => _addEdaction(),
                       child: ListTile(
                         leading: Icon(Icons.add, color: Colors.black),
                         title: Text(
@@ -287,11 +328,9 @@ class EducationScreen extends StatelessWidget {
                       child: Text(
                         'التالي',
                         style: TextStyle(
-                            color: Color(0xFFFFFFFF),
                             fontSize: fontSizeSubtitle),
                       ),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: primaryColor,
                         minimumSize: Size(double.infinity, buttonHeight),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
