@@ -403,7 +403,7 @@ class _HomePageState extends State<HomePage> {
                 // ),
                 Row(
                   children: [
-                    Text('أحدث الوظائف',
+                    Text('أحد ث الوظائف',
                         style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold)),
                     Spacer(),
