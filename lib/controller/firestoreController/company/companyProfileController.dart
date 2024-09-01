@@ -14,14 +14,16 @@ class CompanyProfileController extends GetxController {
   String uid = FirebaseAuth.instance.currentUser!.uid ?? '';
   File? imageFile;
   String? downloadUrl;
+  String? companyName;
+  String? companyImage;
 
   final companyNameController = TextEditingController();
   final companyAddressController = TextEditingController();
   final establishmentDateController = TextEditingController();
   final employeeCountController = TextEditingController();
   final companyDescriptionController = TextEditingController();
+  final companyNumController = TextEditingController();
   String? businessTypeController;
-
 
   Future<void> selectAndUploadFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -45,8 +47,9 @@ class CompanyProfileController extends GetxController {
       }
     }
   }
-  Future<void> selectDate(BuildContext context,
-      TextEditingController controller) async {
+
+  Future<void> selectDate(
+      BuildContext context, TextEditingController controller) async {
     DateTime? pickedDate = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -57,7 +60,6 @@ class CompanyProfileController extends GetxController {
       controller.text = DateFormat('yyyy-MM-dd').format(pickedDate);
     }
   }
-
 
   Future<void> saveProfileCompany() async {
     if (imageFile == null || downloadUrl == null) {
@@ -73,6 +75,7 @@ class CompanyProfileController extends GetxController {
       employeeCount: employeeCountController.text,
       companyDescription: companyDescriptionController.text,
       cvFileUrl: downloadUrl!,
+      PhoneNum: companyNumController.text,
       visible: false,
     );
 
@@ -86,34 +89,10 @@ class CompanyProfileController extends GetxController {
     }
   }
 
-  // Future<ProfileCompany?> fetchProfileCompany() async {
-  //   // SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   // String companyId = prefs.getString('id')??"";
-  //   // if (companyId == null) {
-  //   //   throw Exception('companyId is null');
-  //   // }
-  //
-  //   DocumentSnapshot doc = await FirebaseFirestore.instance
-  //       .collection('profiles_Company')
-  //       .doc('KdBbuqoIECaLtaCbCEsvv')
-  //       .get();
-  //   if (doc.exists) {
-  //     return ProfileCompany.fromMap(doc.data() as Map<String, dynamic>);
-  //   } else {
-  //     return null;
-  //   }
-  // }
   Future<ProfileCompany?> fetchProfileCompany() async {
     if (_profileCompany != null) {
       return _profileCompany;
     }
-    //
-    // SharedPreferences prefs = await SharedPreferences.getInstance();
-    // String companyId = prefs.getString('id') ?? ""; // الحصول على companyId
-
-    // if (companyId.isEmpty) {
-    //   throw Exception('companyId is null');
-    // }
     DocumentSnapshot doc =
         await _firestore.collection('profiles_Company').doc(uid).get();
     if (doc.exists) {
@@ -132,6 +111,7 @@ class CompanyProfileController extends GetxController {
           .doc(uid)
           .get();
       print('Document exists: ${doc.exists}');
+
       return doc.exists;
     } catch (e) {
       print('Error checking document existence: $e');
@@ -148,12 +128,15 @@ class CompanyProfileController extends GetxController {
       if (document.data() != null) {
         Map<String, dynamic> data = document.data() as Map<String, dynamic>;
         bool isVisible = data['visible'] as bool? ?? false;
+        String _companyName = data['companyName'] as String? ?? 'اسم غير متوفر';
+        String _companyImage = data['cvFileUrl'] as String? ?? 'صورة غير متوفرة';
+        companyName = _companyName;
+        companyImage = _companyImage;
         print('isVisible: $isVisible');
         print(uid);
         return isVisible;
       } else {
         print('Document data is null');
-
         return false;
       }
     } catch (e) {
@@ -161,76 +144,4 @@ class CompanyProfileController extends GetxController {
       return false;
     }
   }
-// Future<bool> checkAndHandleVisibility() async {
-//   try {
-//     DocumentSnapshot document = await FirebaseFirestore.instance
-//         .collection('profiles_Company')
-//         .doc('wpo6ccRZZQeciycI6dIihJ0W9ul1')
-//         .get();
-//     if (document.exists) {
-//       Map<String, dynamic> data = document.data() as Map<String, dynamic>;
-//       bool isVisible = data['visabl'] as bool;
-//       if (isVisible) {
-//         return true;
-//       } else {
-//         Get.snackbar(
-//             "عٌَذراً", "طلبك بانشاء ملف شركة بانتظار موافقة المسؤلين",
-//             backgroundColor: Colors.red,
-//           duration: Duration(seconds: 5)
-//         );
-//         return false;
-//       }
-//     } else {
-//       Get.snackbar(
-//           "عٌَذراً", "طلبك بانشاء ملف شركة بانتظار موافقة المسؤلين",
-//           backgroundColor: Colors.red,
-//           duration: Duration(seconds: 5));
-//       AlertDialog(
-//         title:Text('يرجى انشاء ملف شركة للاطلاع على بروفايلات الموظفين'),
-//        actions: [
-//
-//        ],
-//       );
-//       return false;
-//
-//     }
-//   } catch (e) {
-//     print("Error: $e");
-//     return false;
-//   }
-// }
-
-//
-// Future<bool> checkDocumentExists() async {
-//   try {
-//     DocumentSnapshot doc = await FirebaseFirestore.instance
-//         .collection('profiles_Company')
-//         .doc(uid)
-//         .get();
-//     print('ccccccccccccccc${doc.exists}');
-//     return doc.exists;
-//
-//   } catch (e) {
-//     print('Error checking document existence: $e');
-//     return false;
-//   }
-// }
-//
-// Future<bool> isVisible() async {
-//   try {
-//
-//     DocumentSnapshot document = await FirebaseFirestore.instance
-//         .collection('profiles_Company')
-//         .doc(uid)
-//         .get();
-//     Map<String, dynamic> data = document.data() as Map<String, dynamic>;
-//     bool isVisible = data['visabl'] as bool;
-//     print('ccccccccccccccc$isVisible');
-//
-//     return isVisible;
-//   } catch (e) {
-//     print("Error: $e");
-//     return false; // في حالة حدوث خطأ
-//   }
-// }
 }

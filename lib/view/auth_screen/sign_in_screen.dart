@@ -167,7 +167,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       BackContainer(
                           iconButton: IconButton(
                               onPressed: () {
-                                Get.to(JobScreen());
                               },
                               icon: SvgPicture.asset(
                                   'assets/images/starts/google.svg'))),

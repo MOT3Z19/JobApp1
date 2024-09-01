@@ -5,9 +5,9 @@ import 'package:job_app/core/constansColor.dart';
 class RequestCard extends StatelessWidget {
   final String courseName;
   final String courseHours;
-  final String coursePrice;
-  final String courseDescription;
-  const RequestCard({super.key, required this.courseName, required this.courseHours, required this.coursePrice, required this.courseDescription});
+  final String courseType;
+  final String courseAddress;
+  const RequestCard({super.key, required this.courseName, required this.courseHours, required this.courseType, required this.courseAddress});
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +16,7 @@ class RequestCard extends StatelessWidget {
     return Column(
       children: [
         Container(
-
-          padding: EdgeInsetsDirectional.symmetric(
-              horizontal: width * .02, vertical: width * .02),
+          clipBehavior: Clip.antiAlias,
           margin: EdgeInsetsDirectional.only(bottom: 15),
           decoration: BoxDecoration(
             borderRadius: BorderRadiusDirectional.circular(8),
@@ -28,9 +26,10 @@ class RequestCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Container(
-
-                child:Image.asset('assets/images/courses_icons/testImage.png') ,
-                height: height/10,
+                child:Image.asset('assets/images/courses_icons/courseBackground.jfif',fit: BoxFit.fill,) ,
+                height: height/8,
+                width: width/4,
+                clipBehavior: Clip.antiAlias,
                 decoration: BoxDecoration(
                   color: Colors.red,
                   borderRadius: BorderRadius.circular(10)
@@ -54,7 +53,7 @@ class RequestCard extends StatelessWidget {
                     height: height * .01,
                   ),
                   Text(
-                    ' ساعة $courseHours',
+                    '$courseHours  ساعات يومياَ ',
                     style: TextStyle(
                         fontSize: 13,
                         color: subsTitleColor,
@@ -64,7 +63,7 @@ class RequestCard extends StatelessWidget {
                     height: height * .01,
                   ),
                   Text(
-                    courseDescription,
+                    courseAddress,
                     style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w500),
@@ -72,18 +71,12 @@ class RequestCard extends StatelessWidget {
                 ],
               ),
               Spacer(),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-
-                  Text(
-                    '$coursePrice دينار ',
-                    style: TextStyle(fontSize: 14, color: primaryColor),
-                  ),
-
-                ],
+              Text(
+                '$courseType',
+                style: TextStyle(fontSize: 14, color: primaryColor),
               ),
+              SizedBox(width: width*.03,)
+
             ],
           ),
         ),

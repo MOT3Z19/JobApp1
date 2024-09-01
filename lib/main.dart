@@ -35,8 +35,6 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       themeMode: Get.find<StatusController>().theme,
 
-
-
       theme: ThemeData(
           primaryColor: Colors.white,
           brightness: Brightness.light,

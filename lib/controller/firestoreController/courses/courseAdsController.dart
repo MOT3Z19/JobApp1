@@ -12,6 +12,7 @@ class CourseAdsController extends GetxController {
   String? courseLevel;
   String? courseType;
   final TextEditingController courseName = TextEditingController();
+  final TextEditingController courseDays = TextEditingController();
   final TextEditingController courseHours = TextEditingController();
   final TextEditingController coursePrice = TextEditingController();
   final TextEditingController courseLocation = TextEditingController();
@@ -21,68 +22,61 @@ class CourseAdsController extends GetxController {
   String uid = FirebaseAuth.instance.currentUser!.uid;
 
   void addCoursesToDocument(List<Map<String, dynamic>> courses) async {
-    print(uid+'cccccccccccccssssssssssszzzzzzzzzxxxxxxxxxxxx');
-    DocumentReference docRef = FirebaseFirestore.instance
-        .collection('courses')
-        .doc(uid);
-    await docRef.set({
-      'course': FieldValue.arrayUnion(courses)
-    }, SetOptions(merge: true));
+    DocumentReference docRef =
+    FirebaseFirestore.instance.collection('courses').doc(uid);
+    await docRef.set(
+        {'course': FieldValue.arrayUnion(courses)}, SetOptions(merge: true));
+
     clearFormData();
   }
-
-
 
   void clearFormData() {
     courseName.clear();
     courseHours.clear();
+    courseDays.clear();
     coursePrice.clear();
     courseLocation.clear();
     courseDescription.clear();
     videoLink.clear();
-
   }
 
-  Future<List<Course>?> getCourses() async {
-    if (_savedCourse != null) {
-      return _savedCourse;
+  Future<List<Course>> getCourses() async {
+    List<Course> allCourses = [];
+    // if(allCourses!=null){
+    //   return allCourses;
+    // }else{
+    try {
+      CollectionReference coursesCollection =
+      FirebaseFirestore.instance.collection('courses');
+      QuerySnapshot querySnapshot = await coursesCollection.get();
+      List<Map<String, dynamic>> allCoursesData = [];
+      querySnapshot.docs.forEach((doc) {
+        List<dynamic> coursesList = doc['course'] ?? [];
+        allCoursesData.addAll(coursesList.cast<Map<String, dynamic>>());
+      });
+      allCourses = allCoursesData
+          .map((courseData) => Course.fromMap(courseData)).toList();
+    } catch (e) {
+      print('Error fetching courses: $e');
     }
-    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-        .collection('profiles_Company')
-        .doc('Dp2Ay1ip1VOoOif7ZgWTkgwj6s92')
-        .collection('coursesAds')
-        .get();
-    List<Course> courses = querySnapshot.docs.map((doc) {
-      return Course.fromMap(doc.data() as Map<String, dynamic>);
-    }).toList();
-    if(courses.isNotEmpty){
-      _savedCourse = courses;
-      return _savedCourse;
-    }else{
-      return null;
-    }
+    return allCourses;
+   // }
+  }
 
 
+
+  Future<List<Course>> getCompanyCourses() async {
+    DocumentSnapshot snapshot =
+    await FirebaseFirestore.instance.collection('courses').doc(uid).get();
+
+    if (snapshot.exists) {
+      List<dynamic> coursesData = snapshot.get('course');
+      return coursesData
+          .map((courseData) =>
+          Course.fromMap(Map<String, dynamic>.from(courseData)))
+          .toList();
+    } else {
+      return [];
+    }
   }
 }
-// Future<void> submitForm() async {
-//   print(courseName.text+'xxxxxxxxxxx'+courseDescription.text);
-//   final course = Course(
-//     courseName: courseName.text ,
-//     courseHours: courseHours.text ,
-//     isCertified: isCertified??'' ,
-//     courseLevel: courseLevel??'',
-//     courseType: courseType??'',
-//     coursePrice: coursePrice.text ,
-//     courseLocation: courseLocation.text,
-//     courseDescription: courseDescription.text,
-//     videoLink: videoLink.text,
-//   );
-//   await FirebaseFirestore.instance
-//       .collection('profiles_Company')
-//       .doc(uid)
-//       .collection('coursesAds')
-//       .add(course.toJson());
-//   Get.snackbar('Success', 'Course added successfully');
-//   clearFormData();
-// }

@@ -3,6 +3,7 @@ class ProfileCompany {
   String companyAddress;
   String establishmentDate;
   String businessType;
+  String PhoneNum;
   String employeeCount;
   String companyDescription;
   String cvFileUrl;
@@ -12,6 +13,7 @@ class ProfileCompany {
     required this.companyName,
     required this.companyAddress,
     required this.establishmentDate,
+    required this.PhoneNum,
     required this.businessType,
     required this.employeeCount,
     required this.companyDescription,
@@ -25,6 +27,7 @@ class ProfileCompany {
       'companyAddress': companyAddress,
       'establishmentDate': establishmentDate,
       'businessType': businessType,
+      'PhoneNum': PhoneNum,
       'employeeCount': employeeCount,
       'companyDescription': companyDescription,
       'cvFileUrl': cvFileUrl,
@@ -35,6 +38,7 @@ class ProfileCompany {
   factory ProfileCompany.fromMap(Map<String, dynamic> map) {
     return ProfileCompany(
       companyName: map['companyName'],
+      PhoneNum: map['PhoneNum'],
       companyAddress: map['companyAddress'],
       businessType: map['businessType'],
       employeeCount: map['employeeCount'],

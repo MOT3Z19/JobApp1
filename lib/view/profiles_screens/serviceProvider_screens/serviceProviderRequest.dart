@@ -93,10 +93,10 @@ class _ServiceProviderRequestState extends State<ServiceProviderRequest> {
                           ),
                         ],
                       ),
-                      Text(
-                        serviceProvider.serviceDescription,
-                        style: TextStyle(color: subsTitleColor),
-                      ),
+                      // Text(
+                      //   serviceProvider.serviceDescription,
+                      //   style: TextStyle(color: subsTitleColor),
+                      // ),
                       SizedBox(height: height * .01),
 
                     ],

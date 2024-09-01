@@ -9,6 +9,7 @@ class CourseDetailsPage extends StatefulWidget {
   final String? courseLevel;
   final String? courseType;
   final String? coursePrice;
+  final String? courseDays;
   final String? courseLocation;
   final String? courseDescription;
   final String? videoLink;
@@ -20,6 +21,7 @@ class CourseDetailsPage extends StatefulWidget {
        this.isCertified,
        this.courseLevel,
        this.courseType,
+       this.courseDays,
        this.coursePrice,
        this.courseLocation,
        this.courseDescription,
@@ -50,7 +52,7 @@ class _CourseDetailsPageState extends State<CourseDetailsPage>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Image.asset(
-            'assets/images/courses_icons/testImage.png',
+            'assets/images/courses_icons/courseBackground.jfif',
             height: height / 3,
             width: width,
             fit: BoxFit.cover,
@@ -113,7 +115,7 @@ class _CourseDetailsPageState extends State<CourseDetailsPage>
                             ),
                             Tab(
                               child: Text(
-                                'مواعيد الدورة',
+                                'مدة الدورة',
                                 style: TextStyle(
                                     fontFamily: 'Almarai',
                                     fontWeight: FontWeight.w400),
@@ -147,7 +149,7 @@ class _CourseDetailsPageState extends State<CourseDetailsPage>
                                       SvgPicture.asset(
                                           'assets/images/courses_icons/time.svg'),
                                       SizedBox(width: width * .02),
-                                      Text('اجمالي عدد ساعات الدورة ${widget.courseHours} ساعة '),
+                                      Text('اجمالي عدد ساعات الدورة في اليوم  ${widget.courseHours}  ساعات  '),
                                     ],
                                   ),
                                   Row(
@@ -179,12 +181,21 @@ class _CourseDetailsPageState extends State<CourseDetailsPage>
                                 children: [
                                   Row(
                                     children: [
+                                      Icon(Icons.calendar_month,size: width*.09,color: Color(0xff515163),),
+                                      SizedBox(width: width * .02),
+                                      Text('اجمالي عدد أيام الدورة  ${widget.courseDays}  يوم  '),
+                                    ],
+                                  ),
+                                  SizedBox(height: height*.02),
+                                  Row(
+                                    children: [
                                       SvgPicture.asset(
                                           'assets/images/courses_icons/time.svg'),
                                       SizedBox(width: width * .02),
-                                      Text('اجمالي عدد ساعات الدورة ${widget.courseHours} ساعة '),
+                                      Text('اجمالي عدد ساعات الدورة في اليوم  ${widget.courseHours}  ساعات  '),
                                     ],
                                   ),
+
                                   // Row(
                                   //   children: [
                                   //     SvgPicture.asset(

@@ -133,7 +133,7 @@ class JobTypeScreen extends StatelessWidget {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadiusDirectional.all(
                                 Radius.circular(12)),
-                            color: Colors.white,
+                            color: Theme.of(context).primaryColor,
                           ),
                           child: Row(
                             children: [

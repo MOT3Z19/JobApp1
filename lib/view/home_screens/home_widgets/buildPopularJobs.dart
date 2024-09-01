@@ -7,7 +7,8 @@ class buildPopularJobs extends StatelessWidget {
   final String salary;
   final String address;
   final String caption;
-  const buildPopularJobs({super.key, required this.jobName, required this.salary, required this.address, required this.caption});
+  final String jobImage;
+  const buildPopularJobs({super.key, required this.jobName, required this.salary, required this.address, required this.caption, required this.jobImage});
 
   @override
   Widget build(BuildContext context) {
@@ -22,13 +23,13 @@ class buildPopularJobs extends StatelessWidget {
           margin: EdgeInsetsDirectional.only(bottom: 15),
           decoration: BoxDecoration(
             borderRadius: BorderRadiusDirectional.circular(8),
-            color: Colors.white,
+            color:Theme.of(context).primaryColor,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               CircleAvatar(
-                backgroundImage: AssetImage('assets/images/logo.png'),
+                backgroundImage: NetworkImage(jobImage),
                 radius: 24,
                 backgroundColor: Colors.transparent,
               ),
@@ -43,7 +44,7 @@ class buildPopularJobs extends StatelessWidget {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 14,
-                      color: Color(0xFF0D0D26),
+
                     ),
                   ),
                   SizedBox(
@@ -82,7 +83,7 @@ class buildPopularJobs extends StatelessWidget {
                         icon: Icon(
                           Icons.share,
                           size: 18,
-                          color: Colors.black,
+
                         )),
                   ),
                   Text(

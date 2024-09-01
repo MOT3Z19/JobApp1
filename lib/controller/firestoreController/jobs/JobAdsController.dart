@@ -44,29 +44,44 @@ class JobAdsController extends GetxController {
 
   }
 
-  Future<List<JobAdvertisement>?> getJob() async {
-    if (_savedJob != null) {
-      return _savedJob;
-    }
-    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-        .collection('profiles_Company')
-        .doc('Dp2Ay1ip1VOoOif7ZgWTkgwj6s92')
-        .collection('coursesAds')
-        .get();
-    List<JobAdvertisement> jobs = querySnapshot.docs.map((doc) {
-      return JobAdvertisement.fromMap(doc.data() as Map<String, dynamic>);
-    }).toList();
-    if(jobs.isNotEmpty){
-      _savedJob = jobs;
-      return _savedJob;
-    }else{
-      return null;
-    }
-
+  Future<List<JobAdvertisement>> getJobs() async {
+    List<JobAdvertisement> allJobs = [];
+         try {
+        CollectionReference coursesCollection =
+        FirebaseFirestore.instance.collection('jobs');
+        QuerySnapshot querySnapshot = await coursesCollection.get();
+        List<Map<String, dynamic>> allCoursesData = [];
+        querySnapshot.docs.forEach((doc) {
+          List<dynamic> jobsList = doc['jobs'] ?? [];
+          allCoursesData.addAll(jobsList.cast<Map<String, dynamic>>());
+        });
+        allJobs = allCoursesData
+            .map((courseData) => JobAdvertisement.fromMap(courseData))
+            .toList();
+      } catch (e) {
+        print('Error fetching courses: $e');
+      }
+      return allJobs;
 
   }
 
+  Future<List<JobAdvertisement>> getCompanyJobs() async {
+    DocumentSnapshot snapshot = await FirebaseFirestore.instance
+        .collection('jobs')
+        .doc(user)
+        .get();
+    if (snapshot.exists) {
+      List<dynamic> coursesData = snapshot.get('jobs');
+      return coursesData.map((courseData) => JobAdvertisement.fromMap(Map<String, dynamic>.from(courseData))).toList();
+    } else {
+      return [];
+    }
+  }
+
 }
+
+
+
 
 
 // Future<void> submitForm() async {

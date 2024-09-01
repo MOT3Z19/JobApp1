@@ -6,6 +6,8 @@ import 'package:job_app/core/constansColor.dart';
 import 'package:job_app/models/usersDataModels/Edaction.dart';
 import 'package:job_app/models/usersDataModels/ExperienceModel.dart';
 import 'package:job_app/widgets/drop_TextFiledmenu_Widget.dart';
+import 'package:job_app/widgets/textFiled_Widget.dart';
+import 'package:job_app/widgets/textfiled_date_widget.dart';
 import 'descrepation_screen.dart'; // Add this import for date formatting
 
 class EducationScreen extends StatefulWidget {
@@ -95,14 +97,14 @@ class _EducationScreenState extends State<EducationScreen> {
   }
 
   void _navigateToNextScreen() {
-    if (eduction.isEmpty) {
-      Get.snackbar(
-        'خطأ',
-        'الرجاء إضافة خبرات.',
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
-    }else{
+    // if (eduction.isEmpty) {
+    //   Get.snackbar(
+    //     'خطأ',
+    //     'الرجاء إضافة خبرات.',
+    //     backgroundColor: Colors.red,
+    //     colorText: Colors.white,
+    //   );
+    // }else{
       Get.to(() =>
           ProfileDataScreen(
             fullname: widget.fullname,
@@ -125,21 +127,21 @@ class _EducationScreenState extends State<EducationScreen> {
             experiences: widget.experiences,
             edaction: eduction,
           ));
-    }
+  //  }
   }
 
-  Future<void> _selectDate(BuildContext context,
-      TextEditingController controller) async {
-    DateTime? pickedDate = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
-    );
-    if (pickedDate != null) {
-      controller.text = DateFormat('yyyy-MM-dd').format(pickedDate);
-    }
-  }
+  // Future<void> _selectDate(BuildContext context,
+  //     TextEditingController controller) async {
+  //   DateTime? pickedDate = await showDatePicker(
+  //     context: context,
+  //     initialDate: DateTime.now(),
+  //     firstDate: DateTime(2000),
+  //     lastDate: DateTime(2101),
+  //   );
+  //   if (pickedDate != null) {
+  //     controller.text = DateFormat('yyyy-MM-dd').format(pickedDate);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -204,125 +206,38 @@ class _EducationScreenState extends State<EducationScreen> {
                           fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: padding),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Color(0xFFFFFFFF),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: padding),
-                        child: SizedBox(
-                          height: screenHeight/16,
-                          child: CustomDropdown(
-                              label: 'آخر مؤهل علمي ',
-                              onChanged: (String? newValue) {
-                                selectedDegree = newValue;
-                              },
-                              options: [
-                                    'متوسط اعدادية',
-                                    'دبلوم',
-                                    'بكالوريوس',
-                                    'ماجستير',
-                                    'دكتوراة'
-                              ],
-                              selectedValue
-                              :selectedDegree),
-                        ),
-                        // child: DropdownButtonFormField<String>(
-                        //   decoration: InputDecoration(
-                        //     labelText: 'آخر مؤهل علمي ',
-                        //     border: InputBorder.none,
-                        //   ),
-                        //   items: [
-                        //     'متوسط اعدادية',
-                        //     'دبلوم',
-                        //     'بكالوريوس',
-                        //     'ماجستير',
-                        //     'دكتوراة'
-                        //   ].map((String value) {
-                        //     return DropdownMenuItem<String>(
-                        //       value: value,
-                        //       child: Text(
-                        //         value,
-                        //         style: TextStyle(fontFamily: 'Almarai'),
-                        //       ),
-                        //     );
-                        //   }).toList(),
-                        //   onChanged: (String? newValue) {
-                        //     selectedDegree = newValue;
-                        //   },
-                        // ),
-                      ),
-                    ),
+                    CustomDropdown(
+                        label: 'آخر مؤهل علمي ',
+                        onChanged: (String? newValue) {
+                          selectedDegree = newValue;
+                        },
+                        options: [
+                              'متوسط اعدادية',
+                              'دبلوم',
+                              'بكالوريوس',
+                              'ماجستير',
+                              'دكتوراة'
+                        ],
+                        selectedValue
+                        :selectedDegree),
                     SizedBox(height: padding),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Color(0xFFFFFFFF),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: padding),
-                        child: TextField(
-                          style: TextStyle(fontFamily: 'Almarai'),
-                          controller: universityController,
-                          decoration: InputDecoration(
-                            hintText: 'الجامعة . . . ',
-                            border: InputBorder.none,
-                          ),
-                        ),
-                      ),
-                    ),
+                    CustomTextField(label: 'الجامعة . . . ', controller:universityController,keybordType: TextInputType.text),
                     SizedBox(height: padding),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Color(0xFFFFFFFF),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: padding),
-                        child: TextField(
-                          style: TextStyle(fontFamily: 'Almarai'),
-                          controller: collegeController,
-                          decoration: InputDecoration(
-                            hintText: 'الكلية',
-                            border: InputBorder.none,
-                          ),
-                        ),
-                      ),
-                    ),
+                    CustomTextField(label: 'الكلية. . .', controller:collegeController,keybordType: TextInputType.text),
                     SizedBox(height: padding),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Color(0xFFFFFFFF),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: padding),
-                        child: TextField(
-                          style: TextStyle(fontFamily: 'Almarai'),
-                          controller: graduationDateController,
-                          decoration: InputDecoration(
-                            hintText: 'تاريخ التخرج . . . ',
-                            border: InputBorder.none,
-                          ),
-                          readOnly: true,
-                          onTap: () =>
-                              _selectDate(context, graduationDateController),
-                        ),
-                      ),
-                    ),
+                    CustomDatePicker(label: 'تاريخ التخرج . . . ', controller: graduationDateController),
                     SizedBox(height: padding),
                     InkWell(
                       onTap: () => _addEdaction(),
                       child: ListTile(
-                        leading: Icon(Icons.add, color: Colors.black),
+                        leading: Icon(Icons.add),
                         title: Text(
                           'أضف شهادات ودورات ',
                           style: TextStyle(fontFamily: 'Almarai'),
                         ),
                       ),
                     ),
-                    SizedBox(height: screenHeight * .15),
+                    SizedBox(height: screenHeight *.06),
                     ElevatedButton(
                       onPressed: _navigateToNextScreen,
                       child: Text(

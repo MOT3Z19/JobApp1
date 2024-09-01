@@ -6,6 +6,7 @@ import 'package:job_app/controller/firestoreController/company/companyProfileCon
 import 'package:job_app/controller/firestoreController/jobs/JobAdsController.dart';
 import 'package:job_app/core/constansColor.dart';
 import 'package:job_app/models/companyDataModels/JobAdvertisement.dart';
+import 'package:job_app/view/job_screens/job_details.dart';
 import 'package:job_app/view/job_screens/store_Job.dart';
 import '../home_screens/home_widgets/buildPopularJobs.dart';
 import '../profiles_screens/companyProfile_screens/storeCopmanyProfile.dart';
@@ -43,7 +44,7 @@ class _JobRequestsState extends State<JobRequests> {
               isVisible ? savedIsVisible = true : false;
             });
             if ((savedIsExist & savedIsVisible) || (chekDoc & isVisible)) {
-              Get.to(JobAdvertisementScreen());
+              Get.to(JobAdvertisementScreen(companyImage:_companyProfileController.companyImage ??'', companyName: _companyProfileController.companyName??'',));
             } else if (savedIsExist = false || !chekDoc) {
               _makeAccount();
             } else if ((savedIsVisible = false & savedIsExist != false) ||
@@ -78,33 +79,58 @@ class _JobRequestsState extends State<JobRequests> {
                         borderSide: BorderSide(color: subsTitleColor))),
               ),
               SizedBox(height: height * .02),
-              FutureBuilder<List<JobAdvertisement>?>(
-                future: _jobAdsController.getJob(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
-                  } else if (snapshot.hasError) {
-                    printError(info: 'Error: ${snapshot.error}');
-                    return Center(child: CircularProgressIndicator());
-                  } else if (!snapshot.hasData) {
-                    return Center(child: Text('لا يوجد بيانات'));
-                  }
-                  List<JobAdvertisement> job = snapshot.data!;
-                  return SizedBox(
-                    height: height / 1,
-                    child: ListView.builder(
-                        physics: BouncingScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          return buildPopularJobs(
-                            jobName: job[index].type,
-                            salary: job[index].salary,
-                            address: job[index].address,
-                            caption: job[index].jobType,
-                          );
-                        },
-                        itemCount: job.length),
-                  );
-                },
+              Text('الوظائف المعلنة ',style: TextStyle(fontWeight: FontWeight.bold),),
+              SizedBox(height: height * .02),
+              SizedBox(
+                height: height/1.4,
+                child: FutureBuilder<List<JobAdvertisement>?>(
+                  future: _jobAdsController.getJobs(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      printError(info: 'Error: ${snapshot.error}');
+                      return Center(child: CircularProgressIndicator());
+                    } else if (!snapshot.hasData) {
+                      return Center(child: Text('لا يوجد بيانات'));
+                    }
+                    List<JobAdvertisement> job = snapshot.data!;
+                    return InkWell(
+                      child: Expanded(
+                        child: ListView.builder(
+                            physics: BouncingScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              return InkWell(
+                                onTap: () {
+                                  Get.to(JobScreen(
+                                    type: job[index].type ?? '',
+                                    gender: job[index].gender??'',
+                                    experience: job[index].experience??'',
+                                    jobType:  job[index].jobType??'',
+                                    educationLevel:  job[index].educationLevel??'',
+                                    skills:  job[index].skills??'',
+                                    employeeNum:  job[index].employeeNum??'',
+                                    address: job[index].address??'',
+                                    workingHours:  job[index].workingHours??'',
+                                    salary:  job[index].salary??'',
+                                    notes:  job[index].notes??'',
+                                    companyName: job[index].companyName??'',
+                                    companyImage:job[index].companyImage??'',));
+                                },
+                                child: buildPopularJobs(
+                                  jobName: job[index].type??'',
+                                  salary: job[index].salary??'',
+                                  address: job[index].address??'',
+                                  caption: job[index].jobType??'',
+                                  jobImage: job[index].companyImage??'',
+                                ),
+                              );
+                            },
+                            itemCount: job.length),
+                      ),
+                    );
+                  },
+                ),
               )
             ],
           ),

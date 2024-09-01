@@ -1,15 +1,17 @@
 class JobAdvertisement {
-  String type;
-  String gender;
-  String experience;
-  String jobType;
-  String educationLevel;
-  String skills;
-  String employeeNum;
-  String address;
-  String workingHours;
-  String salary;
-  String notes;
+  String? type;
+  String? companyName;
+  String? companyImage;
+  String? gender;
+  String? experience;
+  String? jobType;
+  String? educationLevel;
+  String? skills;
+  String? employeeNum;
+  String? address;
+  String? workingHours;
+  String? salary;
+  String? notes;
   DateTime? timestamp;
 
   JobAdvertisement({
@@ -21,32 +23,19 @@ class JobAdvertisement {
     required this.skills,
     required this.employeeNum,
     required this.address,
+    required this.companyName,
+    required this.companyImage,
     required this.workingHours,
     required this.salary,
     required this.notes,
     this.timestamp
   });
 
-  Map<String, dynamic> toJson() {
-    return {
-      'type': type,
-      'gender': gender,
-      'experience': experience,
-      'jobType': jobType,
-      'educationLevel': educationLevel,
-      'skills': skills,
-      'employeeNum': employeeNum,
-      'address': address,
-      'workingHours': workingHours,
-      'salary': salary,
-      'notes': notes,
-      'timestamp': timestamp??DateTime.now(),
-    };
-  }
+
 
   factory JobAdvertisement.fromMap(Map<String, dynamic> map) {
     return JobAdvertisement(
-      type:map['type'],
+      type:map['specialization'],
       gender:map['gender'],
       experience:map['experience'],
       jobType:map['jobType'],
@@ -57,6 +46,9 @@ class JobAdvertisement {
       workingHours:map['workingHours'],
       salary:map['salary'],
       notes:map['notes'],
+      companyName: map['companyName'],
+      companyImage: map['companyImage'],
+
     );
   }
 

@@ -4,16 +4,23 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:job_app/controller/authController/authWithEmail&PassController.dart';
 import 'package:job_app/controller/firestoreController/company/companyProfileController.dart';
+import 'package:job_app/controller/firestoreController/courses/courseAdsController.dart';
+import 'package:job_app/controller/firestoreController/jobs/JobAdsController.dart';
 import 'package:job_app/controller/firestoreController/serviceProvider/serviceProviderProfileController.dart';
 import 'package:job_app/controller/firestoreController/user/userProfileController.dart';
 import 'package:job_app/controller/mood&Languge/stutasController.dart';
 import 'package:job_app/core/constansColor.dart';
+import 'package:job_app/models/companyDataModels/JobAdvertisement.dart';
+import 'package:job_app/models/companyDataModels/courseAds.dart';
 import 'package:job_app/prefes/sharedPrefController.dart';
 import 'package:job_app/view/auth_screen/sign_in_screen.dart';
 import 'package:job_app/view/courses_screens/course_adsScreen.dart';
+import 'package:job_app/view/courses_screens/courses_datiles.dart';
 import 'package:job_app/view/drawerOthersTabs_screen/contactWith.dart';
 import 'package:job_app/view/drawerOthersTabs_screen/policyTab.dart';
 import 'package:job_app/view/drawerOthersTabs_screen/supporters&founders.dart';
+import 'package:job_app/view/job_screens/job_details.dart';
+import 'package:job_app/view/job_screens/jobsRequests_screen.dart';
 import 'package:job_app/view/job_screens/store_Job.dart';
 import 'package:job_app/view/profiles_screens/companyProfile_screens/companyProfile.dart';
 import 'package:job_app/view/profiles_screens/companyProfile_screens/storeCopmanyProfile.dart';
@@ -42,19 +49,28 @@ final ServiceProviderProfileController _serviceFormController =
     Get.put(ServiceProviderProfileController());
 final CompanyProfileController _companyProfileController =
     Get.put(CompanyProfileController());
-final SharedPrefController _sharedPrefController = Get.put(SharedPrefController());
+final SharedPrefController _sharedPrefController =
+    Get.put(SharedPrefController());
+JobAdsController _jobAdsController = Get.put(JobAdsController());
+final CourseAdsController _courseAdsController = Get.put(CourseAdsController());
 
 
+Future<List<JobAdvertisement>?>? _jobFutuer;
+Future<List<Course>>? _courseFutuer;
 final PageController _controller = PageController();
 int _currentPage = 0;
 bool? isConnection;
 bool savedIsExist = false;
 bool savedIsVisible = false;
 
+
 class _HomePageState extends State<HomePage> {
+
   @override
   void initState() {
     checkConnection();
+    _jobFutuer = _jobAdsController.getJobs();
+    _courseFutuer = _courseAdsController.getCourses();
     super.initState();
   }
 
@@ -340,8 +356,7 @@ class _HomePageState extends State<HomePage> {
                     IconButton(
                         onPressed: () {},
                         icon: SvgPicture.asset(
-                            'assets/images/home_icons/page_icons/notifcations.svg'
-                        ))
+                            'assets/images/home_icons/page_icons/notifcations.svg'))
                   ],
                 ),
                 SizedBox(height: height * .03),
@@ -354,7 +369,7 @@ class _HomePageState extends State<HomePage> {
                           width: width / 7,
                           height: height / 14,
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
+                            borderRadius: BorderRadius.circular(10),
                             color: Theme.of(context).primaryColor,
                           ),
                         ),
@@ -375,7 +390,7 @@ class _HomePageState extends State<HomePage> {
                         textAlign: TextAlign.start,
                         style: TextStyle(fontFamily: 'Almarai', fontSize: 15),
                         decoration: InputDecoration(
-                          fillColor:Theme.of(context).primaryColor ,
+                          fillColor: Theme.of(context).primaryColor,
                           filled: true,
                           hintText: 'ابحث عن وظيفتك...',
                           suffixIcon: SvgPicture.asset(
@@ -393,93 +408,187 @@ class _HomePageState extends State<HomePage> {
                 ),
                 // Column(
                 //   children: [
-                //     TextButton(onPressed: (){Get.to(CourseScreen());}, child: Text('تخزين دورة')),
-                //     TextButton(onPressed: (){Get.to(JobAdvertisementScreen());}, child: Text("تخزين وظيفة")),
-                //     TextButton(onPressed: (){Get.to(ServiceFormScreen());}, child: Text("تخزين خدمة")),
-                //     TextButton(onPressed: (){Get.to(JobPersonalScreen());}, child: Text("تخزين شخصي")),
-                //     TextButton(onPressed: (){Get.to(CompanyProfileForm());}, child: Text("تخزين شركة")),
-                //
+                //     TextButton(
+                //         onPressed: () {
+                //           Get.to(CourseScreen());
+                //         },
+                //         child: Text('تخزين دورة')),
+                //     TextButton(
+                //         onPressed: () {
+                //           Get.to(JobAdvertisementScreen(
+                //             companyName: '',
+                //             companyImage: '',
+                //           ));
+                //         },
+                //         child: Text("تخزين وظيفة")),
+                //     TextButton(
+                //         onPressed: () {
+                //           Get.to(ServiceFormScreen());
+                //         },
+                //         child: Text("تخزين خدمة")),
+                //     TextButton(
+                //         onPressed: () {
+                //           Get.to(JobPersonalScreen());
+                //         },
+                //         child: Text("تخزين شخصي")),
+                //     TextButton(
+                //         onPressed: () {
+                //           Get.to(CompanyProfileForm());
+                //         },
+                //         child: Text("تخزين شركة")),
                 //   ],
                 // ),
-                Row(
-                  children: [
-                    Text('أحد ث الوظائف',
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold)),
-                    Spacer(),
-                    TextButton(
-                        style: ButtonStyle(
-                            alignment: AlignmentDirectional.centerEnd),
-                        onPressed: () {},
-                        child: Text('المزيد',
-                            style: TextStyle(
-                                fontSize: 15, color: Color(0xFF95969D))))
-                  ],
-                ),
-                Container(
-                    height: height / 4.1,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(17),
-                    ),
-                    child: PageView.builder(
-                      physics: BouncingScrollPhysics(),
-                      controller: _controller,
-                      onPageChanged: (index) {
-                        setState(() {
-                          _currentPage = index;
-                        });
-                      },
-                      itemCount: 3,
-                      itemBuilder: (context, index) {
-                        return buildJobCard(
-                          title: 'مدخل بيانات',
-                          company: 'شركة Shell plc',
-                          imageUrl:
-                              'assets/images/home_icons/page_icons/logo.png',
-                          salary: '\$200-\$300',
-                          type: 'دوام كامل',
-                          location: 'العراق، بغداد، شارع المكتبة',
-                          experience: '2-3 سنوات خبرة',
-                        );
-                      },
-                    )),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: List.generate(
-                    3,
-                    (index) => Container(
-                      margin: EdgeInsets.only(
-                          left: width * .01,
-                          right: width * .01,
-                          top: width * .03),
-                      width:
-                          _currentPage == index ? width * 0.05 : width * 0.02,
-                      height: height * 0.01,
-                      decoration: BoxDecoration(
-                        color: _currentPage == index
-                            ? primaryColor
-                            : subsTitleColor,
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                    ),
-                  ),
-                ),
-                Row(
-                  children: [
-                    Text('جميع الوظائف',
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold)),
-                    Spacer(),
-                    TextButton(
-                        style: ButtonStyle(
-                            alignment: AlignmentDirectional.centerEnd),
-                        onPressed: () {},
-                        child: Text('المزيد',
-                            style: TextStyle(
-                                fontSize: 15, color: Color(0xFF95969D))))
-                  ],
-                ),
+
+
                 //buildPopularJobs(),
+                FutureBuilder<List<JobAdvertisement>?>(
+                  future: _jobFutuer,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      printError(info: 'Error: ${snapshot.error}');
+                      return Center(child: CircularProgressIndicator());
+                    } else if (!snapshot.hasData) {
+                      return Center(child: Text('لا يوجد بيانات'));
+                    }
+                    List<JobAdvertisement> job = snapshot.data!;
+                    return Column(
+                      children: [
+                        Row(
+                          children: [
+                            Text('أحدث الوظائف',
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold)),
+                            Spacer(),
+                            TextButton(
+                                style: ButtonStyle(
+                                    alignment: AlignmentDirectional.centerEnd),
+                                onPressed: () {
+                                  Get.to(JobRequests());
+                                },
+                                child: Text('المزيد',
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        color: Color(0xFF95969D))))
+                          ],
+                        ),
+                        Container(
+                            height: height / 4.1,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(17),
+                            ),
+                            child: PageView.builder(
+                              physics: BouncingScrollPhysics(),
+                              controller: _controller,
+                              onPageChanged: (index) {
+                                setState(() {
+                                  _currentPage = index;
+                                });
+
+                              },
+                              itemCount: 3,
+                              itemBuilder: (context, index) {
+                                return buildJobCard(
+                                  title: job[index].type ?? '',
+                                  company: '',
+                                  imageUrl: job[index].companyImage ?? '',
+                                  salary: job[index].salary ?? '',
+                                  type: job[index].jobType ?? '',
+                                  location: job[index].address ?? '',
+                                  experience: job[index].experience ?? '',
+                                );
+                              },
+                            )),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: List.generate(
+                            3,
+                                (index) => Container(
+                              margin: EdgeInsets.only(
+                                  left: width * .01,
+                                  right: width * .01,
+                                  top: width * .03),
+                              width: _currentPage == index
+                                  ? width * 0.05
+                                  : width * 0.02,
+                              height: height * 0.01,
+                              decoration: BoxDecoration(
+                                color: _currentPage == index
+                                    ? primaryColor
+                                    : subsTitleColor,
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            Text('جميع الوظائف',
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold)),
+                            Spacer(),
+                            TextButton(
+                                style: ButtonStyle(
+                                    alignment: AlignmentDirectional.centerEnd),
+                                onPressed: () {
+                                  Get.to(JobRequests());
+                                },
+                                child: Text('المزيد',
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        color: Color(0xFF95969D)))),
+                          ],
+                        ),
+                        InkWell(
+                          child: Expanded(
+                            child: SizedBox(
+                              height: height /5,
+                              child: ListView.builder(
+                                  physics: BouncingScrollPhysics(),
+                                  itemBuilder: (context, index) {
+                                    return InkWell(
+                                      onTap: () {
+                                        Get.to(JobScreen(
+                                          type: job[index].type ?? '',
+                                          gender: job[index].gender ?? '',
+                                          experience:
+                                          job[index].experience ?? '',
+                                          jobType: job[index].jobType ?? '',
+                                          educationLevel:
+                                          job[index].educationLevel ??
+                                              '',
+                                          skills: job[index].skills ?? '',
+                                          employeeNum:
+                                          job[index].employeeNum ?? '',
+                                          address: job[index].address ?? '',
+                                          workingHours:
+                                          job[index].workingHours ?? '',
+                                          salary: job[index].salary ?? '',
+                                          notes: job[index].notes ?? '',
+                                          companyName:
+                                          job[index].companyName ?? '',
+                                          companyImage:
+                                          job[index].companyImage ?? '',
+                                        ));
+                                      },
+                                      child: buildPopularJobs(
+                                        jobName: job[index].type ?? '',
+                                        salary: job[index].salary ?? '',
+                                        address: job[index].address ?? '',
+                                        caption: job[index].jobType ?? '',
+                                        jobImage: job[index].companyImage ?? '',
+                                      ),
+                                    );
+                                  },
+                                  itemCount: job.length),
+                            ),
+                          ),
+                        )
+                      ],
+                    );
+                  },
+                ),
                 Row(
                   children: [
                     Text('الدورات',
@@ -495,23 +604,54 @@ class _HomePageState extends State<HomePage> {
                                 fontSize: 15, color: Color(0xFF95969D))))
                   ],
                 ),
-                Container(
-                  height: height * .4,
-                  decoration: BoxDecoration(),
-                  child: GridView.builder(
-                      physics: ScrollPhysics(parent: BouncingScrollPhysics()),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 1),
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 3,
-                      itemBuilder: (context, index) {
-                        return CourseCard(
-                            title: 'برمجة',
-                            description: 'دورة لتعليم اساسيات البرمجة...',
-                            price: '\$500',
-                            imageUrl:
-                                'assets/images/home_icons/page_icons/noon.png');
-                      }),
+                FutureBuilder<List<Course>>(
+                    future: _courseFutuer,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(child: CircularProgressIndicator());
+                      } else if (snapshot.hasError) {
+                        printError(info: 'Error: ${snapshot.error}');
+                        return Center(child: CircularProgressIndicator());
+                      } else if (!snapshot.hasData) {
+                        return Center(child: Text('لا يوجد بيانات'));
+                      }
+                      List<Course> courses = snapshot.data!;
+                      return Container(
+                        height: height * .4,
+                        decoration: BoxDecoration(),
+                        child: GridView.builder(
+                            physics: ScrollPhysics(parent: BouncingScrollPhysics()),
+                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 1),
+                            scrollDirection: Axis.horizontal,
+                            itemCount: courses.length,
+                            itemBuilder: (context, index) {
+                              return InkWell(
+                                onTap: (){
+                                  Get.to(
+                                      CourseDetailsPage(
+                                        courseName: courses[index].courseName,
+                                        courseHours:courses[index].courseHours,
+                                        isCertified: courses[index].isCertified,
+                                        courseLevel: courses[index].courseLevel,
+                                        courseType: courses[index].courseType,
+                                        coursePrice: courses[index].coursePrice,
+                                        courseLocation:courses[index].courseLocation,
+                                        courseDescription: courses[index].courseDescription,
+                                        videoLink: courses[index].videoLink,
+                                        courseDays: courses[index].courseDays,
+                                      ));
+                                },
+                                child: CourseCard(
+                                    title: courses[index].courseName ?? '',
+                                    description: courses[index].courseLocation ?? '',
+                                    price: courses[index].courseType ?? ''
+                                ),
+                              );
+                            })
+                              );
+
+                    }
                 ),
               ],
             ),
@@ -662,7 +802,7 @@ class _HomePageState extends State<HomePage> {
             ),
             actions: [
               Container(
-                width: width / 3,
+                width: width / 2,
                 child: TextButton(
                     style: TextButton.styleFrom(backgroundColor: primaryColor),
                     onPressed: () {},

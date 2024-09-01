@@ -73,16 +73,20 @@ class _CourseScreenState extends State<CourseScreen> {
                 controller: controller.courseName,
                 keybordType: TextInputType.text),
             CustomTextField(
-                label: 'ساعات الدورة...',
+                label: 'ساعات الدورة في اليوم...',
                 controller: controller.courseHours,
+                keybordType: TextInputType.number),
+            CustomTextField(
+                label: 'عدد الأيام...',
+                controller: controller.courseDays,
                 keybordType: TextInputType.number),
             SizedBox(height: screenHeight * .01),
             CustomDropdown(label: 'وجود شهادة معتمدة',options: ['يوجد', 'لايوجد'], selectedValue: controller.isCertified, onChanged: (value) => setState(() => controller.isCertified = value)),
             CustomDropdown(label: 'مستوى الدورة', options: ['مبتدأ', 'متوسط', 'متقدم'], selectedValue: controller.courseLevel, onChanged: (value) => setState(() => controller.courseLevel = value)),
-            CustomDropdown(label: 'نوع الدورة (حضوري / اونلاين)', options: ['اونلاين', 'حضوري'], selectedValue: controller.courseType, onChanged: (value) => setState(() => controller.courseType = value)),
+            CustomDropdown(label: 'نوع الدورة', options: ['اونلاين', 'حضوري'], selectedValue: controller.courseType, onChanged: (value) => setState(() => controller.courseType = value)),
             CustomTextField(label: 'سعر الدورة...', controller: controller.coursePrice,keybordType: TextInputType.number),
             CustomTextField(label: 'مكان الدورة (البلد, المحافظة,المدينة)', controller: controller.courseLocation,keybordType: TextInputType.streetAddress),
-            CustomTextField(label: 'رابط فيديو قائمة محاضرات الدورة . . . ', controller: controller.videoLink, keybordType: TextInputType.url),
+            CustomTextField(label: 'إضافة فيديو مختصر عن الدورة', controller: controller.videoLink, keybordType: TextInputType.url),
             TextField(
               keyboardType: TextInputType.multiline, controller: controller.courseDescription, maxLines: 5,
               decoration: InputDecoration(
@@ -111,13 +115,13 @@ class _CourseScreenState extends State<CourseScreen> {
                     'isCertified': controller.isCertified,
                     'courseLevel': controller.courseLevel,
                     'courseType': controller.courseType,
+                    'courseDays': controller.courseDays.text,
                     'coursePrice': controller.coursePrice.text,
                     'courseLocation': controller.courseLocation.text,
                     'courseDescription': controller.courseDescription.text,
                     'videoLink': controller.videoLink.text,
                   }
                 ];
-
                 controller.addCoursesToDocument(courses);
                 Get.back();
 

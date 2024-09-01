@@ -5,6 +5,7 @@ import 'package:job_app/controller/firestoreController/user/jobTypeController.da
 import 'package:job_app/controller/firestoreController/user/userProfileController.dart';
 import 'package:job_app/models/usersDataModels/Certificates.dart';
 import 'package:job_app/models/usersDataModels/Edaction.dart';
+import 'package:job_app/widgets/textFiled_Widget.dart';
 import '../../../../core/constansColor.dart';
 import '../../../../models/usersDataModels/ExperienceModel.dart';
 import '../../../../models/usersDataModels/UserProfileModel.dart';
@@ -160,90 +161,97 @@ class _ProfileDataScreenState extends State<ProfileDataScreen> {
                           fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: padding),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Color(0xFFFFFFFF),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: padding),
-                        child: TextField(
-                          style: TextStyle(fontFamily: 'Almarai'),
-                          controller: coursesNameController,
-                          decoration: InputDecoration(
-                            hintText: 'اسم الدورة / الشهادة',
-                            border: InputBorder.none,
-                          ),
-                        ),
-                      ),
-                    ),
+                    CustomTextField(label: 'اسم الدورة / الشهادة', controller:coursesNameController,keybordType: TextInputType.text),
+                    // Container(
+                    //   decoration: BoxDecoration(
+                    //     color: Color(0xFFFFFFFF),
+                    //     borderRadius: BorderRadius.circular(10),
+                    //   ),
+                    //   child: Padding(
+                    //     padding: EdgeInsets.symmetric(horizontal: padding),
+                    //     child: TextField(
+                    //       style: TextStyle(fontFamily: 'Almarai'),
+                    //       controller: coursesNameController,
+                    //       decoration: InputDecoration(
+                    //         hintText: 'اسم الدورة / الشهادة',
+                    //         border: InputBorder.none,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                     SizedBox(height: padding),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Color(0xFFFFFFFF),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: padding),
-                        child: TextField(
-                          style: TextStyle(fontFamily: 'Almarai'),
-                          controller: coursesTypeController,
-                          decoration: InputDecoration(
-                            hintText: 'الاختصاص',
-                            border: InputBorder.none,
-                          ),
-                        ),
-                      ),
-                    ),
+                    CustomTextField(label: 'الاختصاص', controller:coursesTypeController,keybordType: TextInputType.text),
+
+                    // Container(
+                    //   decoration: BoxDecoration(
+                    //     color: Color(0xFFFFFFFF),
+                    //     borderRadius: BorderRadius.circular(10),
+                    //   ),
+                    //   child: Padding(
+                    //     padding: EdgeInsets.symmetric(horizontal: padding),
+                    //     child: TextField(
+                    //       style: TextStyle(fontFamily: 'Almarai'),
+                    //       controller: coursesTypeController,
+                    //       decoration: InputDecoration(
+                    //         hintText: 'الاختصاص',
+                    //         border: InputBorder.none,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                     SizedBox(height: padding),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Color(0xFFFFFFFF),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: padding),
-                        child: TextField(
-                          style: TextStyle(fontFamily: 'Almarai'),
-                          controller: coursesAgncyController,
-                          decoration: InputDecoration(
-                            hintText: 'الجهة المنفذة',
-                            border: InputBorder.none,
-                          ),
-                        ),
-                      ),
-                    ),
+                    CustomTextField(label: 'الجهة المنفذة', controller:coursesAgncyController,keybordType: TextInputType.text),
+
+                    // Container(
+                    //   decoration: BoxDecoration(
+                    //     color: Color(0xFFFFFFFF),
+                    //     borderRadius: BorderRadius.circular(10),
+                    //   ),
+                    //   child: Padding(
+                    //     padding: EdgeInsets.symmetric(horizontal: padding),
+                    //     child: TextField(
+                    //       style: TextStyle(fontFamily: 'Almarai'),
+                    //       controller: coursesAgncyController,
+                    //       decoration: InputDecoration(
+                    //         hintText: 'الجهة المنفذة',
+                    //         border: InputBorder.none,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                     SizedBox(height: padding),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Color(0xFFFFFFFF),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: padding),
-                        child: TextField(
-                          style: TextStyle(fontFamily: 'Almarai'),
-                          controller: coursesTimeController,
-                          decoration: InputDecoration(
-                            hintText: 'مدة الدورة',
-                            border: InputBorder.none,
-                          ),
-                        ),
-                      ),
-                    ),
+                    CustomTextField(label: 'مدة الدورة - بالأيام', controller:coursesTimeController,keybordType: TextInputType.text),
+
+                    // Container(
+                    //   decoration: BoxDecoration(
+                    //     color: Color(0xFFFFFFFF),
+                    //     borderRadius: BorderRadius.circular(10),
+                    //   ),
+                    //   child: Padding(
+                    //     padding: EdgeInsets.symmetric(horizontal: padding),
+                    //     child: TextField(
+                    //       style: TextStyle(fontFamily: 'Almarai'),
+                    //       controller: coursesTimeController,
+                    //       decoration: InputDecoration(
+                    //         hintText: 'مدة الدورة',
+                    //         border: InputBorder.none,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                     SizedBox(height: padding),
 
                     InkWell(
                       onTap: () => _addCertificates(),
                       child: ListTile(
-                        leading: Icon(Icons.add, color: Colors.black),
+                        leading: Icon(Icons.add),
                         title: Text('أضف شهادات ودورات اخرى ',
                             style: TextStyle(fontFamily: 'Almarai')),
                       ),
                     ),
 
 
-                    SizedBox(height: screenHeight * .15),
+                    SizedBox(height: screenHeight * .06),
                     ElevatedButton(
                         child: Text(
                           'التالي',

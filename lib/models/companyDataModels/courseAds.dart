@@ -1,5 +1,6 @@
 class Course {
   String? courseName;
+  String? courseDays;
   String? courseHours;
   String? isCertified;
   String? courseLevel;
@@ -13,6 +14,7 @@ class Course {
   Course({
     required this.courseName,
     required this.courseHours,
+    required this.courseDays,
     required this.isCertified,
     required this.courseLevel,
     required this.courseType,
@@ -26,6 +28,7 @@ class Course {
     return {
       'courseName': courseName,
       'courseHours': courseHours,
+      'courseDays': courseDays,
       'isCertified': isCertified,
       'courseLevel': courseLevel,
       'courseType': courseType,
@@ -43,6 +46,7 @@ class Course {
       courseHours: map['courseHours'] ,
       isCertified: map['isCertified'],
       courseLevel: map['courseLevel'],
+      courseDays: map['courseDays'],
       courseType: map['courseType'],
       coursePrice: map['coursePrice'],
       courseLocation: map['courseLocation'],

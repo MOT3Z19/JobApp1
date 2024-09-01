@@ -1,7 +1,7 @@
 class ServiceProfile {
   final String name;
   final String serviceType;
-  final String serviceDescription;
+ // final String serviceDescription;
   final String serviceFee;
   final String workLocation;
   final String phoneNumber;
@@ -10,7 +10,7 @@ class ServiceProfile {
   ServiceProfile({
     required this.name,
     required this.serviceType,
-    required this.serviceDescription,
+    //required this.serviceDescription,
     required this.serviceFee,
     required this.workLocation,
     required this.phoneNumber,
@@ -21,7 +21,7 @@ class ServiceProfile {
     return {
       'name': name,
       'serviceType': serviceType,
-      'serviceDescription': serviceDescription,
+     // 'serviceDescription': serviceDescription,
       'serviceFee': serviceFee,
       'workLocation': workLocation,
       'phoneNumber': phoneNumber,
@@ -33,7 +33,7 @@ class ServiceProfile {
     return ServiceProfile(
       name:  map['name']??'',
       serviceType: map['serviceType']??'',
-      serviceDescription:  map['serviceDescription']??'',
+    //  serviceDescription:  map['serviceDescription']??'',
       serviceFee:  map['serviceFee']??'',
       workLocation:  map['workLocation']??'',
       phoneNumber:  map['phoneNumber']??'',

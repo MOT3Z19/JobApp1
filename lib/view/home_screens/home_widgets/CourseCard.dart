@@ -6,13 +6,11 @@ class CourseCard extends StatelessWidget {
   final String title;
   final String description;
   final String price;
-  final String imageUrl;
 
   CourseCard({
     required this.title,
     required this.description,
     required this.price,
-    required this.imageUrl,
   });
 
   @override
@@ -29,8 +27,7 @@ class CourseCard extends StatelessWidget {
           Container(
             height: height * .3,
             width: double.infinity,
-            child: Image.asset(
-              imageUrl,
+            child: Image.asset('assets/images/courses_icons/courseBackground.jfif',
               fit: BoxFit.cover,
             ),
           ),

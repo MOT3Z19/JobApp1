@@ -27,6 +27,8 @@ bool savedIsVisible = false;
 class _AllCoursesScreenState extends State<AllCoursesScreen> {
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
         appBar: AppBar(
           leading: InkWell(
@@ -62,47 +64,67 @@ class _AllCoursesScreenState extends State<AllCoursesScreen> {
         ),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: FutureBuilder<List<Course>?>(
-            future: _courseAdsController.getCourses(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator());
-              } else if (snapshot.hasError) {
-                printError(info: 'Error: ${snapshot.error}');
-                return Center(child: CircularProgressIndicator());
-              } else if (!snapshot.hasData) {
-                return Center(child: Text('لا يوجد بيانات'));
-              }
-              List<Course> courses = snapshot.data!;
-
-              return ListView.builder(
-                  physics: BouncingScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                        onTap: () {
-                          Get.to(
-                              CourseDetailsPage(
-                                courseName: courses[index].courseName,
-                                courseHours:courses[index].courseHours,
-                                isCertified: courses[index].isCertified,
-                                courseLevel: courses[index].courseLevel,
-                                courseType: courses[index].courseType,
-                                coursePrice: courses[index].coursePrice,
-                                courseLocation:courses[index].courseLocation,
-                                courseDescription: courses[index].courseDescription,
-                                videoLink: courses[index].videoLink,
-                              ));
-                        },
-                        child: RequestCard(
-                          courseDescription:
-                          courses[index].courseDescription ?? '',
-                          courseName: courses[index].courseName ?? '',
-                          coursePrice: courses[index].coursePrice ?? '',
-                          courseHours: courses[index].courseHours ?? '',
-                        ));
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextField(
+                decoration: InputDecoration(
+                    suffixIcon: Icon(Icons.search),
+                    hintText: 'ابحث عن كورس ...',
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                        borderSide: BorderSide(color: subsTitleColor))),
+              ),
+              SizedBox(height: height * .02),
+              Text('الدورات والكورسات المعلنة',style: TextStyle(fontWeight: FontWeight.bold),),
+              SizedBox(height: height * .02),
+              Expanded(
+                child: FutureBuilder<List<Course>>(
+                  future: _courseAdsController.getCourses(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      printError(info: 'Error: ${snapshot.error}');
+                      return Center(child: CircularProgressIndicator());
+                    } else if (!snapshot.hasData) {
+                      return Center(child: Text('لا يوجد بيانات'));
+                    }
+                    List<Course> courses = snapshot.data!;
+                    return SizedBox(
+                      height: height/1.4,
+                      child: ListView.builder(
+                          physics: BouncingScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            return InkWell(
+                                onTap: () {
+                                  Get.to(
+                                      CourseDetailsPage(
+                                        courseName: courses[index].courseName,
+                                        courseHours:courses[index].courseHours,
+                                        isCertified: courses[index].isCertified,
+                                        courseLevel: courses[index].courseLevel,
+                                        courseType: courses[index].courseType,
+                                        coursePrice: courses[index].coursePrice,
+                                        courseLocation:courses[index].courseLocation,
+                                        courseDescription: courses[index].courseDescription,
+                                        videoLink: courses[index].videoLink,
+                                        courseDays: courses[index].courseDays,
+                                      ));
+                                },
+                                child: RequestCard(
+                                  courseAddress: courses[index].courseLocation ?? '',
+                                  courseName: courses[index].courseName ?? '',
+                                  courseType: courses[index].courseType ?? '',
+                                  courseHours: courses[index].courseHours ?? '',
+                                ));
+                          },
+                          itemCount: courses.length),
+                    );
                   },
-                  itemCount: courses.length);
-            },
+                ),
+              ),
+            ],
           ),
         ));
   }

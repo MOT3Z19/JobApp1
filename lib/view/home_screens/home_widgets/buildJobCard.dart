@@ -48,7 +48,7 @@ class buildJobCard extends StatelessWidget {
                         children: [
                           CircleAvatar(
                             backgroundColor: Colors.transparent,
-                            backgroundImage: AssetImage(imageUrl),
+                            backgroundImage: NetworkImage(imageUrl),
                             radius: width * .08,
                           ),
                           SizedBox(width: width * .02),

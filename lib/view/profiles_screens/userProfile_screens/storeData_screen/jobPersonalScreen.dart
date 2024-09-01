@@ -102,6 +102,13 @@ class _JobPersonalScreenState extends State<JobPersonalScreen> {
                 SizedBox(height: screenHeight*.02),
                 Text('المعلومات الشخصية',style: TextStyle(fontWeight: FontWeight.bold),),
                 SizedBox(height: screenHeight*.01),
+                CustomDropdown(
+
+                  label: 'من يمكن رؤية ملفك الشخصي',
+                  options: ['جميع رواد الاعمال واصحاب المشاريع', 'لا احد سوى الوظائف التي اتقدم عليها'],
+                  selectedValue: selectedProfileVisibility,
+                  onChanged: (value) => setState(() => selectedProfileVisibility = value),
+                ),
                 CustomTextField(label: 'الاسم ثلاثي', controller: fullnameController,keybordType: TextInputType.name),
                 CustomTextField(label: 'محل الولادة', controller: bornPlaceController,keybordType: TextInputType.streetAddress),
                 CustomDatePicker(label: 'تاريخ الميلاد', controller: bornDateController),
@@ -138,7 +145,7 @@ class _JobPersonalScreenState extends State<JobPersonalScreen> {
                 ),
                 CustomDropdown(
                   label: 'متاح للعمل حضوريا او اونلاين',
-                  options: ['كلاهما','حضورياً', 'اونلاين'],
+                  options: ['حضوري و أونلاين','حضورياً', 'اونلاين'],
                   selectedValue: selectedWorkPlace,
                   onChanged: (value) => setState(() => selectedWorkPlace = value),
                 ),
@@ -153,7 +160,7 @@ class _JobPersonalScreenState extends State<JobPersonalScreen> {
                 ),
                 CustomDropdown(
                   label: 'اللغات',
-                  options: ['English', 'French', 'Arabic','chines'],
+                  options: ['العربية', 'الإنجليزية', 'الفرنسية','الإيطالية','الأسبانية','التركية','الهندية','الصينية'],
                   selectedValue: selectedLanguage,
                   onChanged: (value) => setState(() => selectedLanguage = value),
                 ),
@@ -163,13 +170,7 @@ class _JobPersonalScreenState extends State<JobPersonalScreen> {
                   selectedValue: selectedSkills,
                   onChanged: (value) => setState(() => selectedSkills = value),
                 ),
-                CustomDropdown(
-
-                  label: 'من يمكن رؤية ملفك الشخصي',
-                  options: ['جميع رواد الاعمال واصحاب المشاريع', 'لا احد سوى الوظائف التي اتقدم عليها'],
-                  selectedValue: selectedProfileVisibility,
-                  onChanged: (value) => setState(() => selectedProfileVisibility = value),
-                ),
+               
                 SizedBox(height: screenHeight*.02),
 
                 ElevatedButton(

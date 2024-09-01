@@ -4,7 +4,20 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:job_app/core/constansColor.dart';
 
 class JobScreen extends StatefulWidget {
-  const JobScreen({super.key});
+  final String type;
+  final String gender;
+  final String experience;
+  final String jobType;
+  final String educationLevel;
+  final String skills;
+  final String employeeNum;
+  final String address;
+  final String workingHours;
+  final String salary;
+  final String companyName;
+  final String companyImage;
+  final String notes;
+  const JobScreen({super.key, required this.type, required this.gender, required this.experience, required this.jobType, required this.educationLevel, required this.skills, required this.employeeNum, required this.address, required this.workingHours, required this.salary, required this.notes, required this.companyName, required this.companyImage});
 
   @override
   State<JobScreen> createState() => _JobScreenState();
@@ -12,6 +25,7 @@ class JobScreen extends StatefulWidget {
 
 class _JobScreenState extends State<JobScreen>with SingleTickerProviderStateMixin {
   late TabController _tabController;
+
 
   @override
   void initState() {
@@ -50,19 +64,19 @@ class _JobScreenState extends State<JobScreen>with SingleTickerProviderStateMixi
                   Center(
                     child: CircleAvatar(
                         radius: width / 7,
-                        backgroundColor: Colors.red,
-                        // backgroundImage:
-                        //     NetworkImage('profileCompany.cvFileUrl')
+                        backgroundColor: Colors.grey,
+                        backgroundImage:
+                            NetworkImage(widget.companyImage)
                       ),
                   ),
                   SizedBox(height: height * .02),
                   Text(
-                    'مهندس حاسوب',
+                    widget.type,
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
                   SizedBox(height: height * .008),
                   Text(
-                    'شركة فيسبوك',
+                    widget.companyName,
                     style: TextStyle(color: subsTitleColor),
                   ),
                   SizedBox(height: height * .02),
@@ -72,21 +86,21 @@ class _JobScreenState extends State<JobScreen>with SingleTickerProviderStateMixi
                       Chip(
                         backgroundColor: submenueColor.withOpacity(1.0),
                         label: Text(
-                          'قسم البرمجة',
+                          '${widget.workingHours} ساعة ',
                           style: TextStyle(color: Colors.white),
                         ),
                       ),
                       Chip(
                         backgroundColor: submenueColor.withOpacity(1.0),
                         label: Text(
-                          'خبرة 5 سنوات',
+                         widget.gender,
                           style: TextStyle(color: Colors.white),
                         ),
                       ),
                       Chip(
                         backgroundColor: submenueColor.withOpacity(1.0),
                         label: Text(
-                          'دوام جزئي',
+                          widget.jobType,
                           style: TextStyle(color: Colors.white),
                         ),
                       ),
@@ -98,11 +112,11 @@ class _JobScreenState extends State<JobScreen>with SingleTickerProviderStateMixi
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Text(
-                          'العراق,بغداد, شارع البصرة',
+                          widget.address,
                           style: TextStyle(color: Colors.white),
                         ),
                         Text(
-                          ' الراتب 200\$-300\$',
+                          ' الراتب ${widget.salary} \$',
                           style: TextStyle(color: Colors.white),
                         ),
                       ],
@@ -111,7 +125,7 @@ class _JobScreenState extends State<JobScreen>with SingleTickerProviderStateMixi
                   Align(
                     alignment: AlignmentDirectional.centerEnd,
                     child: Chip(
-                      shape: RoundedRectangleBorder(
+                      shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.only(
                               topRight: Radius.circular(20),
                               bottomRight: Radius.circular(20))),
@@ -146,7 +160,7 @@ class _JobScreenState extends State<JobScreen>with SingleTickerProviderStateMixi
                     ),
                     Tab(
                       child: Text(
-                        'متطلبات الوظيفة',
+                        'ملاحظات',
                         style: TextStyle(
                           fontFamily: 'Almarai',
                         ),
@@ -164,17 +178,37 @@ class _JobScreenState extends State<JobScreen>with SingleTickerProviderStateMixi
                     children: [
                       Padding(
                         padding: EdgeInsets.all(16.0),
-                        child: Text(
-                          'نحن الفرق التي تنشئ جميع منتجات فيسبوك التي يستخدمها مليارات الأشخاص حول العالم. هل ترغب في إنشاء ميزات جديدة وتحسين المنتجات الحالية مثل Messenger والفيديو والمجموعات وآخر الأخبار والبحث والمزيد المسؤوليات:تطوير تطبيقات الويب/الهاتف المحمول بشكل كامل مع مجموعة متنوعة من لغات البرمجة إنشاء منتجات وميزات استهلاكية باستخدام لغة البرمجة الداخلية',
-
-                              style: TextStyle(fontSize: 16),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '  عدد الموظفين المطلوب للوظيفة :  ${widget.employeeNum}',
+                                  style: TextStyle(fontSize: 16),
+                            ),
+                            Text(
+                              '  ساعات العمل :  ${widget.workingHours}',
+                                  style: TextStyle(fontSize: 16),
+                            ),
+                            Text(
+                              ' المهارات المطلوبة : ${widget.skills}',
+                                  style: TextStyle(fontSize: 16),
+                            ),
+                            Text(
+                              ' الجنس : ${widget.gender}',
+                                  style: TextStyle(fontSize: 16),
+                            ),
+                            Text(
+                              '  الراتب : ${widget.salary} \$',
+                                  style: TextStyle(fontSize: 16),
+                            ),
+                          ],
                         ),
                       ),
                       Padding(
                         padding: EdgeInsets.all(16.0),
                         child: Text(
-                          'درجة الماجستير في التصميم أو علوم الكمبيوتر أو التفاعل الحاسوبي أو مجال ذي صلة 3 سنوات من الخبرة الصناعية ذات الصلة.القدرة على قيادة المنتجات وتصميمها من الصفر وتحسين الميزات، كل ذلك من خلال عملية تصميم تتمحور حول المستخدم. مهارات في التواصل والتأثير على استراتيجية تصميم المنتج.مهارات ممتازة في حل المشكلات والإلمام بالقيود والقيود التقنية.تجربة التصميم عبر منصات متعددة.محفظة تسلط الضوء على مشاريع متعددة.',
-
+                          widget.notes,
                           style: TextStyle(fontSize: 16),
                         ),
                       ),

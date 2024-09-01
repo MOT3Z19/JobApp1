@@ -26,7 +26,6 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: width * .05,vertical: height*.02),
         child: FutureBuilder<ServiceProfile?>(
-
           future:_serviceFormController.fetchServiceProfile(),
           builder: (context, snapshot){
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -75,7 +74,7 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
                   padding: EdgeInsets.all(width * .05),
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).primaryColor,
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Column(
@@ -95,10 +94,10 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
                           ),
                         ],
                       ),
-                      Text(
-                        serviceProvider.serviceDescription,
-                        style: TextStyle(color: subsTitleColor),
-                      ),
+                      // Text(
+                      //   serviceProvider.serviceDescription,
+                      //   style: TextStyle(color: subsTitleColor),
+                      // ),
                       SizedBox(height: height * .01),
 
                     ],
@@ -112,7 +111,7 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
                   padding: EdgeInsets.all(width * .05),
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).primaryColor,
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Column(

@@ -31,10 +31,11 @@ class _ProtofileScreenState extends State<MoreTypeScreen> {
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.symmetric(
-            horizontal: horizontalPadding, vertical: screenHeight * 0.07),
+            horizontal: horizontalPadding),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            SizedBox(height: screenHeight*.07),
             Center(
               child: Text(
                 'فرصة',
@@ -74,7 +75,7 @@ class _ProtofileScreenState extends State<MoreTypeScreen> {
                               decoration: BoxDecoration(
                                 borderRadius:
                                     BorderRadius.circular(screenWidth * 0.60),
-                                color: Colors.grey.shade100,
+                                color: Theme.of(context).primaryColor,
                               ),
                               height: screenHeight * 0.17,
                               width: screenWidth * 0.35,
@@ -164,14 +165,14 @@ class _ProtofileScreenState extends State<MoreTypeScreen> {
                                   start: screenWidth * .05),
                               child: SvgPicture.asset(
                                   'assets/images/profile_icons/about.svg')),
-                          fillColor: Colors.white,
+                          fillColor:Theme.of(context).primaryColor,
                           filled: true,
                           border:
                               OutlineInputBorder(borderSide: BorderSide.none),
                           hintText: 'اكتب النبذة المختصرة . . .'),
                     ),
                     SizedBox(
-                      height: screenHeight * .02,
+                      height: screenHeight * .04,
                     ),
                     ElevatedButton(
                       onPressed: () async {

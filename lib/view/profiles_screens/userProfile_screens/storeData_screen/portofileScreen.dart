@@ -33,7 +33,9 @@ class _ProtofileScreenState extends State<ProtofileScreen> {
             Align(
                 alignment: AlignmentDirectional.centerEnd,
                 child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.to(MoreTypeScreen());
+                      },
                     child: Text(
                       textAlign: TextAlign.left,
                       'تخطي',

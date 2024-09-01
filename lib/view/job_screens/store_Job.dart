@@ -9,6 +9,10 @@ import 'package:job_app/widgets/drop_TextFiledmenu_Widget.dart';
 import 'package:job_app/widgets/textFiled_Widget.dart';
 
 class JobAdvertisementScreen extends StatefulWidget {
+  final String companyName;
+  final String companyImage;
+  const JobAdvertisementScreen({super.key, required this.companyName, required this.companyImage});
+
   @override
   State<JobAdvertisementScreen> createState() => _JobAdvertisementScreenState();
 }
@@ -128,7 +132,10 @@ class _JobAdvertisementScreenState extends State<JobAdvertisementScreen> {
                 CustomDropdown(
                     label: 'مستوى التعليم المطلوب',
                     options: [
-                      'متوسط اعدادية',
+                      'غير مهم',
+                      'ابتدائي',
+                      'متوسط',
+                      'ثانوية',
                       'دبلوم',
                       'بكالوريوس',
                       'ماجستير',
@@ -142,7 +149,7 @@ class _JobAdvertisementScreenState extends State<JobAdvertisementScreen> {
                     options: [
                       'حضوري',
                       'أونلاين',
-                      'كلاهما',
+                      'حضوري و أونلاين',
                     ],
                     selectedValue: controller.jobType,
                     onChanged: (value) =>
@@ -196,6 +203,8 @@ class _JobAdvertisementScreenState extends State<JobAdvertisementScreen> {
                 ElevatedButton(onPressed: () {
                   List<Map<String, dynamic>> jobs = [
                     {
+                      'companyName':widget.companyName,
+                      'companyImage':widget.companyImage,
                       'specialization': controller.type,
                       'gender': controller.gender,
                       'educationLevel': controller.educationLevel,

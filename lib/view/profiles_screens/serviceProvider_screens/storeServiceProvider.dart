@@ -16,9 +16,10 @@ class ServiceFormScreen extends StatefulWidget {
 
 class _ServiceFormScreenState extends State<ServiceFormScreen> {
   final TextEditingController _nameController = TextEditingController();
-  String? serviceTypeController;
-  String? serviceDescriptionController;
+  //String? serviceTypeController;
+  //String? serviceDescriptionController;
   final TextEditingController _serviceFeeController = TextEditingController();
+  final TextEditingController _serviceTypeController = TextEditingController();
   final TextEditingController _workLocationController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
   XFile? _image;
@@ -46,8 +47,8 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
           _image != null ? await _controller.uploadImage(_image!) : '';
       final profile = ServiceProfile(
         name: _nameController.text,
-        serviceType: serviceTypeController ?? '',
-        serviceDescription: serviceDescriptionController ?? '',
+        serviceType: _serviceTypeController.text,
+        //serviceDescription: serviceDescriptionController ?? '',
         serviceFee: _serviceFeeController.text,
         workLocation: _workLocationController.text,
         phoneNumber: _phoneNumberController.text,
@@ -149,30 +150,37 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
               SizedBox(height: screenHeight*.01),
 
               CustomTextField(
-                label: 'الاسم ثلاثي',
+                label: 'الاسم والشُهرة',
                 controller: _nameController,
                 keybordType: TextInputType.name,
               ),
-              CustomDropdown(
-                  label: 'نوع الخدمة ',
-                  options: [
-                    'أونلاين',
-                    'حضوري',
-                    'كلاهما',
-                  ],
-                  selectedValue: serviceTypeController,
-                  onChanged: (value) =>
-                      setState(() => serviceTypeController = value)),
-              CustomDropdown(
-                  label: 'وصف الخدمة ',
-                  options: [
-                    'أونلاين',
-                    'حضوري',
-                    'كلاهما',
-                  ],
-                  selectedValue: serviceDescriptionController,
-                  onChanged: (value) =>
-                      setState(() => serviceDescriptionController = value)),
+              CustomTextField(
+                label: 'نوع المهنة',
+                controller: _serviceTypeController,
+                keybordType: TextInputType.name,
+              ),
+              
+              
+              // CustomDropdown(
+              //     label: 'نوع الخدمة ',
+              //     options: [
+              //       'أونلاين',
+              //       'حضوري',
+              //       'حضوري و أونلاين',
+              //     ],
+              //     selectedValue: serviceTypeController,
+              //     onChanged: (value) =>
+              //         setState(() => serviceTypeController = value)),
+              // CustomDropdown(
+              //     label: 'وصف الخدمة ',
+              //     options: [
+              //       'أونلاين',
+              //       'حضوري',
+              //       'حضوري و أونلاين',
+              //     ],
+              //     selectedValue: serviceDescriptionController,
+              //     onChanged: (value) =>
+              //         setState(() => serviceDescriptionController = value)),
               CustomTextField(
                 label: 'أجر الخدمة',
                 controller: _serviceFeeController,
